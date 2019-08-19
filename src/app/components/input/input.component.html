@@ -1,0 +1,6 @@
+<form [formGroup]="form">
+  <span *ngFor="let item of inputConfig; index as i">
+    <label class="c-input-label">{{item.label}} <span *ngIf="item.required">*</span></label>
+    <input [placeholder]="item.placeholder" class="c-input" type="text" formControlName="input_{{i}}"/>
+  </span>
+</form>

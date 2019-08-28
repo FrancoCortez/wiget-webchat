@@ -7,6 +7,7 @@ import {ConfigStoreModule} from './config-store';
 import {InitWebChatStoreModule} from './init-web-chat-store';
 import {LoginStoreModule} from './login-store';
 import {TeamStoreModule} from './team-store';
+import {RouterStoreModule} from './router-store';
 
 @NgModule({
   declarations: [],
@@ -16,10 +17,12 @@ import {TeamStoreModule} from './team-store';
     InitWebChatStoreModule,
     LoginStoreModule,
     TeamStoreModule,
+    RouterStoreModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
-      maxAge: 25 // Retains last 25 states
+      maxAge: 25, // Retains last 25 states,
+      logOnly: false
     })
   ]
 })

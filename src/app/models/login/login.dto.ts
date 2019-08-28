@@ -1,3 +1,6 @@
 export interface LoginDto {
-  inputValue?: any;
+  name?: string;
+  user?: string;
+  valid?: boolean;
+  initMessage?: string;
 }

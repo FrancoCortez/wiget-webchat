@@ -13,9 +13,9 @@ export const initialState: State = {
   isLoading: false,
   config: {
     input: [
-      { placeholder: 'Ingrese su Nombre', label: 'Nombre', validation: false, required: true }
+      {placeholder: 'Ingrese su Nombre', label: 'Nombre', validation: false, required: true}
     ],
-    button: { label: 'Ingresar', enabled: false }
+    button: {label: 'Ingresar', enabled: false}
   }
 };
 

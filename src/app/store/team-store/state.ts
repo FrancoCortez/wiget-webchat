@@ -1,4 +1,3 @@
-import {LoginDto} from '../../models/login/login.dto';
 import {TeamUiModel} from '../../models/ui-model/team.ui-model';
 
 export interface State {

@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {InputUiModel} from '../../models/ui-model/input.ui-model';
-import {RootStoreState, LoginAction} from '../../store';
+import {ConfigAction, LoginAction, RootStoreState} from '../../store';
 import {select, Store} from '@ngrx/store';
 import {selectConfig} from '../../store/config-store/selector';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginDto} from '../../models/login/login.dto';
 
 @Component({
@@ -16,9 +16,9 @@ export class InputComponent implements OnInit {
    * Input model for configuration
    */
   public inputConfig: InputUiModel[];
-  form: FormGroup;
+  public form: FormGroup;
 
-  constructor(private readonly store: Store<RootStoreState.AppState>, private formBuilder: FormBuilder) {
+  constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 
   ngOnInit() {
@@ -26,14 +26,12 @@ export class InputComponent implements OnInit {
       let count = 0;
       this.form = new FormGroup({});
       resp.input.forEach(row => {
-         this.form.addControl('input_' + count, new FormControl());
-         count++;
+        row.id = 'input_' + count;
+        this.form.addControl('input_' + count, new FormControl('', (row.required) ? Validators.required : null));
+        count++;
       });
       this.inputConfig = resp.input;
-      const loginObj: LoginDto = {
-        inputValue: this.form
-      };
-      this.store.dispatch(LoginAction.login({payload: loginObj}));
+      this.store.dispatch(ConfigAction.loadConfig({payload: resp}));
     });
   }
 }

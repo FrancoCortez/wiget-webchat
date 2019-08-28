@@ -10,6 +10,14 @@ const featureReducer = createReducer(
     isLoader: false,
     config: payload,
     error: null,
+  })),
+  on(featureActions.updateInputConfig, (state, {payload}) => ({
+    ...state,
+    isLoading: true,
+    isLoader: false,
+    // config: [{ ...state.config, ...] ,
+    config: payload,
+    error: null,
   }))
 );
 

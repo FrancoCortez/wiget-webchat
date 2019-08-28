@@ -2,18 +2,10 @@
   <div [hidden]="hidden" class="chattigo-widget chattigo-widget--welcome">
     <a class="chattigo-widget__mobile-close-icon"><span class="icon-close"></span></a>
     <div class="chattigo-widget-header__background"></div>
-    <div class="chattigo-widget-header">
-      <img class="chattigo-widget-header__logo" src="https://cdn.chattigo.com/assets/img/isotipo-grey.svg" />
-      <h2 class="chattigo-widget-header__h3">Chatear es la nueva forma de hablar</h2>
-      <div class="chattigo-widget-header__subheading">
-        Tu negocio crece cuando te comunicas mejor con tus clientes.
-      </div>
-    </div>
-
+    <app-header></app-header>
     <div class="chattigo-widget-content">
       <div class="chattigo-widget-team">
-        <label class="chattigo-widget-team__label">Inicia una conversación</label>
-        <div class="chattigo-widget-team__caption">El equipo usualmente responde en pocas horas.</div>
+        <app-widget-caption></app-widget-caption>
         <app-team></app-team>
       </div>
       <div class="chattigo-widget-form">

@@ -10,7 +10,7 @@ export class SocketClient {
   constructor(private readonly socket: Socket) { }
 
   public join(msisdn: string): Observable<any> {
-    this.socket.emit('join', msisdn);
+    this.socket.emit('join-chat', msisdn);
     return of('resolved');
   }
 
@@ -19,7 +19,7 @@ export class SocketClient {
     return of('resolved');
   }
 
-  public getMessage() {
+  public getMessage(): Observable<any> {
     console.log('Entre al coso')
     return this.socket.fromEvent<any>('newMessage');
   }

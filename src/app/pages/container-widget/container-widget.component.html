@@ -1,7 +1,8 @@
 <div class="u-widget-example-margin">
   <div [hidden]="hidden" class="chattigo-widget">
     <app-header-widget></app-header-widget>
-    <app-widget-chat *ngIf="widgetOpen"></app-widget-chat>
+    <app-widget-chat *ngIf="widgetOpen" class="chattigo-widget__content widget-message-content-js"></app-widget-chat>
+    <app-input-send *ngIf="widgetOpen"></app-input-send>
     <app-widget-config *ngIf="configOpen"></app-widget-config>
   </div>
   <app-trigger-button></app-trigger-button>

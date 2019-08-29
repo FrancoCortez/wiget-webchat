@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   form: FormGroup;
 
   ngAfterViewInit(): void {
-    this.form = this.inputComponentReferent.form;
+
   }
 
   constructor(private readonly store: Store<RootStoreState.AppState>) {
@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.store.pipe(select(ConfigSelector.selectConfig))
       .pipe(map(input => input.input))
       .subscribe(input => {
+        this.form = this.inputComponentReferent.form;
         const login: LoginDto = {};
         input.forEach(row => {
           if ( row.nameField ) {

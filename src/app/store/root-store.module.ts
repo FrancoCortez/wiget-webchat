@@ -8,6 +8,7 @@ import {InitWebChatStoreModule} from './init-web-chat-store';
 import {LoginStoreModule} from './login-store';
 import {TeamStoreModule} from './team-store';
 import {RouterStoreModule} from './router-store';
+import {ConversationStoreModule} from './conversation-store';
 
 @NgModule({
   declarations: [],
@@ -18,6 +19,7 @@ import {RouterStoreModule} from './router-store';
     LoginStoreModule,
     TeamStoreModule,
     RouterStoreModule,
+    ConversationStoreModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({

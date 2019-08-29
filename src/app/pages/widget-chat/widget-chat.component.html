@@ -1,42 +1,13 @@
-<div class="c-message-box">
-  <div class="c-message-box__message">
-    hola
-    <small>10:00</small>
+<div id="messageBody">
+  <div class="c-message-box" *ngFor="let item of conversation">
+    <div class="c-message-box__message" *ngIf="item.subject === 'CLIENT'">
+      <span [innerHTML]="item.content"></span>
+      <small>{{item.hour | date: 'hh:mm' }}</small>
+    </div>
+    <div class="c-message-box__message-sended" *ngIf="item.subject === 'AGENT'">
+      <span [innerHTML]="item.content"></span>
+      <small>{{item.hour | date: 'hh:mm' }}</small>
+    </div>
   </div>
-  <div class="c-message-box__message">
-    Quiero saber como se hace
-    <small>10:00</small>
-  </div>
-  <div class="c-message-box__message-sended">
-    Tiene que pagar para poder ingresar
-    <small>10:00</small>
-  </div>
-  <div class="c-message-box__message-sended">
-    Aquí le dejo el link de pago
-    <small>10:04</small>
-  </div>
-  <div class="c-message-box__message-sended">
-    <a class="c-action-link" href="#">http://pagaporfa.org</a>
-    <small>10:04</small>
-  </div>
-  <div class="c-message-box__message-supervisor-send">
-    <label>Supervisor</label>
-    Estimado Clientísimo Cliente, <br>¿Cómo le va?
-    <small>10:08</small>
-  </div>
-  <div class="c-message-box__message-sended">
-    <a class="c-message-box__message-attachment">
-      <img src="https://develop.cdn.chattigo.com/assets/img/attachment/preview-tiny/PDF.svg" />
-      Attachment name.pdf
-    </a>
-    Adjunto PDF
-    <small>10:10</small>
-  </div>
-  <form [formGroup]="form">
-  <span>
-    <input [placeholder]="sendConfig.messagePlaceholder" class="c-input" formControlName="sendMessage" type="text"/>
-    <button style="border: none;background-color: inherit;" type="button" (click)="sendMessage(form.value)" class="icon-send"></button>
-  </span>
-    {{data}}
-  </form>
+
 </div>

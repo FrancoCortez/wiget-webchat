@@ -1,5 +1,5 @@
 <div class="u-widget-example-margin">
-  <div [hidden]="hidden" class="chattigo-widget chattigo-widget--welcome">
+  <div *ngIf="!hidden" class="chattigo-widget chattigo-widget--welcome">
     <a class="chattigo-widget__mobile-close-icon"><span class="icon-close"></span></a>
     <div class="chattigo-widget-header__background"></div>
     <app-header></app-header>

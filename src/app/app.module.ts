@@ -11,7 +11,7 @@ import {ComponentsModule} from './components/components.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
-const config: SocketIoConfig = { url: 'https://kops.chattigo.com', options: { path: '/webchat/socket.io/socket.io/' , query: 'did=demoChattigo@WC', transports: ['websocket']} };
+const config: SocketIoConfig = { url: 'https://kops.chattigo.com', options: { path: '/webchat/socket.io/' , query: 'did=demoChattigo@WC', transports: ['websocket']} };
 
 @NgModule({
   declarations: [

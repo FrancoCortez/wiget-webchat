@@ -28,12 +28,11 @@ export class InputSendComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // this.sendElement.nativeElement.focus();
     this.store.pipe(select(ConfigSelector.selectConfig)).subscribe(resp => this.sendConfig = resp.messageSend);
   }
 
-  sendMessage(value: any) {
-    if (value.sendMessage !== undefined && value.sendMessage !== '' && value.sendMessage !== null) {
+  sendMessage(value: any, $event: any) {
+    if (value.sendMessage !== undefined && value.sendMessage !== '' && value.sendMessage !== null ) {
       const messageUi: MessageUiModel = {
         content: value.sendMessage.replace(/(?:\r\n|\r|\n)/g, '<br/>'),
         subject: 'CLIENT',
@@ -48,22 +47,44 @@ export class InputSendComponent implements OnInit, AfterViewInit {
         resp.id = uuid();
         this.socket.sendMessage(resp);
       });
-      this.sendElement.nativeElement.focus();
       this.form.reset();
-      const findMessageBox = document.getElementsByClassName('widget-send-message-box-js');
-      if (findMessageBox.length) {
-        const sendMessageBox = findMessageBox[0];
-        const inputMessage: any = sendMessageBox.getElementsByClassName('widget-message-input-js')[0];
-        const chatMessages: any = document.getElementsByClassName('widget-message-content-js')[0];
-        let sendMessageBoxHeight = (sendMessageBox.scrollHeight - 16) + 'px';
+      // this.form.controls['sendMessage'].setValue('asdasd');
+      this.sendElement.nativeElement.focus();
+      this.eventScroll();
+    } else {
+      if($event.which === 13){
+        this.sendElement.nativeElement.focus();
+        this.form.reset();
+        $event.preventDefault();
+        return false;
+      }
+    }
+  }
+
+  public keypress(value,$event) {
+    if(value.sendMessage == undefined || value.sendMessage == '' || value.sendMessage == null) {
+      if($event.which === 13){
+        this.sendElement.nativeElement.focus();
+        this.form.reset();
+        $event.preventDefault();
+        return false;
+      }
+    }
+  }
+  private eventScroll () {
+    const findMessageBox = document.getElementsByClassName('widget-send-message-box-js');
+    if (findMessageBox.length) {
+      const sendMessageBox = findMessageBox[0];
+      const inputMessage: any = sendMessageBox.getElementsByClassName('widget-message-input-js')[0];
+      const chatMessages: any = document.getElementsByClassName('widget-message-content-js')[0];
+      let sendMessageBoxHeight = (sendMessageBox.scrollHeight - 16) + 'px';
+      chatMessages.style.marginBottom = sendMessageBoxHeight;
+      if (inputMessage !== null) {
+        inputMessage.style.height = '1px';
+        inputMessage.style.height = (2 + inputMessage.scrollHeight) + 'px';
+        sendMessageBoxHeight = (sendMessageBox.scrollHeight - 16) + 'px';
         chatMessages.style.marginBottom = sendMessageBoxHeight;
-        if (inputMessage !== null) {
-          inputMessage.style.height = '1px';
-          inputMessage.style.height = (2 + inputMessage.scrollHeight) + 'px';
-          sendMessageBoxHeight = (sendMessageBox.scrollHeight - 16) + 'px';
-          chatMessages.style.marginBottom = sendMessageBoxHeight;
-          chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
+        chatMessages.scrollTop = chatMessages.scrollHeight;
       }
     }
   }

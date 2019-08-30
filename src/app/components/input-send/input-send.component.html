@@ -1,11 +1,11 @@
 <div class="chattigo-widget__footer">
   <div class="c-send-message widget-send-message-box-js">
     <form [formGroup]="form">
-      <textarea #send (keydown.enter)="sendMessage(form.value)" class="c-input c-send-message__input widget-message-input-js" formControlName="sendMessage" [placeholder]="sendConfig.messagePlaceholder"></textarea>
+      <textarea #send (keyup.enter)="sendMessage(form.value, $event)" (keypress)="keypress(form.value, $event)"  class="c-input c-send-message__input widget-message-input-js" formControlName="sendMessage" [placeholder]="sendConfig.messagePlaceholder"></textarea>
       <div class="c-send-message__actions">
         <a href="#"><span class="icon-attachment"></span></a>
         <a href="#"><span class="icon-emoji"></span></a>
-        <a href="javascript:void(0)" (click)="sendMessage(form.value)"><span class="icon-send"></span></a>
+        <a href="javascript:void(0)" (click)="sendMessage(form.value, $event)"><span class="icon-send"></span></a>
       </div>
     </form>
   </div>

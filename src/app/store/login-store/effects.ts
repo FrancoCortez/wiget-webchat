@@ -11,11 +11,6 @@ import {LoginService} from '../../services/login.service';
 @Injectable()
 export class LoginStoreEffects {
 
-  constructor(private actions$: Actions,
-              private readonly store: Store<RootStoreState.AppState>,
-              private readonly login: LoginService) {
-  }
-
   login$: Observable<Action> = createEffect(() => this.actions$.pipe(
     ofType(featureActions.login),
     mergeMap(action => this.login.login(action.payload)
@@ -28,6 +23,11 @@ export class LoginStoreEffects {
       ))
     )
   );
+
+  constructor(private actions$: Actions,
+              private readonly store: Store<RootStoreState.AppState>,
+              private readonly login: LoginService) {
+  }
 
 
 }

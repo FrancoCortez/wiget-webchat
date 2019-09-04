@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
-import {RootStoreState, RouterAction} from '../../store';
+import {ConversationAction, RootStoreState} from '../../store';
 
 @Component({
   selector: 'app-widget-config',
@@ -17,7 +17,7 @@ export class WidgetConfigComponent implements OnInit {
   }
 
   closeChat() {
-    this.store.dispatch(RouterAction.loginOpen());
+    this.store.dispatch(ConversationAction.leaveChat());
   }
 
 }

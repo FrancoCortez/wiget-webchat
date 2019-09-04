@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {RootStoreState} from '../../store';
 import {selectConfig} from '../../store/config-store/selector';
-import {WidgetCaptionUiModel} from '../../models/ui-model/widget-caption.ui-model';
 import {CaptionLoginUiModel} from '../../models/ui-model/caption-login.ui-model';
 
 @Component({

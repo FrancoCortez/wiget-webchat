@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {InitWebChatAction, RootStoreState} from '../../store';
 import {selectIsOpen} from '../../store/init-web-chat-store/selector';
+import {filter} from 'rxjs/operators';
 
 @Component({
   selector: 'app-trigger-button',
@@ -16,10 +17,9 @@ export class TriggerButtonComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.pipe(select(selectIsOpen)).subscribe(resp => {
-      this.hidden = !resp;
-    });
-    this.store.pipe();
+    this.store.pipe(select(selectIsOpen))
+      .pipe(filter(fill => fill !== null && fill !== undefined))
+      .subscribe(resp => this.hidden = !resp);
   }
 
   public initWebChat() {

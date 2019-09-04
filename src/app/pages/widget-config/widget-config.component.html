@@ -1,20 +1,19 @@
+<div class="chattigo-widget-content">
+  <ul class="chattigo-widget-list-options">
+    <li class="chattigo-widget-list-options__item">
+      <div class="chattigo-widget-list-options__left-side">
+        <span class="icon-megaphone"></span>
+        Mensajes con Sonido
+      </div>
 
-    <div class="chattigo-widget-content">
-      <ul class="chattigo-widget-list-options">
-        <li class="chattigo-widget-list-options__item">
-          <div class="chattigo-widget-list-options__left-side">
-            <span class="icon-megaphone"></span>
-            Mensajes con Sonido
-          </div>
+      <div class="chattigo-widget-list-options__right-side">
+        <div class="chattigo-widget-list-options__switch">
+          <input checked class="c-switch" id="switche" type="checkbox">
+          <label for="switche"></label>
+        </div>
+      </div>
+    </li>
+  </ul>
 
-          <div class="chattigo-widget-list-options__right-side">
-            <div class="chattigo-widget-list-options__switch">
-              <input id="switche" type="checkbox" class="c-switch" checked>
-              <label for="switche"></label>
-            </div>
-          </div>
-        </li>
-      </ul>
-
-      <a (click)="closeChat()" class="chattigo-widget-logout">Terminar chat</a>
-    </div>
+  <a (click)="closeChat()" class="chattigo-widget-logout">Terminar chat</a>
+</div>

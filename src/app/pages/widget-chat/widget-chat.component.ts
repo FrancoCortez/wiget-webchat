@@ -1,9 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {ConfigSelector, ConversationAction, ConversationSelector, RootStoreState} from '../../store';
-import {FormControl, FormGroup} from '@angular/forms';
-import {MessageDto} from '../../models/message/message.dto';
-import {MessageSendUiModel} from '../../models/ui-model/message-send.ui-model';
+import {ConversationAction, ConversationSelector, RootStoreState} from '../../store';
 import {SocketClient} from '../../client/socket.client';
 import {MessageUiModel} from '../../models/ui-model/message.ui.model';
 import {filter} from 'rxjs/operators';
@@ -17,23 +14,16 @@ export class WidgetChatComponent implements OnInit, AfterViewInit {
 
   public conversation: MessageUiModel[] = [];
 
-  constructor(private readonly store: Store<RootStoreState.AppState>, private readonly socket: SocketClient) {
-    this.socket.getMessage()
-      .pipe(filter(fill => fill.content !== undefined))
-      .subscribe(resp => {
-        if (resp.content !== undefined) {
-          console.log('entre al subscribe');
-          resp.content = resp.content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-          const messageUi: MessageUiModel = {
-            content: resp.content,
-            subject: 'AGENT',
-            type: resp.type,
-            hour: new Date()
-          };
-          this.store.dispatch(ConversationAction.addMessage({payload: messageUi}));
-        }
-      });
+  constructor(private readonly store: Store<RootStoreState.AppState>) {
+    this.store.dispatch(ConversationAction.getMessage());
   }
+
+  ngOnInit() {
+    this.store.pipe(select(ConversationSelector.selectConversations))
+      .pipe(filter(fill => fill.length !== 0))
+      .subscribe(resp => this.conversation = resp);
+  }
+
 
   ngAfterViewInit(): void {
     const findMessageBox = document.getElementsByClassName('widget-send-message-box-js');
@@ -53,10 +43,8 @@ export class WidgetChatComponent implements OnInit, AfterViewInit {
       }
     }
   }
-
-  ngOnInit() {
-    this.store.pipe(select(ConversationSelector.selectConversations)).subscribe(resp => this.conversation = resp);
+  goToLink(url: string) {
+    window.open(url, '_blank');
   }
-
 
 }

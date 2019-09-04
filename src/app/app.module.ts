@@ -9,9 +9,13 @@ import {APP_BASE_HREF} from '@angular/common';
 import {PagesModule} from './pages/pages.module';
 import {ComponentsModule} from './components/components.module';
 import {ReactiveFormsModule} from '@angular/forms';
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import {SocketIoConfig, SocketIoModule} from 'ngx-socket-io';
+import {HttpClientModule} from '@angular/common/http';
 
-const config: SocketIoConfig = { url: 'https://kops.chattigo.com', options: { path: '/webchat/socket.io/' , query: 'did=demoChattigo@WC', transports: ['websocket']} };
+const config: SocketIoConfig = {
+  url: 'https://kops.chattigo.com',
+  options: {path: '/webchat/socket.io/', query: 'did=demoChattigo@WC', transports: ['websocket']}
+};
 
 @NgModule({
   declarations: [
@@ -24,6 +28,7 @@ const config: SocketIoConfig = { url: 'https://kops.chattigo.com', options: { pa
     PagesModule,
     ComponentsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     SocketIoModule.forRoot(config)
   ],
   providers: [

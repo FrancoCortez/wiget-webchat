@@ -1,6 +1,16 @@
 <form [formGroup]="form">
   <span *ngFor="let item of inputConfig; index as i">
     <label class="c-input-label">{{item.label}} <span *ngIf="item.required">*</span></label>
-    <input [placeholder]="item.placeholder" class="c-input" formControlName="input_{{i}}"  type="text"/>
+    <input [placeholder]="item.placeholder"
+           class="c-input"
+           [ngClass]="{'c-input--error': form.getError('messageValidation', [('input_' + i)]) || form.getError('required', [('input_' + i)])}"
+           formControlName="input_{{i}}"
+           type="text"/>
+    <p class="c-input__error-message" *ngIf="form.getError('messageValidation', [('input_' + i)]) as error">
+      {{ error }}
+    </p>
+    <p class="c-input__error-message" *ngIf="form.getError('required', [('input_' + i)]) as error">
+      El campo {{item.label}} es obligatorio
+    </p>
   </span>
 </form>

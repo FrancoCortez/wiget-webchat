@@ -7,4 +7,5 @@ export interface InputUiModel {
   userField?: boolean;
   nameField?: boolean;
   fontColor?: string;
+  errorText?: string[];
 }

@@ -3,8 +3,6 @@ import {select, Store} from '@ngrx/store';
 import {ConfigAction, RootStoreState, RouterSelector} from './store';
 import {ConfigUiModel} from './models/ui-model/config.ui-model';
 import {InputUiModel} from './models/ui-model/input.ui-model';
-import {SocketClient} from './client/socket.client';
-import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +15,8 @@ export class AppComponent implements OnInit {
   public widgetOpen = false;
   public configOpen = false;
 
-  constructor(private readonly store: Store<RootStoreState.AppState>) {}
+  constructor(private readonly store: Store<RootStoreState.AppState>) {
+  }
 
   ngOnInit(): void {
     // this.store.dispatch(RouterAction.loginOpen);
@@ -29,7 +28,7 @@ export class AppComponent implements OnInit {
     this.store.pipe(select(RouterSelector.selectLoginOpen)).subscribe(resp => this.loginOpen = resp);
     this.store.pipe(select(RouterSelector.selectWidgetOpen)).subscribe(resp => this.widgetOpen = resp);
     this.store.pipe(select(RouterSelector.selectConfigOpen)).subscribe(resp => this.configOpen = resp);
-    const setting = {
+    const setting: any = {
       header_text: 'Web Chat', // Configure
       header_status: 'En linea', // Configure
       // TODO NEW
@@ -44,16 +43,17 @@ export class AppComponent implements OnInit {
       caption_subtitle_color: '#1f1f1f', // Configure
       // Configure
       // tslint:disable-next-line:max-line-length
-      welcome_text: 'Bienvenido al servicio de web chat de nuestra página. Por favor introduzca la información solicitada para iniciar la sesión.',
+      welcome_text: 'Bienvenido al servicio de web chat de nuestra página.',
       subtitle_text: 'SUBTITULO DE PRUEBA', // Configure
       message_placeholder: 'Escriba un mensaje...',
       // Configure
       login_fields: [
         'Nombre',
-        {
+        /* {
           label: 'Email',
           // TODO NEW
           placeholder: 'Ingrese su correo',
+          required: false,
           validation: (value) => {
             // tslint:disable-next-line:max-line-length
             const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
             }
           }
         },
-        {label: 'RUT', required: true}
+        {label: 'RUT', required: true} */
       ],
       send_color: '#cb1e74',
       header_background_color: '#cb1e74',  // Configure
@@ -97,7 +97,7 @@ export class AppComponent implements OnInit {
         titleColor: setting.welcome_color,
         subtitleColor: setting.subtitle_color,
       },
-      caption: {
+      caption: {
         caption: setting.header_status,
         title: setting.header_text,
         headerBackgroundColor: setting.header_background_color,
@@ -131,14 +131,14 @@ export class AppComponent implements OnInit {
         (row.label === setting.user_field) ? input.userField = true : input.userField = false;
         (row.label === setting.name_field) ? input.nameField = true : input.nameField = false;
         input.label = row.label;
-        input.required = row.required;
+        input.required = (row.required === undefined) ? false : row.required;
+
         input.validation = row.validation;
         input.placeholder = (row.placeholder === undefined || row.placeholder === null) ? row.label : row.placeholder;
       }
       formInput.push(input);
     });
     configUi.input = formInput;
-    console.log(configUi);
     this.store.dispatch(ConfigAction.loadConfig({payload: configUi}));
   }
 

@@ -8,7 +8,7 @@ import {TeamComponent} from './team/team.component';
 import {HeaderComponent} from './header/header.component';
 import {WidgetCaptionComponent} from './widget-caption/widget-caption.component';
 import {HeaderWidgetComponent} from './header-widget/header-widget.component';
-import { InputSendComponent } from './input-send/input-send.component';
+import {InputSendComponent} from './input-send/input-send.component';
 
 @NgModule({
   declarations: [

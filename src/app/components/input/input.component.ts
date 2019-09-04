@@ -1,10 +1,10 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {InputUiModel} from '../../models/ui-model/input.ui-model';
-import {ConfigAction, LoginAction, RootStoreState} from '../../store';
+import {ConfigAction, RootStoreState} from '../../store';
 import {select, Store} from '@ngrx/store';
 import {selectConfig} from '../../store/config-store/selector';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {LoginDto} from '../../models/login/login.dto';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {validationGeneric, validationOfNull} from '../../validation/parametric.validation';
 
 @Component({
   selector: 'app-input',
@@ -26,8 +26,12 @@ export class InputComponent implements OnInit {
       let count = 0;
       this.form = new FormGroup({});
       resp.input.forEach(row => {
-        row.id = 'input_' + count;
-        this.form.addControl('input_' + count, new FormControl('', (row.required) ? Validators.required : null));
+        row.id = `input_${count}`;
+        this.form.addControl( row.id, new FormControl('',
+          [
+            (row.validation !== undefined) ? validationGeneric(row.validation) : validationOfNull,
+            (row.required !== undefined && row.required !== false && row.required !== null) ? Validators.required : validationOfNull,
+          ]));
         count++;
       });
       this.inputConfig = resp.input;

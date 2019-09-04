@@ -3,5 +3,8 @@ export interface MessageUiModel {
   type?: string;
   subject?: string;
   hour?: Date;
-  innerHtml?: string;
+  mediaUrl?: string;
+  redirectUrl?: string;
+  mimeType?: string;
+  nameFile?: string;
 }

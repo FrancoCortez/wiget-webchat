@@ -14,7 +14,7 @@ export class LoginService {
 
   public login(message: MessageDto): Observable<any> {
     return this.socket.join(message.msisdn).pipe(
-      map(mapper => this.socket.sendMessage(message).pipe(
+      map(() => this.socket.sendMessage(message).pipe(
         map(send => send),
         catchError(error => {
           return throwError(error);

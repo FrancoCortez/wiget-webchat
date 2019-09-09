@@ -8,7 +8,7 @@ const featureReducer = createReducer(
     ...state,
     isLoading: true,
     isLoader: false,
-    // team: payload,
+    team: payload,
     error: null,
   })),
   on(featureActions.teamSuccess, (state) => ({

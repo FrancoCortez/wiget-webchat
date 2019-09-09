@@ -1,3 +1,8 @@
 export interface TeamUiModel {
-  src?: string;
+  id?: bigint;
+  name?: string;
+  maxChats?: number;
+  idClient?: number;
+  photo: string;
+  active?: boolean;
 }

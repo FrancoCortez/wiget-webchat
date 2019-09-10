@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ConfigAction, RootStoreState, RouterSelector} from './store';
 import {ConfigUiModel} from './models/ui-model/config.ui-model';
@@ -151,5 +151,6 @@ export class AppComponent implements OnInit {
     configUi.input = formInput;
     this.store.dispatch(ConfigAction.loadConfig({payload: configUi}));
   }
+
 
 }

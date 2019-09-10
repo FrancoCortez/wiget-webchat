@@ -51,7 +51,7 @@ export class HeaderWidgetComponent implements OnInit {
     }
   }
 
-  public toogleClose() {
+  public toggleClose() {
     this.store.dispatch(InitWebChatAction.open({payload: this.hidden}));
   }
 }

@@ -9,7 +9,7 @@ import {map} from 'rxjs/operators';
 })
 export class UploadFileClient {
 
-  private serverBff = 'https://kops.chattigo.com/webchat/message/attachment/upload';
+  private serverBff = 'https://k8s-dev.chattigo.com/webchat/message/attachment/upload';
 
   constructor(private readonly http: HttpClient) {
   }

@@ -14,6 +14,7 @@ export interface ConfigUiModel {
   caption?: WidgetCaptionUiModel;
   messageSend?: MessageSendUiModel;
   configPanel?: ConfigPanelUiModel;
+  isMobile?: boolean;
   preserveHistory?: boolean;
   bgMenu?: string;
   geoActive?: boolean;

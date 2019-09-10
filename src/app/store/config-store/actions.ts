@@ -6,3 +6,4 @@ export const loadConfigSuccess = createAction('[loadConfigSuccess] Load Configur
 export const loadConfigFailure = createAction('[loadConfigFailure] Load Configuration webchat', props<{ payload: any }>());
 
 export const updateInputConfig = createAction('[updateInputConfig] update input config', props<{ payload: ConfigUiModel }>());
+export const updateMobile = createAction('[updateMobile] update mobile', props<{ payload: boolean}>());

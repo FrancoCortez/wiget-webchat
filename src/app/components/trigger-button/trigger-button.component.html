@@ -1,5 +1,5 @@
 <div class="u-widget-trigger-example-margin">
-  <a (click)="initWebChat()" [ngStyle]="{'background-image': backgroundColor}" class="chattigo-widget-trigger">
+  <a *ngIf="mobileHidden" (click)="initWebChat()" [ngStyle]="{'background-image': backgroundColor}" class="chattigo-widget-trigger test-angular">
     <img class="chattigo-widget-trigger--logo" src="https://cdn.chattigo.com/assets/img/isotipo-grey.svg"/>
   </a>
 </div>

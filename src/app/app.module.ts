@@ -14,8 +14,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {PickerModule} from '@ctrl/ngx-emoji-mart';
 
 const config: SocketIoConfig = {
-  url: 'https://kops.chattigo.com',
-  options: {path: '/webchat/socket.io/', query: 'did=demoChattigo@WC', transports: ['websocket']}
+  url: 'https://k8s-dev.chattigo.com',
+  options: {path: '/webchat/socket.io/', query: 'did=santotomas@WC', transports: ['websocket']}
 };
 
 @NgModule({

@@ -1,6 +1,6 @@
 <div class="u-widget-example-margin">
   <div *ngIf="!hidden" class="chattigo-widget chattigo-widget--welcome">
-    <a class="chattigo-widget__mobile-close-icon"><span class="icon-close"></span></a>
+    <a class="chattigo-widget__mobile-close-icon" (click)="toggleClose()" ><span class="icon-close"></span></a>
     <div [ngStyle]="{'background-image': headerColor}" class="chattigo-widget-header__background"></div>
     <app-header></app-header>
     <div class="chattigo-widget-content">

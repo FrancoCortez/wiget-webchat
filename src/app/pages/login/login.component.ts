@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {ConfigSelector, InitWebChatSelector, LoginAction, RootStoreState} from '../../store';
+import {ConfigSelector, InitWebChatAction, InitWebChatSelector, LoginAction, RootStoreState} from '../../store';
 import {InputComponent} from '../../components/input/input.component';
 import {FormGroup} from '@angular/forms';
 import {LoginDto} from '../../models/login/login.dto';
@@ -79,6 +79,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.store.dispatch(LoginAction.login({payload: message}));
         });
     }
+  }
+
+  public toggleClose() {
+    this.store.dispatch(InitWebChatAction.open({payload: this.hidden}));
   }
 
 }

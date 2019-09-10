@@ -15,7 +15,6 @@ const featureReducer = createReducer(
     ...state,
     isLoading: true,
     isLoader: false,
-    // config: [{ ...state.config, ...] ,
     config: payload,
     error: null,
   }))

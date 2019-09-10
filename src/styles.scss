@@ -13,3 +13,9 @@ div.emoji-mart-preview  {
 .emoji-mart {
   width: 100% !important;
 }
+
+.test-angular {
+  @media only screen and (max-width: 451px) {
+    display: block !important;
+  }
+}

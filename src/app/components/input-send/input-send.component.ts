@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ConfigSelector, ConversationAction, LoginSelector, RootStoreState} from '../../store';
-import {SocketClient} from '../../client/socket.client';
 import {MessageUiModel} from '../../models/ui-model/message.ui.model';
 import {MessageSendUiModel} from '../../models/ui-model/message-send.ui-model';
 import {FormControl, FormGroup} from '@angular/forms';
@@ -9,9 +8,8 @@ import {UploadFileClient} from '../../client/upload-file.client';
 import {SubjectEnum} from '../../models/utils/subject.enum';
 import {TypeFileEnum} from '../../models/utils/type-file.enum';
 import {MessageDto} from '../../models/message/message.dto';
-import {MessageService} from '../../services/message.service';
-import {PreviewAttachmentEnum} from '../../models/utils/preview-attachment.enum';
 import {filter} from 'rxjs/operators';
+import {FormatService} from '../../services/format.service';
 
 @Component({
   selector: 'app-input-send',
@@ -19,20 +17,48 @@ import {filter} from 'rxjs/operators';
   styleUrls: []
 })
 export class InputSendComponent implements OnInit, AfterViewInit {
-  public sendConfig: MessageSendUiModel;
-  public form: FormGroup;
   @ViewChild('send', {static: false}) sendElement: ElementRef;
   @ViewChild('attachmentInput', {static: false}) sendAttachmentElement: ElementRef;
-  public imagePath;
+  sendConfig: MessageSendUiModel;
+  form: FormGroup;
+  imagePath;
   imgURL: any = null;
   message = '';
   typeFile = null;
   nameFile = null;
-  public sendFile: any;
+  sendFile: any;
+  loginResp: MessageDto = null;
+  displayEmoji = false;
+  localeEmoji = {
+    search: 'Buscar emoji',
+    emojilist: 'Lista de emoji',
+    notfound: 'No se encontraron emoji',
+    clear: 'Limpiar',
+    categories: {
+      search: 'Resultados de busqueda',
+      recent: 'Usados mas frecuentemente',
+      people: 'Emoticonos y Personas',
+      nature: 'Animales y Naturaleza',
+      foods: 'Alimentos y Bebidas',
+      activity: 'Actividades',
+      places: 'Viajes y Lugares',
+      objects: 'Objetos',
+      symbols: 'Simbolos',
+      flags: 'Banderas',
+      custom: 'Personaliados',
+    },
+    skintones: {
+      1: 'Default Skin Tone',
+      2: 'Light Skin Tone',
+      3: 'Medium-Light Skin Tone',
+      4: 'Medium Skin Tone',
+      5: 'Medium-Dark Skin Tone',
+      6: 'Dark Skin Tone',
+    },
+  };
 
   constructor(private readonly store: Store<RootStoreState.AppState>,
-              private readonly socket: SocketClient,
-              private readonly sendService: MessageService,
+              private readonly format: FormatService,
               private readonly uploadFileClient: UploadFileClient) {
     this.form = new FormGroup({});
     this.form.addControl('sendMessage', new FormControl());
@@ -44,12 +70,19 @@ export class InputSendComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.eventScrollForTextArea();
     this.store.pipe(select(ConfigSelector.selectConfig)).subscribe(resp => this.sendConfig = resp.messageSend);
+    this.store.pipe(select(LoginSelector.selectLogin))
+      .pipe(filter(fill => fill !== null))
+      .subscribe((resp: MessageDto) => this.loginResp = resp);
   }
 
   public uploadFile($event: any): void {
     const files = $event.target.files[0];
-    this.eventScroll();
+    if (files.size > 10000000) {
+      alert('El archivo pesa mas de 10mb');
+      return;
+    }
     if (files !== undefined && files !== null) {
       const mimeType = files.type;
       if (mimeType.match(/image\/*/) !== null) {
@@ -62,10 +95,11 @@ export class InputSendComponent implements OnInit, AfterViewInit {
         };
       } else if (mimeType.match(/application\/*/) !== null) {
         this.imagePath = files;
-        this.previewImgSelector(null,  mimeType);
+        this.previewImgSelector(null, mimeType);
       }
       this.nameFile = files.name;
       this.sendFile = files;
+      this.sendElement.nativeElement.focus();
     }
   }
 
@@ -75,67 +109,41 @@ export class InputSendComponent implements OnInit, AfterViewInit {
    * @param value valor del campo de texto
    * @param $event evento que se ejecuta al momento de enviar un mensaje
    */
-  public sendMessage(value: any, $event: any): boolean {
-    if (value.sendMessage !== undefined && value.sendMessage !== '' && value.sendMessage !== null) {
+  public sendMessage(value: any) {
+    if ((value.sendMessage !== undefined && value.sendMessage !== '' && value.sendMessage !== null)
+      || (this.sendFile !== null && this.sendFile !== undefined)) {
       if (this.sendFile != null) {
-        console.log('entre al dispache del send')
         this.uploadFileClient.sendFile(this.sendFile).subscribe(fileResp => {
           this.store.pipe(select(LoginSelector.selectLogin))
             .pipe(filter(fill => fill !== null))
             .subscribe((resp: MessageDto) => {
-            let contentTemp = value.sendMessage.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-            contentTemp = contentTemp.replace(/(((https?:\/\/)|(www\.))[^\s]+)/g, (url) => {
-              return '<a class="c-action-link" href="' + url + '" target="_blank">' + url + '</a>';
+              const messageFront: MessageUiModel = {
+                originalContent: value.sendMessage,
+                content: this.format.messageFormat(value.sendMessage),
+                subject: SubjectEnum.CLIENT,
+                type: TypeFileEnum.MEDIA,
+                hour: new Date(),
+                mediaUrl: this.previewImgSelector(fileResp.mediaUrl, fileResp.mimeType),
+                redirectUrl: fileResp.mediaUrl,
+                mimeType: fileResp.mimeType,
+                nameFile: this.nameFile
+              };
+              this.store.dispatch(ConversationAction.sendMessage({message: {messageUi: messageFront, messageDto: resp}}));
+              this.resetFeatures();
             });
-            const messageFront: MessageUiModel = {
-              content: contentTemp,
-              subject: SubjectEnum.CLIENT,
-              type: TypeFileEnum.MEDIA,
-              hour: new Date(),
-              mediaUrl: this.previewImgSelector(fileResp.mediaUrl, fileResp.mimeType),
-              redirectUrl: fileResp.mediaUrl,
-              mimeType: fileResp.mimeType,
-              nameFile: this.nameFile
-            };
-            this.store.dispatch(ConversationAction.sendMessage({message: {messageUi: messageFront, messageDto: resp}}));
-            this.resetFeatures();
-          });
         });
       } else {
-        this.store.pipe(select(LoginSelector.selectLogin))
-          .pipe(filter(fill => fill !== null))
-          .subscribe((resp: MessageDto) => {
-          let contentTemp = value.sendMessage.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-          contentTemp = contentTemp.replace(/(((https?:\/\/)|(www\.))[^\s]+)/g, (url) => {
-            return '<a class="c-action-link" href="' + url + '" target="_blank">' + url + '</a>';
-          });
-          const messageFront: MessageUiModel = {
-            content: contentTemp,
-            subject: SubjectEnum.CLIENT,
-            type: TypeFileEnum.TEXT,
-            hour: new Date(),
-            mediaUrl: null,
-            mimeType: null
-          };
-          this.store.dispatch(ConversationAction.sendMessage({message: {messageUi: messageFront, messageDto: resp}}));
-          this.resetFeatures();
-        });
-      }
-    } else {
-      if ($event.which === 13) {
+        const messageFront: MessageUiModel = {
+          originalContent: value.sendMessage,
+          content: this.format.messageFormat(value.sendMessage),
+          subject: SubjectEnum.CLIENT,
+          type: TypeFileEnum.TEXT,
+          hour: new Date(),
+          mediaUrl: null,
+          mimeType: null
+        };
+        this.store.dispatch(ConversationAction.sendMessage({message: {messageUi: messageFront, messageDto: this.loginResp}}));
         this.resetFeatures();
-        $event.preventDefault();
-        return false;
-      }
-    }
-  }
-
-  public keypress(value: any, $event: any): boolean {
-    if (value.sendMessage === undefined || value.sendMessage === '' || value.sendMessage === null) {
-      if ($event.which === 13) {
-        this.resetFeatures();
-        $event.preventDefault();
-        return false;
       }
     }
   }
@@ -149,6 +157,27 @@ export class InputSendComponent implements OnInit, AfterViewInit {
     this.form.controls.uploadInput.reset();
   }
 
+  keydownEvent(value: any, $event: any) {
+    if ($event.keyCode === 13) {
+      this.sendMessage(value);
+      $event.preventDefault();
+    }
+  }
+
+  addEmoji($event) {
+    this.displayEmoji = !this.displayEmoji;
+    // tslint:disable-next-line:max-line-length
+    this.form.controls.sendMessage.setValue(((this.form.controls.sendMessage.value == null) ? '' : this.form.controls.sendMessage.value) + $event.emoji.native);
+    this.sendElement.nativeElement.focus();
+  }
+
+  displayPanelEmoji() {
+    this.displayEmoji = !this.displayEmoji;
+    if (!this.displayEmoji) {
+      this.sendElement.nativeElement.focus();
+    }
+  }
+
   private eventScroll(): void {
     const findMessageBox = document.getElementsByClassName('widget-send-message-box-js');
     if (findMessageBox.length) {
@@ -157,12 +186,17 @@ export class InputSendComponent implements OnInit, AfterViewInit {
       const chatMessages: any = document.getElementsByClassName('widget-message-content-js')[0];
       let sendMessageBoxHeight = (sendMessageBox.scrollHeight - 16) + 'px';
       chatMessages.style.marginBottom = sendMessageBoxHeight;
-      if (inputMessage !== null) {
-        inputMessage.style.height = '1px';
-        inputMessage.style.height = (2 + inputMessage.scrollHeight) + 'px';
-        sendMessageBoxHeight = (sendMessageBox.scrollHeight - 16) + 'px';
-        chatMessages.style.marginBottom = '67px';
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+      inputMessage.style.height = '1px';
+      inputMessage.style.height = (2 + inputMessage.scrollHeight) + 'px';
+      sendMessageBoxHeight = (sendMessageBox.scrollHeight - 16) + 'px';
+      chatMessages.style.marginBottom = sendMessageBoxHeight;
+      if (inputMessage) {
+        inputMessage.addEventListener('keyup', () => {
+          inputMessage.style.height = '1px';
+          inputMessage.style.height = (2 + inputMessage.scrollHeight) + 'px';
+          sendMessageBoxHeight = (sendMessageBox.scrollHeight - 16) + 'px';
+          chatMessages.style.marginBottom = sendMessageBoxHeight;
+        });
       }
     }
   }
@@ -173,29 +207,32 @@ export class InputSendComponent implements OnInit, AfterViewInit {
     this.sendFile = null;
     this.typeFile = null;
     this.sendElement.nativeElement.focus();
-    this.eventScroll();
   }
 
   private previewImgSelector(mediaUrl: string,
                              mimeType: string): string {
-    let mediaUrlType = '';
-    if (mimeType.match(/application\/*/) !== null) {
-      const ext = mimeType.substring(mimeType.lastIndexOf('/') + 1);
-      switch (ext) {
-        case 'pdf': {
-          this.typeFile = 'pdf';
-          this.imgURL = PreviewAttachmentEnum.PREVIEW_PDF;
-          mediaUrlType = PreviewAttachmentEnum.PREVIEW_TINY_PDF;
-          break;
-        }
-        default: {
-          mediaUrlType = '';
-          break;
-        }
+    const result = this.format.attachmentFile(mediaUrl, mimeType);
+    this.typeFile = result.typeFile;
+    this.imgURL = result.imgURL;
+    return result.mediaUrlType;
+  }
+
+  private eventScrollForTextArea() {
+    const findMessageBox = document.getElementsByClassName('widget-send-message-box-js');
+    if (findMessageBox.length) {
+      const sendMessageBox = findMessageBox[0];
+      const inputMessage: any = sendMessageBox.getElementsByClassName('widget-message-input-js')[0];
+      const chatMessages: any = document.getElementsByClassName('widget-message-content-js')[0];
+      let sendMessageBoxHeight = (sendMessageBox.scrollHeight - 16) + 'px';
+      chatMessages.style.marginBottom = sendMessageBoxHeight;
+      if (inputMessage) {
+        inputMessage.addEventListener('keyup', () => {
+          inputMessage.style.height = '1px';
+          inputMessage.style.height = (2 + inputMessage.scrollHeight) + 'px';
+          sendMessageBoxHeight = (sendMessageBox.scrollHeight - 16) + 'px';
+          chatMessages.style.marginBottom = sendMessageBoxHeight;
+        });
       }
-    } else if (mimeType.match(/image\/*/) !== null) {
-      mediaUrlType = mediaUrl;
     }
-    return mediaUrlType;
   }
 }

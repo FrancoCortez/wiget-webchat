@@ -1,31 +1,53 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {ConversationAction, ConversationSelector, RootStoreState} from '../../store';
-import {SocketClient} from '../../client/socket.client';
+import {ConversationSelector, RootStoreState} from '../../store';
 import {MessageUiModel} from '../../models/ui-model/message.ui.model';
 import {filter} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-widget-chat',
   templateUrl: './widget-chat.component.html',
-  styleUrls: []
+  styleUrls: [],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WidgetChatComponent implements OnInit, AfterViewInit {
+export class WidgetChatComponent implements OnInit, OnDestroy {
 
   public conversation: MessageUiModel[] = [];
+  @ViewChildren('elementConversation') elementAgent: QueryList<any>;
+  private conversationObserve: Subscription = new Subscription();
 
-  constructor(private readonly store: Store<RootStoreState.AppState>) {
-    this.store.dispatch(ConversationAction.getMessage());
+  constructor(private readonly store: Store<RootStoreState.AppState>,
+              private changeDetector: ChangeDetectorRef) {
   }
 
   ngOnInit() {
-    this.store.pipe(select(ConversationSelector.selectConversations))
-      .pipe(filter(fill => fill.length !== 0))
-      .subscribe(resp => this.conversation = resp);
+    this.conversationObserve =
+      this.store.pipe(select(ConversationSelector.selectConversations))
+        .pipe(filter(fill => fill.length !== 0))
+        .subscribe(resp => {
+          this.conversation = resp;
+          this.changeDetector.detectChanges();
+          this.changeDetector.markForCheck();
+          this.elementAgent.last.nativeElement.scrollIntoView();
+          this.eventScroll();
+        });
   }
 
+  ngOnDestroy(): void {
+    this.conversationObserve.unsubscribe();
+  }
 
-  ngAfterViewInit(): void {
+  goToLink(url: string) {
+    window.open(url, '_blank');
+  }
+
+  loadImage($event) {
+    this.elementAgent.last.nativeElement.scrollIntoView();
+    this.eventScroll();
+  }
+
+  private eventScroll(): void {
     const findMessageBox = document.getElementsByClassName('widget-send-message-box-js');
     if (findMessageBox.length) {
       const sendMessageBox = findMessageBox[0];
@@ -33,7 +55,11 @@ export class WidgetChatComponent implements OnInit, AfterViewInit {
       const chatMessages: any = document.getElementsByClassName('widget-message-content-js')[0];
       let sendMessageBoxHeight = (sendMessageBox.scrollHeight - 16) + 'px';
       chatMessages.style.marginBottom = sendMessageBoxHeight;
-      if (inputMessage !== null) {
+      inputMessage.style.height = '1px';
+      inputMessage.style.height = (2 + inputMessage.scrollHeight) + 'px';
+      sendMessageBoxHeight = (sendMessageBox.scrollHeight - 16) + 'px';
+      chatMessages.style.marginBottom = sendMessageBoxHeight;
+      if (inputMessage) {
         inputMessage.addEventListener('keyup', () => {
           inputMessage.style.height = '1px';
           inputMessage.style.height = (2 + inputMessage.scrollHeight) + 'px';
@@ -42,9 +68,6 @@ export class WidgetChatComponent implements OnInit, AfterViewInit {
         });
       }
     }
-  }
-  goToLink(url: string) {
-    window.open(url, '_blank');
   }
 
 }

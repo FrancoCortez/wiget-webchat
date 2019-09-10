@@ -1,3 +1,6 @@
 export enum MediaTypeEnum {
-  IMAGES = 'IMAGES'
+  IMAGES = 'image',
+  APPLICATION = 'application',
+  TEXT = 'text',
+  AUDIO = 'audio'
 }

@@ -5,15 +5,15 @@
         <span class="icon-megaphone"></span>
         Mensajes con Sonido
       </div>
-
       <div class="chattigo-widget-list-options__right-side">
         <div class="chattigo-widget-list-options__switch">
-          <input checked class="c-switch" id="switche" type="checkbox">
-          <label for="switche"></label>
+          <input (change)="soundChange($event)" [checked]="soundActive" class="c-switch" id="switche" type="checkbox">
+          <label [ngStyle]="{'background-image': (soundActive === true) ? configPanel.switchColor: unableColor}"
+                 for="switche"></label>
         </div>
       </div>
     </li>
   </ul>
 
-  <a (click)="closeChat()" class="chattigo-widget-logout">Terminar chat</a>
+  <a (click)="closeChat()" [ngStyle]="{'color': configPanel.linkColor}" class="chattigo-widget-logout">Terminar chat</a>
 </div>

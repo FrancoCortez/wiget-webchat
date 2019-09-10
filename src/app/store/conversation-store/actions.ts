@@ -18,3 +18,7 @@ export const leaveChatSuccess = createAction('[leaveChatSuccess] leave chat succ
 export const leaveChatFailure = createAction('[leaveChatFailure] leave chat failure', props<{ payload: any }>());
 
 export const cleanConversation = createAction('[cleanConversation] clean conversation');
+
+export const activateSound = createAction('[activateSound] activate sound', props<{ payload: boolean }>());
+
+export const addAgentMessage = createAction('[addAgentMessage] addAgentMessage', props<{ payload: string }>());

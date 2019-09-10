@@ -6,21 +6,14 @@ const featureReducer = createReducer(
   initialState,
   on(featureActions.open, (state, {payload}) => ({
     ...state,
-    isLoading: true,
-    isLoader: false,
-    open: payload.valueOf()
+    open: payload
   })),
   on(featureActions.openSuccess, (state) => ({
     ...state,
-    isLoading: false,
-    isLoader: true,
   })),
   on(featureActions.openFailure, (state, {payload}) => ({
     ...state,
-    isLoading: false,
-    isLoader: false,
     error: payload,
-    open: false
   })),
 );
 

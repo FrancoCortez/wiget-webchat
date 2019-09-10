@@ -9,7 +9,7 @@ import {InitWebChatStoreEffects} from './effects';
   declarations: [],
   imports: [
     CommonModule,
-    StoreModule.forFeature('init-web-chat', reducer),
+    StoreModule.forFeature('initWebChat', reducer),
     EffectsModule.forFeature([InitWebChatStoreEffects])
   ]
 })

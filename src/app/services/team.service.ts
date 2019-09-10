@@ -1,9 +1,6 @@
 import {Injectable} from '@angular/core';
-import {SocketClient} from '../client/socket.client';
-import {MessageDto} from '../models/message/message.dto';
 import {Observable, throwError} from 'rxjs';
-import {catchError, concatAll, map} from 'rxjs/operators';
-import {HttpClient} from '@angular/common/http';
+import {catchError, map} from 'rxjs/operators';
 import {TeamClient} from '../client/team.client';
 import {TeamUiModel} from '../models/ui-model/team.ui-model';
 

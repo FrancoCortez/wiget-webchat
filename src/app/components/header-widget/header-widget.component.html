@@ -1,12 +1,16 @@
 <div class="chattigo-widget-header" style="margin-bottom: 0 !important;">
-  <div class="chattigo-widget-header__background"></div>
+  <div [ngStyle]="{'background-image': caption.headerBackgroundColor}" class="chattigo-widget-header__background"></div>
   <img [src]="caption.src" class="chattigo-widget-header__image"/>
   <div class="chattigo-widget-header__agent-info">
-    <label class="chattigo-widget-header__agent-info--name">{{caption.title}}</label>
-    <span class="chattigo-widget-header__agent-info--status">{{caption.caption}}</span>
+    <label [ngStyle]="{'color': caption.headerFontColor}"
+           class="chattigo-widget-header__agent-info--name">{{caption.title}}</label>
+    <span [ngStyle]="{'color': caption.headerFontColor}"
+          class="chattigo-widget-header__agent-info--status">{{caption.caption}}</span>
   </div>
   <div class="chattigo-widget-header__actions">
-    <a (click)="toggleConfig()" class="chattigo-widget-header__actions--item"><span class="icon-config"></span></a>
-    <a (click)="toogleClose()" class="chattigo-widget-header__actions--item"><span class="icon-arrow-down"></span></a>
+    <a (click)="toggleConfig()" class="chattigo-widget-header__actions--item"><span [ngStyle]="{'color': caption.headerFontColor}"
+                                                                                    class="icon-config"></span></a>
+    <a (click)="toogleClose()" class="chattigo-widget-header__actions--item"><span [ngStyle]="{'color': caption.headerFontColor}"
+                                                                                   class="icon-arrow-down"></span></a>
   </div>
 </div>

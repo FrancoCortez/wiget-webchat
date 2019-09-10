@@ -1,1 +1,2 @@
-<button [disabled]="!buttonConfig.enabled" class="c-button">{{buttonConfig.label}}</button>
+<button [disabled]="!buttonConfig.enabled" [ngStyle]="{'background-image': buttonConfig.colorButtonBg}"
+        class="c-button">{{buttonConfig.label}}</button>

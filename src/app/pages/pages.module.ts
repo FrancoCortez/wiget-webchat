@@ -6,24 +6,30 @@ import {WidgetConfigComponent} from './widget-config/widget-config.component';
 import {WidgetChatComponent} from './widget-chat/widget-chat.component';
 import {ContainerWidgetComponent} from './container-widget/container-widget.component';
 import {ReactiveFormsModule} from '@angular/forms';
-
+import {ValidateHtmlPipe} from '../validation/validate-html.pipe';
+import {PickerModule} from '@ctrl/ngx-emoji-mart';
+import {EmojiModule} from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 @NgModule({
   declarations: [
     LoginComponent,
     WidgetConfigComponent,
     WidgetChatComponent,
-    ContainerWidgetComponent
+    ContainerWidgetComponent,
+    ValidateHtmlPipe
   ],
   imports: [
     CommonModule,
     ComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PickerModule,
+    EmojiModule
   ],
   exports: [
     LoginComponent,
     WidgetConfigComponent,
-    ContainerWidgetComponent
+    ContainerWidgetComponent,
+    ValidateHtmlPipe
   ]
 })
 export class PagesModule {

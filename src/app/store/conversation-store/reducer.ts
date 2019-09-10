@@ -48,6 +48,18 @@ const featureReducer = createReducer(
     isLoading: false,
     isLoader: false,
     error: payload
+  })),
+  on(featureActions.activateSound, (state, {payload}) => ({
+    ...state,
+    isLoading: false,
+    isLoader: false,
+    config: {...state.config, soundActive: payload}
+  })),
+  on(featureActions.addAgentMessage, (state, {payload}) => ({
+    ...state,
+    isLoading: false,
+    isLoader: false,
+    agentName: payload
   }))
 );
 

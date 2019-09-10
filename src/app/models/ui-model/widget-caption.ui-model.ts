@@ -4,4 +4,5 @@ export interface WidgetCaptionUiModel {
   headerBackgroundColor?: string;
   headerFontColor?: string;
   src?: string;
+  agentNameEnabled?: boolean;
 }

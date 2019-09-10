@@ -12,26 +12,19 @@ export class SocketClient {
   constructor(private readonly socket: Socket) {
   }
 
-  private connectSocket() {
-    this.socket.connect();
-  }
-  private disconnectSocket() {
-    this.socket.disconnect();
-  }
   public join(msisdn: string): Observable<string> {
-    this.connectSocket();
+    // this.connectSocket();
     this.socket.emit('join-chat', msisdn);
     return of('resolved');
   }
 
   public sendMessage(message: MessageDto): Observable<string> {
-    this.connectSocket();
+    // this.connectSocket();
     this.socket.emit('sendMessage', message);
     return of('resolved');
   }
 
   public getMessage(): Observable<MessageDto> {
-    this.connectSocket();
     return this.socket.fromEvent<MessageDto>('newMessage').pipe(
       filter(fill => fill !== undefined),
       map(data => data)
@@ -39,8 +32,17 @@ export class SocketClient {
   }
 
   public leave() {
-    this.socket.emit('leave-chat', null);
+    this.socket.emit('leave-chat');
     this.disconnectSocket();
     return of('resolved');
+  }
+
+  private connectSocket() {
+    this.socket.connect();
+  }
+
+  private disconnectSocket() {
+    this.socket.disconnect();
+    this.socket.removeAllListeners();
   }
 }

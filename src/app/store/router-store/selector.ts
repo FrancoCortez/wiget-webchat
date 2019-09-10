@@ -1,9 +1,9 @@
-import {createFeatureSelector, createSelector} from '@ngrx/store';
+import {createSelector} from '@ngrx/store';
 import {State} from './state';
 import {AppState} from '../root-state';
 
 // export const selectorRouter = createFeatureSelector<AppState , State>('router');
-const selector =  (state: AppState) => state.router;
+const selector = (state: AppState) => state.router;
 
 export const selectLoginOpen = createSelector(
   selector,

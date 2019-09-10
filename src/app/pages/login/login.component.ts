@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   @ViewChild(InputComponent, {static: false}) inputComponentReferent;
 
   form: FormGroup;
+  headerColor: string;
 
   constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
@@ -29,8 +30,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.store.pipe(select(InitWebChatSelector.selectIsOpen))
-      .pipe(filter(fill => fill !== null && fill !== undefined))
+      // .pipe(filter(fill => fill !== null && fill !== undefined))
       .subscribe(resp => this.hidden = !resp);
+    this.store.pipe(select(ConfigSelector.selectConfig)).subscribe(resp => {
+      this.headerColor = resp.caption.headerBackgroundColor;
+    });
   }
 
   public login() {

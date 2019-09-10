@@ -31,16 +31,18 @@ export class AppComponent implements OnInit {
     const setting: any = {
       header_text: 'Web Chat', // Configure
       header_status: 'En linea', // Configure
+      agent_name_enabled: true, // TODO NEW
       // TODO NEW
-      logo: 'https://cdn.chattigo.com/assets/img/isotipo-grey.svg', // Configure
+      // logo: 'https://cdn.chattigo.com/assets/img/isotipo-grey.svg', // Configure
+      logo: 'https://www.santotomas.cl/wp-content/themes/institucional/images/logos/logo-st.svg',
       // TODO NEW
       caption_title: 'Inicia una conversación', // Configure
       // TODO NEW
-      caption_title_color: '#1f1f1f', // Configure
+      caption_title_color: '#424243', // Configure
       // TODO NEW
       caption_subtitle: 'El equipo usualmente responde en pocas horas.', // Configure
       // TODO NEW
-      caption_subtitle_color: '#1f1f1f', // Configure
+      caption_subtitle_color: '#424243', // Configure
       // Configure
       // tslint:disable-next-line:max-line-length
       welcome_text: 'Bienvenido al servicio de web chat de nuestra página.',
@@ -65,19 +67,19 @@ export class AppComponent implements OnInit {
         {label: 'RUT', required: true} */
       ],
       send_color: '#cb1e74',
-      header_background_color: '#cb1e74',  // Configure
-      header_font_color: '#FFFFFF',  // Configure
+      header_background_color: '#004f45',  // Configure
+      header_font_color: '#ffffff',  // Configure
       locale: 'es',
       name_field: 'Nombre', // Configure
       user_field: 'RUT', // Configure
       // TODO NEW
       button_enabled: true, // Configure
       button_login_color: 'white', // Configure
-      button_login_bg: 'rgb(223, 141, 51)', // Configure
+      button_login_bg: '#004f45', // Configure
       login_text: 'Iniciar sesión', // Configure
-      field_font_color: '#525252', // Configure
-      welcome_color: '#525252', // Configure
-      subtitle_color: '#525252', // Configure
+      field_font_color: '#424243', // Configure
+      welcome_color: '#ffffff', // Configure
+      subtitle_color: '#ffffff', // Configure
       preserve_history: false, // Configure
       bg_menu: '#1f1f1f', // Configure
       geo_active: true, // Configure
@@ -87,31 +89,39 @@ export class AppComponent implements OnInit {
       button: {
         enabled: setting.button_enabled,
         label: setting.login_text,
-        colorText: setting.button_login_color,
-        colorButtonBg: setting.button_login_bg
+        // colorText: setting.button_login_color,
+        colorText: `${setting.button_login_color}`,
+        // colorButtonBg: setting.button_login_bg
+        colorButtonBg: `linear-gradient(140deg, ${setting.button_login_bg} 40%, #000 200%)`
       },
       header: {
         title: setting.welcome_text,
         subtitle: setting.subtitle_text,
         logo: setting.logo,
-        titleColor: setting.welcome_color,
-        subtitleColor: setting.subtitle_color,
+        titleColor: `${setting.welcome_color}`,
+        subtitleColor: `${setting.subtitle_color}`,
       },
       caption: {
         caption: setting.header_status,
         title: setting.header_text,
-        headerBackgroundColor: setting.header_background_color,
-        headerFontColor: setting.header_font_color
+        // tslint:disable-next-line:max-line-length
+        headerBackgroundColor: `url(https://cdn.chattigo.com/assets/img/logo-wing.svg), linear-gradient(140deg, ${setting.header_background_color} 40%, #000 200%)`,
+        headerFontColor: `${setting.header_font_color}`,
+        agentNameEnabled: setting.agent_name_enabled,
       },
       captionLogin: {
         title: setting.caption_title,
         caption: setting.caption_subtitle,
-        titleColor: setting.caption_title_color,
-        captionColor: setting.caption_subtitle_color
+        titleColor: `${setting.caption_title_color}`,
+        captionColor: `${setting.caption_subtitle_color}`
       },
       messageSend: {
         messagePlaceholder: setting.message_placeholder,
         sendButtonColor: setting.send_color
+      },
+      configPanel: {
+        switchColor: `linear-gradient(140deg, ${setting.button_login_bg} 40%, #000 200%)`,
+        linkColor: `#004f45`,
       },
       preserveHistory: setting.preserve_history,
       geoActive: setting.geo_active,

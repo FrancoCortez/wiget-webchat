@@ -4,6 +4,7 @@ import {HeaderUiModel} from './header.ui-model';
 import {WidgetCaptionUiModel} from './widget-caption.ui-model';
 import {CaptionLoginUiModel} from './caption-login.ui-model';
 import {MessageSendUiModel} from './message-send.ui-model';
+import {ConfigPanelUiModel} from './config-panel.ui-model';
 
 export interface ConfigUiModel {
   input?: InputUiModel[];
@@ -12,6 +13,7 @@ export interface ConfigUiModel {
   captionLogin?: CaptionLoginUiModel;
   caption?: WidgetCaptionUiModel;
   messageSend?: MessageSendUiModel;
+  configPanel?: ConfigPanelUiModel;
   preserveHistory?: boolean;
   bgMenu?: string;
   geoActive?: boolean;

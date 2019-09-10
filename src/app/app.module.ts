@@ -11,6 +11,7 @@ import {ComponentsModule} from './components/components.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {SocketIoConfig, SocketIoModule} from 'ngx-socket-io';
 import {HttpClientModule} from '@angular/common/http';
+import {PickerModule} from '@ctrl/ngx-emoji-mart';
 
 const config: SocketIoConfig = {
   url: 'https://kops.chattigo.com',
@@ -29,12 +30,14 @@ const config: SocketIoConfig = {
     ComponentsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    PickerModule
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'}
   ],
   bootstrap: [AppComponent],
+  exports: [],
   entryComponents: [
     AppComponent
   ]

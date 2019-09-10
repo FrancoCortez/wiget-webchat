@@ -1,15 +1,17 @@
 <form [formGroup]="form">
   <span *ngFor="let item of inputConfig; index as i">
-    <label class="c-input-label">{{item.label}} <span *ngIf="item.required">*</span></label>
-    <input [placeholder]="item.placeholder"
-           class="c-input"
-           [ngClass]="{'c-input--error': form.getError('messageValidation', [('input_' + i)]) || form.getError('required', [('input_' + i)])}"
-           formControlName="input_{{i}}"
-           type="text"/>
-    <p class="c-input__error-message" *ngIf="form.getError('messageValidation', [('input_' + i)]) as error">
+    <label [ngStyle]="{'color': item.fontColor}" class="c-input-label">{{item.label}} <span
+      *ngIf="item.required">*</span></label>
+    <input
+      [ngClass]="{'c-input--error': form.getError('messageValidation', [('input_' + i)]) || form.getError('required', [('input_' + i)])}"
+      [placeholder]="item.placeholder"
+      class="c-input"
+      formControlName="input_{{i}}"
+      type="text"/>
+    <p *ngIf="form.getError('messageValidation', [('input_' + i)]) as error" class="c-input__error-message">
       {{ error }}
     </p>
-    <p class="c-input__error-message" *ngIf="form.getError('required', [('input_' + i)]) as error">
+    <p *ngIf="form.getError('required', [('input_' + i)]) as error" class="c-input__error-message">
       El campo {{item.label}} es obligatorio
     </p>
   </span>

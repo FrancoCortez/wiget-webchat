@@ -15,7 +15,7 @@ export class HeaderWidgetComponent implements OnInit {
   public hidden = false;
   private configToggle = false;
   private widgetToggle = true;
-  private caption: WidgetCaptionUiModel;
+  public caption: WidgetCaptionUiModel;
 
   constructor(private readonly store: Store<RootStoreState.AppState>) {
   }

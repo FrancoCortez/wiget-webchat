@@ -13,7 +13,7 @@ import {TeamService} from '../../services/team.service';
 export class TeamComponent implements OnInit {
 
   teamList: TeamUiModel[] = [];
-  did: string = 'atencionChattigo@WC';
+  did: string = 'santotomas@WC';
 
   constructor(private readonly store: Store<RootStoreState.AppState>, public teamService: TeamService) {
   }

@@ -9,9 +9,10 @@ const concat = require('concat');
     //'./dist/webchat-angular/polyfills-es2015.js',
     //'./dist/webchat-angular/scripts-es5.js',
     './dist/webchat-angular/main-es5.js',
+    './dist/webchat-angular/styles-es5.js',
     //'./dist/webchat-angular/main-es2015.js'
-    './dist/webchat-angular/3-es5.js'
+    // './dist/webchat-angular/3-es5.js'
   ];
   await fs.ensureDir('elements');
-  await concat(files, 'elements/aks-my-medium.js');
+  await concat(files, 'dist/webchat-angular/aks-my-medium.js');
 })();

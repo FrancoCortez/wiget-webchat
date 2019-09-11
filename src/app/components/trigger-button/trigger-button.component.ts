@@ -39,7 +39,7 @@ export class TriggerButtonComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  private onResize(event) {
+  public onResize(event) {
     if (event.target.innerWidth < 451) {
       this.mobileHidden = this.hidden;
     } else {

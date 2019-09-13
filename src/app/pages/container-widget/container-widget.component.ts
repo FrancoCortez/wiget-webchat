@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {ConversationAction, InitWebChatSelector, RootStoreState, RouterSelector} from '../../store';
+import {ConfigSelector, ConversationAction, InitWebChatSelector, RootStoreState, RouterSelector} from '../../store';
 import {filter} from 'rxjs/operators';
 
 @Component({
@@ -19,6 +19,12 @@ export class ContainerWidgetComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
+      .subscribe(resp => {
+        this.store.subscribe(state => {
+          localStorage.setItem('state', JSON.stringify(state));
+        });
+      });
     this.store.pipe(select(InitWebChatSelector.selectIsOpen))
       .subscribe(resp => this.hidden = !resp);
     this.store.pipe(select(RouterSelector.selectWidgetOpen))

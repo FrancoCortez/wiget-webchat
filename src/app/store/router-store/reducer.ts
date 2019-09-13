@@ -21,6 +21,12 @@ const featureReducer = createReducer(
     login: false,
     widget: false,
     config: true
+  })),
+  on(featureActions.loadRouter, (state, {payload}) => ({
+    ...state,
+    login: payload.login,
+    widget: payload.widget,
+    config: payload.config
   }))
 );
 

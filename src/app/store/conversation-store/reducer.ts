@@ -31,7 +31,8 @@ const featureReducer = createReducer(
     ...state,
     isLoading: false,
     isLoader: false,
-    conversation: []
+    conversation: [],
+    agentName: ''
   })),
   on(featureActions.leaveChat, (state) => ({
     ...state,
@@ -60,6 +61,15 @@ const featureReducer = createReducer(
     isLoading: false,
     isLoader: false,
     agentName: payload
+  }))
+  ,
+  on(featureActions.loadMessages, (state, {payload}) => ({
+    ...state,
+    isLoading: payload.isLoading,
+    isLoader: payload.isLoader,
+    agentName: payload.agentName,
+    config: payload.config,
+    conversation: payload.conversation
   }))
 );
 

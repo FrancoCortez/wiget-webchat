@@ -13,18 +13,19 @@ export class SocketClient {
   }
 
   public join(msisdn: string): Observable<string> {
-    // this.connectSocket();
+    this.connectSocket();
     this.socket.emit('join-chat', msisdn);
     return of('resolved');
   }
 
   public sendMessage(message: MessageDto): Observable<string> {
-    // this.connectSocket();
+    this.connectSocket();
     this.socket.emit('sendMessage', message);
     return of('resolved');
   }
 
   public getMessage(): Observable<MessageDto> {
+    this.connectSocket();
     return this.socket.fromEvent<MessageDto>('newMessage').pipe(
       filter(fill => fill !== undefined),
       map(data => data)
@@ -42,7 +43,7 @@ export class SocketClient {
   }
 
   private disconnectSocket() {
-    this.socket.disconnect();
+    this.socket.disconnect('all');
     this.socket.removeAllListeners();
   }
 }

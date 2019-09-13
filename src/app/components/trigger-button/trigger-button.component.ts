@@ -2,7 +2,7 @@ import {Component, HostListener, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ConfigSelector, InitWebChatAction, RootStoreState} from '../../store';
 import {selectIsOpen} from '../../store/init-web-chat-store/selector';
-import {filter, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-trigger-button',
@@ -13,6 +13,8 @@ export class TriggerButtonComponent implements OnInit {
 
   public hidden = false;
   public mobileHidden = false;
+  public triggerHidden = false;
+
   backgroundColor = '';
 
   constructor(private readonly store: Store<RootStoreState.AppState>) {
@@ -46,4 +48,5 @@ export class TriggerButtonComponent implements OnInit {
       this.mobileHidden = true;
     }
   }
+
 }

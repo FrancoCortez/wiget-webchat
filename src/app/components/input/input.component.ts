@@ -32,6 +32,9 @@ export class InputComponent implements OnInit {
             (row.validation !== undefined) ? validationGeneric(row.validation) : validationOfNull,
             (row.required !== undefined && row.required !== false && row.required !== null) ? Validators.required : validationOfNull,
           ]));
+        if (row.choices !== undefined && row.choices.length > 0) {
+          this.form.controls[row.id].setValue(row.choices[0]);
+        }
         count++;
       });
       this.inputConfig = resp.input;

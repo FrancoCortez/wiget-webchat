@@ -28,6 +28,12 @@ const featureReducer = createReducer(
     isLoading: false,
     isLoader: false,
     login: null
+  })),
+  on(featureActions.loadLogin, (state, {payload}) => ({
+    ...state,
+    isLoading: payload.isLoading,
+    isLoader: payload.isLoader,
+    login: payload.login
   }))
 );
 

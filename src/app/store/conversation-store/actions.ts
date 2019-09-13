@@ -22,3 +22,5 @@ export const cleanConversation = createAction('[cleanConversation] clean convers
 export const activateSound = createAction('[activateSound] activate sound', props<{ payload: boolean }>());
 
 export const addAgentMessage = createAction('[addAgentMessage] addAgentMessage', props<{ payload: string }>());
+
+export const loadMessages = createAction('[loaddMessages] load messages', props<{ payload: any }>());

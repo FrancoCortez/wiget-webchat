@@ -8,4 +8,5 @@ export interface InputUiModel {
   nameField?: boolean;
   fontColor?: string;
   errorText?: string[];
+  choices?: string[];
 }

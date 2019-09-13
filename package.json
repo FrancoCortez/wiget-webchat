@@ -1,6 +1,6 @@
 {
   "name": "webchat-angular",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,7 +8,6 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:elements": "ng build --prod --output-hashing none && node build-script.js",
     "build:elementss": "ng build --prod --output-hashing none --build-optimizer true && node build-script.js"
   },
   "private": true,
@@ -31,7 +30,8 @@
     "rxjs": "~6.5.2",
     "tslib": "^1.9.0",
     "uuid": "^3.3.3",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "document-register-element": "1.8.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.802.2",

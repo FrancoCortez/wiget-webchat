@@ -12,10 +12,10 @@ import {filter} from 'rxjs/operators';
 })
 export class HeaderWidgetComponent implements OnInit {
 
-  public hidden = false;
-  private configToggle = false;
-  private widgetToggle = true;
-  public caption: WidgetCaptionUiModel;
+  hidden = false;
+  configToggle = false;
+  widgetToggle = true;
+  caption: WidgetCaptionUiModel;
 
   constructor(private readonly store: Store<RootStoreState.AppState>) {
   }

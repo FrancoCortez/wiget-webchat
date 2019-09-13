@@ -27,4 +27,8 @@ export class LoginService {
       concatAll()
     );
   }
+
+  public reconnect(msisdn: string): Observable<any> {
+    return this.socket.join(msisdn);
+  }
 }

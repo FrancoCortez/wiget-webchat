@@ -13,3 +13,13 @@ export const selectIsOpen = createSelector(
     return state.open;
   }
 );
+
+export const selectIsTrigger = createSelector(
+  selectInitWebChatState,
+  (state: State): boolean => {
+    if (state !== undefined && state !== null) {
+      return state.trigger;
+    }
+    return state.trigger;
+  }
+);

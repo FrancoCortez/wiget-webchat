@@ -36,7 +36,6 @@ const config: SocketIoConfig = {
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'}
   ],
-  bootstrap: [AppComponent],
   exports: [],
   entryComponents: [
     AppComponent
@@ -48,6 +47,6 @@ export class AppModule {
 
   ngDoBootstrap() {
     const el = createCustomElement(AppComponent, {injector: this.injector});
-    customElements.define('app-root', el);
+    customElements.define('app-widget-root', el);
   }
 }

@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ConfigSelector, InitWebChatAction, InitWebChatSelector, LoginAction, RootStoreState} from '../../store';
 import {InputComponent} from '../../components/input/input.component';
 import {FormGroup} from '@angular/forms';
 import {LoginDto} from '../../models/login/login.dto';
-import {filter, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {MessageDto} from '../../models/message/message.dto';
 import {v4 as uuid} from 'uuid';
 
@@ -13,7 +13,7 @@ import {v4 as uuid} from 'uuid';
   templateUrl: './login.component.html',
   styleUrls: []
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements OnInit {
 
   public hidden = false;
   @ViewChild(InputComponent, {static: false}) inputComponentReferent;
@@ -24,14 +24,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
   constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 
-  ngAfterViewInit(): void {
-
-  }
-
   ngOnInit() {
     this.store.pipe(select(InitWebChatSelector.selectIsOpen))
-      // .pipe(filter(fill => fill !== null && fill !== undefined))
-      .subscribe(resp => this.hidden = !resp);
+      .subscribe(resp => {
+        this.hidden = !resp;
+      });
     this.store.pipe(select(ConfigSelector.selectConfig)).subscribe(resp => {
       this.headerColor = resp.caption.headerBackgroundColor;
     });

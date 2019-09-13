@@ -15,6 +15,14 @@ const featureReducer = createReducer(
     ...state,
     error: payload,
   })),
+  on(featureActions.loadInitWeb, (state, {payload}) => ({
+    ...state,
+    open: payload.open
+  })),
+  on(featureActions.triggerInit, (state, {payload}) => ({
+    ...state,
+    trigger: payload
+  })),
 );
 
 export function reducer(state: State | undefined, action: Action) {

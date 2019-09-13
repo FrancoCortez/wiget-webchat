@@ -2,12 +2,15 @@
   <span *ngFor="let item of inputConfig; index as i">
     <label [ngStyle]="{'color': item.fontColor}" class="c-input-label">{{item.label}} <span
       *ngIf="item.required">*</span></label>
-    <input
-      [ngClass]="{'c-input--error': form.getError('messageValidation', [('input_' + i)]) || form.getError('required', [('input_' + i)])}"
-      [placeholder]="item.placeholder"
-      class="c-input"
-      formControlName="input_{{i}}"
-      type="text"/>
+    <select *ngIf="item.choices !== undefined && item.choices.length > 0" formControlName="input_{{i}}">
+    <option *ngFor="let sel of item.choices">{{sel}}</option>
+  </select>
+    <input *ngIf="item.choices === null || item.choices === undefined "
+           [ngClass]="{'c-input--error': form.getError('messageValidation', [('input_' + i)]) || form.getError('required', [('input_' + i)])}"
+           [placeholder]="item.placeholder"
+           class="c-input"
+           formControlName="input_{{i}}"
+           type="text"/>
     <p *ngIf="form.getError('messageValidation', [('input_' + i)]) as error" class="c-input__error-message">
       {{ error }}
     </p>

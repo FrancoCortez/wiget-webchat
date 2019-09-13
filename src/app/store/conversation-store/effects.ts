@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as featureActions from './actions';
 import {Observable, of} from 'rxjs';
-import {catchError, map, mergeMap} from 'rxjs/operators';
+import {catchError, filter, map, mergeMap} from 'rxjs/operators';
 import {Action, select, Store} from '@ngrx/store';
 import {MessageService} from '../../services/message.service';
-import {ConversationSelector, LoginAction, RootStoreState, RouterAction} from '../index';
+import {ConfigSelector, ConversationSelector, InitWebChatAction, LoginAction, RootStoreState, RouterAction} from '../index';
 
 @Injectable()
 export class ConversationStoreEffects {
@@ -23,6 +23,7 @@ export class ConversationStoreEffects {
     })
     )
   );
+
   leaveChat$: Observable<Action> = createEffect(() => this.actions$.pipe(
     ofType(featureActions.leaveChat),
     mergeMap(() => this.messageService.leaveChat()
@@ -31,6 +32,15 @@ export class ConversationStoreEffects {
           this.store.dispatch(RouterAction.loginOpen());
           this.store.dispatch(LoginAction.leaveLogin());
           this.store.dispatch(featureActions.cleanConversation());
+          localStorage.removeItem('state');
+          localStorage.clear();
+          this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
+          this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
+            .subscribe(resp => {
+              this.store.subscribe(state => {
+                localStorage.setItem('state', JSON.stringify(state));
+              });
+            });
           return featureActions.leaveChatSuccess();
         }),
         catchError(error => of(featureActions.leaveChatFailure({payload: error})))

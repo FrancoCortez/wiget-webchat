@@ -81,7 +81,11 @@
     };
     widget = document.querySelector('app-widget-root');
     widget.setAttribute('setting', JSON.stringify(config, replacer, 2));
+
     document.getElementById('idButton').addEventListener('click', () => {
+
+    });
+    document.addEventListener("DOMContentLoaded", function (event) {
         widget.init();
     });
 

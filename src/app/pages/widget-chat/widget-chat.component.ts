@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChildren
+} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ConversationSelector, RootStoreState} from '../../store';
 import {MessageUiModel} from '../../models/ui-model/message.ui.model';
@@ -11,7 +20,7 @@ import {Subscription} from 'rxjs';
   styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WidgetChatComponent implements OnInit, OnDestroy {
+export class WidgetChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public conversation: MessageUiModel[] = [];
   @ViewChildren('elementConversation') elementAgent: QueryList<any>;
@@ -21,7 +30,7 @@ export class WidgetChatComponent implements OnInit, OnDestroy {
               private changeDetector: ChangeDetectorRef) {
   }
 
-  ngOnInit() {
+  ngAfterViewInit(): void {
     this.conversationObserve =
       this.store.pipe(select(ConversationSelector.selectConversations))
         .pipe(filter(fill => fill.length !== 0))
@@ -33,6 +42,11 @@ export class WidgetChatComponent implements OnInit, OnDestroy {
           this.eventScroll();
         });
   }
+
+  ngOnInit() {
+
+  }
+
 
   ngOnDestroy(): void {
     this.conversationObserve.unsubscribe();

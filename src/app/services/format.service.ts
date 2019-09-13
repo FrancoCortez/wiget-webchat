@@ -62,17 +62,17 @@ export class FormatService {
           typeFile: MediaTypeExtension.PPT,
           imgURL: PreviewAttachmentEnum.PREVIEW_PPT
         };
-      } else if (MediaTypeExtension.TEXT.split('|').includes(ext)) {
-        return {
-          mediaUrlType: PreviewAttachmentEnum.PREVIEW_TINY_WORD,
-          typeFile: MediaTypeExtension.WORD,
-          imgURL: PreviewAttachmentEnum.PREVIEW_WORD
-        };
       } else if (MediaTypeExtension.ONE.split('|').includes(ext)) {
         return {
           mediaUrlType: PreviewAttachmentEnum.PREVIEW_TINY_ONE,
           typeFile: MediaTypeExtension.ONE,
           imgURL: PreviewAttachmentEnum.PREVIEW_ONE
+        };
+      } else {
+        return {
+          mediaUrlType: PreviewAttachmentEnum.PREVIEW_TINY_OTHER,
+          typeFile: 'OTHER',
+          imgURL: PreviewAttachmentEnum.PREVIEW_OTHER
         };
       }
     } else if (mimeType.match(/image\/*/) !== null) {
@@ -82,7 +82,33 @@ export class FormatService {
           typeFile: MediaTypeExtension.IMAGE,
           // imgURL: PreviewAttachmentEnum.PREVIEW_WORD
         };
+      } else {
+        return {
+          mediaUrlType: PreviewAttachmentEnum.PREVIEW_TINY_OTHER,
+          typeFile: 'OTHER',
+          imgURL: PreviewAttachmentEnum.PREVIEW_OTHER
+        };
       }
+    } else if (mimeType.match(/text\/*/) !== null) {
+      if (MediaTypeExtension.TEXT.split('|').includes(ext)) {
+        return {
+          mediaUrlType: PreviewAttachmentEnum.PREVIEW_TINY_TEXT,
+          typeFile: MediaTypeExtension.TEXT,
+          imgURL: PreviewAttachmentEnum.PREVIEW_TEXT
+        };
+      } else {
+        return {
+          mediaUrlType: PreviewAttachmentEnum.PREVIEW_TINY_OTHER,
+          typeFile: 'OTHER',
+          imgURL: PreviewAttachmentEnum.PREVIEW_OTHER
+        };
+      }
+    } else {
+      return {
+        mediaUrlType: PreviewAttachmentEnum.PREVIEW_TINY_OTHER,
+        typeFile: 'OTHER',
+        imgURL: PreviewAttachmentEnum.PREVIEW_OTHER
+      };
     }
   }
 }

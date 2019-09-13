@@ -96,6 +96,13 @@ export class InputSendComponent implements OnInit, AfterViewInit {
       } else if (mimeType.match(/application\/*/) !== null) {
         this.imagePath = files;
         this.previewImgSelector(null, mimeType);
+        //
+      } else if (mimeType.match(/text\/*/) !== null) {
+        this.imagePath = files;
+        this.previewImgSelector(null, mimeType);
+      } else {
+        this.imagePath = files;
+        this.previewImgSelector(null, mimeType);
       }
       this.nameFile = files.name;
       this.sendFile = files;

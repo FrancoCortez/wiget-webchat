@@ -134,7 +134,7 @@
             login_text: '登錄'
         }
     };
-    let replacer = (key, value) => {
+    var replacer = function(key, value) {
         if (typeof value === 'function') {
             return value.toString();
         }

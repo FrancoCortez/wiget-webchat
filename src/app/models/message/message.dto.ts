@@ -9,4 +9,5 @@ export interface MessageDto {
   name?: string;
   isAttachment: boolean;
   attachment?: AttachmentDto;
+  idUser?: string;
 }

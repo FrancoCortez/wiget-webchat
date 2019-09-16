@@ -9,14 +9,10 @@ import {APP_BASE_HREF} from '@angular/common';
 import {PagesModule} from './pages/pages.module';
 import {ComponentsModule} from './components/components.module';
 import {ReactiveFormsModule} from '@angular/forms';
-import {SocketIoConfig, SocketIoModule} from 'ngx-socket-io';
 import {HttpClientModule} from '@angular/common/http';
 import {PickerModule} from '@ctrl/ngx-emoji-mart';
-
-const config: SocketIoConfig = {
-  url: 'https://k8s-dev.chattigo.com',
-  options: {path: '/webchat/socket.io/', query: 'did=santotomas@WC', transports: ['websocket']}
-};
+import {SocketIoModule} from 'ngx-socket-io';
+import {SocketConnect} from './client/socket.connect';
 
 @NgModule({
   declarations: [
@@ -30,11 +26,11 @@ const config: SocketIoConfig = {
     ComponentsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SocketIoModule.forRoot(config),
+    SocketIoModule,
     PickerModule
   ],
   providers: [
-    {provide: APP_BASE_HREF, useValue: '/'}
+    {provide: APP_BASE_HREF, useValue: '/'}, SocketConnect
   ],
   exports: [],
   entryComponents: [

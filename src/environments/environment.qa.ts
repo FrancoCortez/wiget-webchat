@@ -1,16 +1,16 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-const globalBffServer = 'https://k8s-dev.chattigo.com';
+const globalBffServer = 'https://kops.chattigo.com';
 export const environment = {
   production: false,
-  socketServer: 'https://k8s-dev.chattigo.com',
+  socketServer: 'https://kops.chattigo.com',
   socketPath: '/webchat/socket.io/',
   socketTransports: 'websocket',
   bffServer: globalBffServer,
   bffGetAgent: `${globalBffServer}/webchat/channel/did`,
   bffUploadFile: `${globalBffServer}/webchat/message/attachment/upload`,
-  agentImg: 'https://develop.cdn.chattigo.com/assets/img/profiles',
+  agentImg: 'https://cdn.chattigo.com/assets/img/profiles',
 
   // Constant Websocket Action
   joinChat: 'join-chat',
@@ -20,8 +20,6 @@ export const environment = {
 
 
 };
-
-
 
 
 /*

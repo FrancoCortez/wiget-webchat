@@ -3,12 +3,18 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start:qa": "ng serve --configuration=qa",
+    "start:dev": "ng serve",
+    "start:prod": "ng serve --configuration=prod",
+    "build:prod": "ng build --prod",
+    "build:dev": "ng build",
+    "build:qa": "ng build --configuration=qa",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:elementss": "ng build --prod --output-hashing none --build-optimizer true && node build-script.js"
+    "build:elements-prod": "ng build --prod --output-hashing none --build-optimizer true && node build-script.js",
+    "build:elements-dev": "ng build --output-hashing none && node build-script-dev.js",
+    "build:elements-qa": "ng build --configuration=qa --output-hashing none --build-optimizer true && node build-script-qa.js"
   },
   "private": true,
   "dependencies": {
@@ -27,6 +33,7 @@
     "@ngrx/store-devtools": "^8.2.0",
     "@webcomponents/custom-elements": "^1.2.4",
     "ngx-socket-io": "^3.0.1",
+    "socket.io-client": "^2.2.0",
     "rxjs": "~6.5.2",
     "tslib": "^1.9.0",
     "uuid": "^3.3.3",

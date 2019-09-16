@@ -3,6 +3,7 @@ import {Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {TeamClient} from '../client/team.client';
 import {TeamUiModel} from '../models/ui-model/team.ui-model';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class TeamService {
           (value, key) => value.photo =
             (value.photo !== undefined && value.photo !== null) ?
               value.photo :
-              `https://develop.cdn.chattigo.com/assets/img/profiles/${(key + 1)}_dummy.png`);
+              `${environment.agentImg}/${(key + 1)}_dummy.png`);
         return data;
       }),
       catchError(err => {

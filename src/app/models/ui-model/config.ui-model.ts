@@ -18,4 +18,5 @@ export interface ConfigUiModel {
   preserveHistory?: boolean;
   bgMenu?: string;
   geoActive?: boolean;
+  did?: string;
 }

@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Input, OnInit,} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {
   ConfigAction,
@@ -20,8 +20,7 @@ import {v4 as uuid} from 'uuid';
 @Component({
   selector: 'app-widget-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, AfterViewInit {
 
@@ -31,9 +30,11 @@ export class AppComponent implements OnInit, AfterViewInit {
   public triggerHidden = false;
   public toggles = false;
   @Input() setting: any;
+  @Input() did: string;
 
-  constructor(private readonly store: Store<RootStoreState.AppState>,
-              private changeDetectorRef: ChangeDetectorRef) {
+  //  @Input() lang?: any;
+
+  constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 
   ngAfterViewInit(): void {
@@ -41,7 +42,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    // this.changeDetectorRef.reattach()
     this.store.pipe(select(InitWebChatSelector.selectIsTrigger)).subscribe(resp => this.triggerHidden = resp);
     const reviver = (key, value) => {
       if (typeof value === 'string'
@@ -66,12 +66,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     const setting = JSON.parse(this.setting, reviver);
     const configUi: ConfigUiModel = {
+      did: this.did,
       button: {
         enabled: setting.button_enabled,
         label: setting.login_text,
-        // colorText: setting.button_login_color,
         colorText: `${setting.button_login_color}`,
-        // colorButtonBg: setting.button_login_bg
         colorButtonBg: `linear-gradient(140deg, ${setting.button_login_bg} 40%, #000 200%)`
       },
       header: {
@@ -101,7 +100,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       },
       configPanel: {
         switchColor: `linear-gradient(140deg, ${setting.button_login_bg} 40%, #000 200%)`,
-        linkColor: `#004f45`,
+        linkColor: `linear-gradient(140deg, ${setting.button_login_bg} 40%, #000 200%)`,
       },
       preserveHistory: setting.preserve_history,
       geoActive: setting.geo_active,
@@ -173,5 +172,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     message.content = `\n Nombre: ${message.name} \n ${data.content}`;
     this.store.dispatch(LoginAction.login({payload: message}));
     this.expandChat();
-  };
+  }
+
 }

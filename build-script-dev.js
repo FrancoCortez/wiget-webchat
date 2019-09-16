@@ -10,5 +10,5 @@ const concat = require('concat');
     './dist/webchat-angular/scripts.js',
   ];
   await fs.ensureDir('dist');
-  await concat(files, 'dist/widget.js');
+  await concat(files, 'dist/widget-dev.js');
 })();

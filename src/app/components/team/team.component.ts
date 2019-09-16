@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {RootStoreState, TeamAction} from '../../store';
+import {ConfigSelector, RootStoreState, TeamAction} from '../../store';
 import {TeamUiModel} from '../../models/ui-model/team.ui-model';
 import {selectTeam} from '../../store/team-store/selector';
 import {TeamService} from '../../services/team.service';
@@ -13,9 +13,10 @@ import {TeamService} from '../../services/team.service';
 export class TeamComponent implements OnInit {
 
   teamList: TeamUiModel[] = [];
-  did: string = 'santotomas@WC';
+  did = '';
 
   constructor(private readonly store: Store<RootStoreState.AppState>, public teamService: TeamService) {
+    this.store.pipe(select(ConfigSelector.selectDid)).subscribe(resp => this.did = resp);
   }
 
   ngOnInit() {

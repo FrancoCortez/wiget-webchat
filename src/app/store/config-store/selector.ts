@@ -12,3 +12,8 @@ export const selectConfig = createSelector(
   selector,
   (state: State): ConfigUiModel => state.config
 );
+
+export const selectDid = createSelector(
+  selector,
+  (state: State): string => state.config.did
+);

@@ -1,39 +1,37 @@
 import {Injectable} from '@angular/core';
 import {MessageDto} from '../models/message/message.dto';
-import {Socket} from 'ngx-socket-io';
 import {Observable, of} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
+import {SocketConnect} from './socket.connect';
 
 @Injectable({
   providedIn: 'root',
-
 })
 export class SocketClient {
-  constructor(private readonly socket: Socket) {
+  constructor(private readonly socket: SocketConnect) {
   }
 
   public join(msisdn: string): Observable<string> {
-    this.connectSocket();
-    this.socket.emit('join-chat', msisdn);
+    this.socket.connectToServer();
+    this.socket.emit(environment.joinChat, msisdn);
     return of('resolved');
   }
 
   public sendMessage(message: MessageDto): Observable<string> {
-    this.connectSocket();
-    this.socket.emit('sendMessage', message);
+    this.socket.emit(environment.sendMessage, message);
     return of('resolved');
   }
 
   public getMessage(): Observable<MessageDto> {
-    this.connectSocket();
-    return this.socket.fromEvent<MessageDto>('newMessage').pipe(
+    return this.socket.listen(environment.newMessage).pipe(
       filter(fill => fill !== undefined),
       map(data => data)
     );
   }
 
   public leave() {
-    this.socket.emit('leave-chat');
+    this.socket.emit(environment.leaveChat);
     this.disconnectSocket();
     return of('resolved');
   }
@@ -43,7 +41,7 @@ export class SocketClient {
   }
 
   private disconnectSocket() {
-    this.socket.disconnect('all');
+    this.socket.disconnect();
     this.socket.removeAllListeners();
   }
 }

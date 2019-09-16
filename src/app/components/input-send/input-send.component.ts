@@ -29,6 +29,7 @@ export class InputSendComponent implements OnInit, AfterViewInit {
   sendFile: any;
   loginResp: MessageDto = null;
   displayEmoji = false;
+  did = '';
   localeEmoji = {
     search: 'Buscar emoji',
     emojilist: 'Lista de emoji',
@@ -70,6 +71,7 @@ export class InputSendComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.store.pipe(select(ConfigSelector.selectDid)).subscribe(resp => this.did = resp);
     this.eventScrollForTextArea();
     this.store.pipe(select(ConfigSelector.selectConfig)).subscribe(resp => this.sendConfig = resp.messageSend);
     this.store.pipe(select(LoginSelector.selectLogin))
@@ -117,27 +119,26 @@ export class InputSendComponent implements OnInit, AfterViewInit {
    * @param $event evento que se ejecuta al momento de enviar un mensaje
    */
   public sendMessage(value: any) {
+    this.displayEmoji = false;
     if ((value.sendMessage !== undefined && value.sendMessage !== '' && value.sendMessage !== null)
       || (this.sendFile !== null && this.sendFile !== undefined)) {
       if (this.sendFile != null) {
-        this.uploadFileClient.sendFile(this.sendFile).subscribe(fileResp => {
-          this.store.pipe(select(LoginSelector.selectLogin))
-            .pipe(filter(fill => fill !== null))
-            .subscribe((resp: MessageDto) => {
-              const messageFront: MessageUiModel = {
-                originalContent: value.sendMessage,
-                content: this.format.messageFormat(value.sendMessage),
-                subject: SubjectEnum.CLIENT,
-                type: TypeFileEnum.MEDIA,
-                hour: new Date(),
-                mediaUrl: this.previewImgSelector(fileResp.mediaUrl, fileResp.mimeType),
-                redirectUrl: fileResp.mediaUrl,
-                mimeType: fileResp.mimeType,
-                nameFile: this.nameFile
-              };
-              this.store.dispatch(ConversationAction.sendMessage({message: {messageUi: messageFront, messageDto: resp}}));
-              this.resetFeatures();
-            });
+        this.uploadFileClient.sendFile(this.sendFile, this.did).subscribe(fileResp => {
+          const content = this.format.messageFormat(value.sendMessage);
+          const messageFront: MessageUiModel = {
+            originalContent: ((content === undefined || content === null || content === '') ? '\n' : content),
+            content: ((content === undefined || content === null || content === '') ? '\n' : content),
+            subject: SubjectEnum.CLIENT,
+            type: TypeFileEnum.MEDIA,
+            hour: new Date(),
+            mediaUrl: this.previewImgSelector(fileResp.mediaUrl, fileResp.mimeType),
+            redirectUrl: fileResp.mediaUrl,
+            mimeType: fileResp.mimeType,
+            nameFile: this.nameFile
+          };
+          console.log(messageFront);
+          this.store.dispatch(ConversationAction.sendMessage({message: {messageUi: messageFront, messageDto: this.loginResp}}));
+          this.resetFeatures();
         });
       } else {
         const messageFront: MessageUiModel = {
@@ -153,6 +154,7 @@ export class InputSendComponent implements OnInit, AfterViewInit {
         this.resetFeatures();
       }
     }
+    // tslint:disable-next-line:max-line-length
     this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
       .subscribe(resp => {
         this.store.subscribe(state => {
@@ -178,7 +180,7 @@ export class InputSendComponent implements OnInit, AfterViewInit {
   }
 
   addEmoji($event) {
-    this.displayEmoji = !this.displayEmoji;
+    // this.displayEmoji = !this.displayEmoji;
     // tslint:disable-next-line:max-line-length
     this.form.controls.sendMessage.setValue(((this.form.controls.sendMessage.value == null) ? '' : this.form.controls.sendMessage.value) + $event.emoji.native);
     this.sendElement.nativeElement.focus();

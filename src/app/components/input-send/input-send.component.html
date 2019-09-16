@@ -9,7 +9,7 @@
           <img [src]="imgURL" style="width:100%">
         </div>
       </div>
-      <emoji-mart (emojiClick)="addEmoji($event)" *ngIf="displayEmoji" [i18n]="localeEmoji"></emoji-mart>
+      <emoji-mart (emojiClick)="addEmoji($event)" *ngIf="displayEmoji" [i18n]="localeEmoji" recent="null"></emoji-mart>
       <textarea #send (keydown)="keydownEvent(form.value, $event)"
                 [placeholder]="sendConfig.messagePlaceholder"
                 class="c-input c-send-message__input widget-message-input-js"

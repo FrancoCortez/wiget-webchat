@@ -23,24 +23,16 @@ export class SocketConnect {
     });
   }
 
-  join(room: string) {
-    this.connected$.subscribe(connected => {
-      if (connected) {
-        this.socket.emit('join', {room});
-      }
-    });
-  }
-
-  disconnect() {
+  public disconnect() {
     this.socket.disconnect();
     this.connected$.next(false);
   }
 
-  emit(event: string, data?: any) {
+  public emit(event: string, data?: any) {
     this.socket.emit(event, data);
   }
 
-  listen(event: string): Observable<any> {
+  public listen(event: string): Observable<any> {
     return new Observable(observer => {
       this.socket.on(event, data => {
         observer.next(data);
@@ -49,13 +41,9 @@ export class SocketConnect {
     });
   }
 
-  connect() {
-    this.socket.on('connection', ($event) => {
-      console.log('event');
+  public connect() {
+    this.socket.on('connection', () => {
     });
   }
 
-  removeAllListeners() {
-    // this.socket.getSocket().removeAllListeners();
-  }
 }

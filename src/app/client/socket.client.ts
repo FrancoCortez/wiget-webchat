@@ -42,6 +42,5 @@ export class SocketClient {
 
   private disconnectSocket() {
     this.socket.disconnect();
-    this.socket.removeAllListeners();
   }
 }

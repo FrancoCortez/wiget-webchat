@@ -167,7 +167,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       name: (data.name === undefined || data.name === null || data.name === '') ? 'Anonimo' : data.name,
       attachment: null,
       timestamp: new Date(),
-      content: data.content
+      content: data.content,
+      idUser: data.idUser
     };
     message.content = `\n Nombre: ${message.name} \n ${data.content}`;
     this.store.dispatch(LoginAction.login({payload: message}));

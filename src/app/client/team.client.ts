@@ -16,7 +16,7 @@ export class TeamClient {
   }
 
   public getAll(did: string): Observable<TeamUiModel[] | any> {
-    return this.http.get<HttpResponse<TeamUiModel[]>>(`${this.serverBff}/${did}/agents`).pipe(
+    return this.http.get<HttpResponse<TeamUiModel[]>>(`${this.serverBff}/${did}/agents/actives`).pipe(
       map(data => {
         return data;
       }),

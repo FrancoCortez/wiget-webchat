@@ -2,6 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 const globalBffServer = 'https://k8s-dev.chattigo.com';
+
 export const environment = {
   production: false,
   socketServer: 'https://k8s-dev.chattigo.com',

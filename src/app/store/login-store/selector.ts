@@ -11,3 +11,8 @@ export const selectLogin = createSelector(
   selector,
   (state: State): LoginDto => state.login
 );
+
+export const loginState = createSelector(
+  selector,
+  (state: State): boolean => state.isLoginState
+);

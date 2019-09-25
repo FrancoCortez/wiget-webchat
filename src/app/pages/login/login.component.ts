@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
+    this.store.dispatch(LoginAction.loginState({payload: true}));
     this.form = this.inputComponentReferent.form;
     if (this.form.valid) {
       this.store.pipe(select(ConfigSelector.selectConfig))

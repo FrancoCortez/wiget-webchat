@@ -6,15 +6,15 @@
     <option *ngFor="let sel of item.choices">{{sel}}</option>
   </select>
     <input *ngIf="item.choices === null || item.choices === undefined "
-           [ngClass]="{'c-input--error': form.getError('messageValidation', [('input_' + i)]) || form.getError('required', [('input_' + i)])}"
+           [ngClass]="{'c-input--error': loginState && (form.getError('messageValidation', [('input_' + i)]) || form.getError('required', [('input_' + i)]))}"
            [placeholder]="item.placeholder"
            class="c-input"
            formControlName="input_{{i}}"
            type="text"/>
-    <p *ngIf="form.getError('messageValidation', [('input_' + i)]) as error" class="c-input__error-message">
+    <p *ngIf="loginState && form.getError('messageValidation', [('input_' + i)]) as error" class="c-input__error-message">
       {{ error }}
     </p>
-    <p *ngIf="form.getError('required', [('input_' + i)]) as error" class="c-input__error-message">
+    <p *ngIf="loginState && form.getError('required', [('input_' + i)]) as error" class="c-input__error-message">
       El campo {{item.label}} es obligatorio
     </p>
   </span>

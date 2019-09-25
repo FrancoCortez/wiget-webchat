@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {InputUiModel} from '../../models/ui-model/input.ui-model';
-import {ConfigAction, RootStoreState} from '../../store';
+import {ConfigAction, LoginSelector, RootStoreState} from '../../store';
 import {select, Store} from '@ngrx/store';
 import {selectConfig} from '../../store/config-store/selector';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
@@ -17,11 +17,12 @@ export class InputComponent implements OnInit {
    */
   public inputConfig: InputUiModel[];
   public form: FormGroup;
-
+  public loginState = false;
   constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 
   ngOnInit() {
+    this.store.pipe(select(LoginSelector.loginState)).subscribe(resp => this.loginState = resp);
     this.store.pipe(select(selectConfig)).subscribe(resp => {
       let count = 0;
       this.form = new FormGroup({});

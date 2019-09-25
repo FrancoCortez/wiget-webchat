@@ -9,3 +9,5 @@ export const leaveLogin = createAction('[leaveLogin] leave login');
 
 export const loadLogin = createAction('[loadLogin] load login', props<{ payload: any }>());
 
+export const loginState = createAction('[loginState] login state', props<{ payload: boolean}>());
+

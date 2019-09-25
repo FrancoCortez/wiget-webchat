@@ -103,7 +103,7 @@ export class FormatService {
           imgURL: PreviewAttachmentEnum.PREVIEW_OTHER
         };
       }
-    } else if (mimeType.match(/audio\/*/) !== null || mimeType.match(/video\/*/)) {
+    } else if (mimeType.match(/audio\/*/) !== null || (mimeType.match(/video\/*/)) !== null) {
       if (MediaTypeExtension.AUDIO.split('|').includes(ext)) {
         return {
           mediaUrlType: PreviewAttachmentEnum.PREVIEW_TINY_AUDIO,

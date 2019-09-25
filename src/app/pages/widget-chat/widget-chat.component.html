@@ -1,0 +1,26 @@
+<div id="messageBody">
+  <div #elementConversation *ngFor="let item of conversation" class="c-message-box">
+    <div *ngIf="item.subject === 'AGENT'" class="c-message-box__message">
+      <a (click)="goToLink(item.redirectUrl)" *ngIf="item.mimeType !== null && item.mimeType !== undefined"
+         class="c-message-box__message-attachment"
+         style="max-width: 200px !important; max-height: 200px !important;">
+        <img (load)="loadImage($event)" [src]="item.mediaUrl" style="max-width: 200px; max-height: 200px;"/>
+        <span
+          *ngIf="item.mimeType.search('application') == 0 || item.mimeType.search('text') == 0 || item.mimeType.search('OTHER') == 0 || item.mimeType.search('audio') == 0 || item.mimeType.search('video') == 0 ">{{item.nameFile}}</span>
+      </a>
+      <span [innerHTML]="item.content | validateHtml"></span>
+      <small>{{item.hour | date: 'hh:mm' }}</small>
+    </div>
+    <div *ngIf="item.subject === 'CLIENT'" class="c-message-box__message-sended">
+      <a (click)="goToLink(item.redirectUrl)" *ngIf="item.mimeType !== null && item.mimeType !== undefined"
+         class="c-message-box__message-attachment"
+         style="max-width: 200px !important; max-height: 200px !important;">
+        <img (load)="loadImage($event)" [src]="item.mediaUrl" style="max-width: 200px; max-height: 200px;"/>
+        <span
+          *ngIf="item.mimeType.search('application') == 0 || item.mimeType.search('text') == 0 || item.mimeType.search('OTHER') == 0 || item.mimeType.search('audio') == 0 || item.mimeType.search('video') == 0 ">{{item.nameFile}}</span>
+      </a>
+      <span [innerHTML]="item.content | validateHtml"></span>
+      <small>{{item.hour | date: 'hh:mm' }}</small>
+    </div>
+  </div>
+</div>

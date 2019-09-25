@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Testing Webchat</title>
+  <meta
+    content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    name="viewport"/>
+  <meta content="telephone=no" name="format-detection"/>
+  <meta content="no" name="msapplication-tap-highlight"/>
+  <meta content="yes" name="apple-mobile-web-app-capable"/>
+  <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+</head>
+<body>
+<button id="idButton" type="button">init button</button>
+<button id="toggleButton" type="button">Toggle button</button>
+<button id="visibilityWC" type="button">visibilityWC button</button>
+<button id="expandChat" type="button">expandChat button</button>
+<button id="collapseChat" type="button">collapseChat button</button>
+<button id="logout" type="button">logout</button>
+<button id="startChat" type="button">startChat</button>
+<app-widget-root did="santotomas@WC"></app-widget-root>
+<script>
+    var config = {
+        header_text: 'Web Chat', // Configure
+        header_status: 'En linea', // Configure
+        agent_name_enabled: true, // TODO NEW
+        logo: 'https://www.santotomas.cl/wp-content/themes/institucional/images/logos/logo-st.svg',
+        // TODO NEW
+        caption_title: 'Inicia una conversación', // Configure
+        // TODO NEW
+        caption_title_color: '#424243', // Configure
+        // TODO NEW
+        caption_subtitle: 'El equipo usualmente responde en pocas horas.', // Configure
+        // TODO NEW
+        caption_subtitle_color: '#424243',
+        welcome_text: 'Bienvenido al servicio de web chat',
+        subtitle_text: 'SUBTITULO DE PRUEBA',
+        message_placeholder: 'Escriba un mensaje...',
+        login_fields: [
+            // {label: 'Selecciona tu carrera', choices: ['Ingeniero', 'Medicina', 'otros']},
+            'Nombre',
+            {
+                label: 'Email',
+                // TODO NEW
+                placeholder: 'Ingrese su correo',
+                required: false,
+                validation: function (value) {
+                    // tslint:disable-next-line:max-line-length
+                    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    if (!re.test(value)) {
+                        throw new Error('El valor de Email debe ser un correo electrónico válido');
+                    }
+                }
+            },
+            {label: 'RUT', required: true}
+        ],
+        send_color: '#cb1e74',
+        header_background_color: '#004f45',  // Configure
+        header_font_color: '#ffffff',  // Configure
+        locale: 'es',
+        name_field: 'Nombre', // Configure
+        user_field: 'RUT', // Configure
+        // TODO NEW
+        button_enabled: true, // Configure
+        button_login_color: 'white', // Configure
+        button_login_bg: '#004f45', // Configure
+        login_text: 'Iniciar sesión', // Configure
+        field_font_color: '#424243', // Configure
+        welcome_color: '#ffffff', // Configure
+        subtitle_color: '#ffffff', // Configure
+        preserve_history: true, // Configure
+        bg_menu: '#1f1f1f', // Configure
+        geo_active: true, // Configure
+
+    };
+
+    var i18n = {
+        es: {
+            header_text: 'Web Chat',
+            header_status: 'En linea',
+            caption_title: 'Inicia una conversación',
+            caption_subtitle: 'El equipo usualmente responde en pocas horas.',
+            welcome_text: 'Bienvenido al servicio de web chat de nuestra página.',
+            subtitle_text: 'SUBTITULO DE PRUEBA',
+            message_placeholder: 'Escriba un mensaje...',
+            login_text: 'Iniciar sesión',
+            login_fields: [
+                'Nombre',
+                {label: 'Correo', placeholder: 'Escriba su correo'}
+            ]
+        },
+        en: {
+            header_text: 'Web Chat',
+            header_status: 'Online',
+            caption_title: 'Start a conversation\n',
+            caption_subtitle: 'The team usually responds in a few hours.',
+            welcome_text: 'The team usually responds in a few hours.',
+            subtitle_text: 'TEST SUBTITLE',
+            message_placeholder: 'Write a message...',
+            login_text: 'Log in',
+            login_fields: [
+                'Name',
+                {label: 'Mail', placeholder: 'Enter your email'}
+            ]
+        },
+        ru: {
+            header_text: 'Web Chat',
+            header_status: 'В линии',
+            caption_title: 'Начать разговор',
+            caption_subtitle: 'Команда обычно отвечает через несколько часов.',
+            welcome_text: 'Добро пожаловать на наш веб-чат.',
+            subtitle_text: 'СУБТИТР ТЕСТА',
+            message_placeholder: 'Написать сообщение...',
+            login_text: 'Войти в систему',
+        },
+        pt: {
+            header_text: 'Web Chat',
+            header_status: 'Em linha',
+            caption_title: 'Iniciar uma conversa',
+            caption_subtitle: 'A equipe geralmente responde em algumas horas.',
+            welcome_text: 'Bem-vindo ao serviço de bate-papo na web da nossa página.',
+            subtitle_text: 'LEGENDA DO TESTE',
+            message_placeholder: 'Escreva uma mensagem ...',
+            login_text: 'Iniciar sessão'
+        },
+        zh: {
+            header_text: 'Web Chat',
+            header_status: '在線',
+            caption_title: '開始對話',
+            caption_subtitle: '團隊通常會在幾個小時內做出回應。',
+            welcome_text: '歡迎使用我們頁面的網絡聊天服務。',
+            subtitle_text: '測試字幕',
+            message_placeholder: '寫一條消息...',
+            login_text: '登錄'
+        }
+    };
+    var replacer = function(key, value) {
+        if (typeof value === 'function') {
+            return value.toString();
+        }
+        return value;
+    };
+    widget = document.querySelector('app-widget-root');
+    widget.setAttribute('setting', JSON.stringify(config, replacer, 2));
+    widget.setAttribute('lang', JSON.stringify(i18n));
+
+    document.getElementById('idButton').addEventListener('click', () => {
+
+    });
+    document.addEventListener("DOMContentLoaded", function (event) {
+        widget.init();
+    });
+
+    document.getElementById('toggleButton').addEventListener('click', () => {
+        widget.toggle();
+    });
+    document.getElementById('visibilityWC').addEventListener('click', () => {
+        widget.visibilityWC(false);
+    });
+    document.getElementById('expandChat').addEventListener('click', () => {
+        widget.expandChat();
+    });
+    document.getElementById('collapseChat').addEventListener('click', () => {
+        widget.collapseChat();
+    });
+    document.getElementById('logout').addEventListener('click', () => {
+        widget.logout();
+    });
+    document.getElementById('startChat').addEventListener('click', () => {
+        data = {
+            "name": "Johans", //nombre usuario
+            "idUser": 3089, //id del agente
+            // "msisdn": "67e9f313-5a6a-4fd3-9c8c-299e148822e7", //opcional
+            "content": "prueba de asignacion directa" //mensaje inicial (opcional)
+
+        };
+        widget.startChat(data);
+    });
+</script>
+</body>
+</html>
+

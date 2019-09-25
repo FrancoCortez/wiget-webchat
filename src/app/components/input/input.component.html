@@ -1,0 +1,21 @@
+<form [formGroup]="form">
+  <span *ngFor="let item of inputConfig; index as i">
+    <label [ngStyle]="{'color': item.fontColor}" class="c-input-label">{{item.label}} <span
+      *ngIf="item.required">*</span></label>
+    <select *ngIf="item.choices !== undefined && item.choices.length > 0" class="c-input" formControlName="input_{{i}}">
+    <option *ngFor="let sel of item.choices">{{sel}}</option>
+  </select>
+    <input *ngIf="item.choices === null || item.choices === undefined "
+           [ngClass]="{'c-input--error': loginState && (form.getError('messageValidation', [('input_' + i)]) || form.getError('required', [('input_' + i)]))}"
+           [placeholder]="item.placeholder"
+           class="c-input"
+           formControlName="input_{{i}}"
+           type="text"/>
+    <p *ngIf="loginState && form.getError('messageValidation', [('input_' + i)]) as error" class="c-input__error-message">
+      {{ error }}
+    </p>
+    <p *ngIf="loginState && form.getError('required', [('input_' + i)]) as error" class="c-input__error-message">
+      El campo {{item.label}} es obligatorio
+    </p>
+  </span>
+</form>

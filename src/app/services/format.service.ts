@@ -103,6 +103,20 @@ export class FormatService {
           imgURL: PreviewAttachmentEnum.PREVIEW_OTHER
         };
       }
+    } else if (mimeType.match(/audio\/*/) !== null || mimeType.match(/video\/*/)) {
+      if (MediaTypeExtension.AUDIO.split('|').includes(ext)) {
+        return {
+          mediaUrlType: PreviewAttachmentEnum.PREVIEW_TINY_AUDIO,
+          typeFile: MediaTypeExtension.AUDIO,
+          imgURL: PreviewAttachmentEnum.PREVIEW_AUDIO
+        };
+      } else {
+        return {
+          mediaUrlType: PreviewAttachmentEnum.PREVIEW_TINY_OTHER,
+          typeFile: 'OTHER',
+          imgURL: PreviewAttachmentEnum.PREVIEW_OTHER
+        };
+      }
     } else {
       return {
         mediaUrlType: PreviewAttachmentEnum.PREVIEW_TINY_OTHER,

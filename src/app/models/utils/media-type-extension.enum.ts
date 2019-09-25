@@ -53,6 +53,8 @@ export enum MediaTypeExtension {
   ,
   AUDIO = 'basic' +
     '|mid' +
+    '|mp3' +
+    '|mp4' +
     '|mpeg' +
     '|x-aiff' +
     '|x-mpegurl' +

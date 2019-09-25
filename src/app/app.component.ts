@@ -15,7 +15,6 @@ import {InputUiModel} from './models/ui-model/input.ui-model';
 import {filter} from 'rxjs/operators';
 import {MessageDto} from './models/message/message.dto';
 import {v4 as uuid} from 'uuid';
-import { Compiler } from '@angular/core';
 
 
 @Component({
@@ -35,8 +34,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   //  @Input() lang?: any;
 
-  constructor(private readonly store: Store<RootStoreState.AppState>,
-              private _compiler: Compiler) {
+  constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 
   ngAfterViewInit(): void {
@@ -44,7 +42,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this._compiler.clearCache();
+    // this._compiler.clearCache();
     this.store.pipe(select(InitWebChatSelector.selectIsTrigger)).subscribe(resp => this.triggerHidden = resp);
     const reviver = (key, value) => {
       if (typeof value === 'string'

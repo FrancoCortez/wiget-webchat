@@ -23,3 +23,8 @@ export const selectIsTrigger = createSelector(
     return state.trigger;
   }
 );
+
+export const selectIdUser = createSelector(
+  selectInitWebChatState,
+  (state: State): string => state.idUser
+);

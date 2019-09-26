@@ -20,11 +20,13 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
   headerColor: string;
+  idUser: string;
 
   constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 
   ngOnInit() {
+    this.store.pipe(select(InitWebChatSelector.selectIdUser)).subscribe(resp => this.idUser = resp);
     this.store.pipe(select(InitWebChatSelector.selectIsOpen))
       .subscribe(resp => {
         this.hidden = !resp;
@@ -69,7 +71,8 @@ export class LoginComponent implements OnInit {
             name: (login.name === undefined || login.name === null || login.name === '') ? 'Anonimo' : login.name,
             attachment: null,
             timestamp: new Date(),
-            content: ''
+            content: '',
+            idUser: this.idUser
           };
           input.forEach(row => {
             message.content += `\n ${row.label}: ${this.form.controls[row.id].value}`;

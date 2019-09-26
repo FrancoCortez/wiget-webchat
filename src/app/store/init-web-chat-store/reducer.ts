@@ -23,6 +23,10 @@ const featureReducer = createReducer(
     ...state,
     trigger: payload
   })),
+  on(featureActions.loadIdUser, (state, {payload}) => ({
+    ...state,
+    idUser: payload
+  })),
 );
 
 export function reducer(state: State | undefined, action: Action) {

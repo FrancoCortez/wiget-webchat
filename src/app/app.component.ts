@@ -176,4 +176,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.expandChat();
   }
 
+  @Input() public initChatWithAgent = (data: string) => {
+    this.store.dispatch(InitWebChatAction.loadIdUser({payload: data}));
+    this.init();
+    this.expandChat();
+  }
+
 }

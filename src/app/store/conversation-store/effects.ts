@@ -5,7 +5,14 @@ import {Observable, of} from 'rxjs';
 import {catchError, filter, map, mergeMap} from 'rxjs/operators';
 import {Action, select, Store} from '@ngrx/store';
 import {MessageService} from '../../services/message.service';
-import {ConfigSelector, ConversationSelector, InitWebChatAction, LoginAction, RootStoreState, RouterAction} from '../index';
+import {
+  ConfigSelector,
+  ConversationSelector,
+  InitWebChatAction,
+  LoginAction,
+  RootStoreState,
+  RouterAction, RouterSelector
+} from '../index';
 
 @Injectable()
 export class ConversationStoreEffects {
@@ -29,7 +36,13 @@ export class ConversationStoreEffects {
     mergeMap(() => this.messageService.leaveChat()
       .pipe(
         map((message) => {
-          this.store.dispatch(RouterAction.loginOpen());
+          if(this.firstPageElection.button) {
+            console.log(this.firstPageElection.button);
+            this.store.dispatch(RouterAction.buttonLogin());
+          } else if (this.firstPageElection.login) {
+            console.log(this.firstPageElection.login);
+            this.store.dispatch(RouterAction.loginOpen());
+          }
           this.store.dispatch(LoginAction.leaveLogin());
           this.store.dispatch(featureActions.cleanConversation());
           localStorage.removeItem('state');
@@ -66,12 +79,13 @@ export class ConversationStoreEffects {
       ))
     )
   );
-
+  private firstPageElection: any;
   constructor(private actions$: Actions,
               private readonly store: Store<RootStoreState.AppState>,
               private readonly messageService: MessageService) {
     this.audio = new Audio('assets/audio/Rhea.mp3');
     this.store.pipe(select(ConversationSelector.selectChatSound)).subscribe(resp => this.audioEnabled = resp.soundActive);
+    this.store.pipe(select(RouterSelector.selectFirstPage)).subscribe(resp => this.firstPageElection = resp);
   }
 
 

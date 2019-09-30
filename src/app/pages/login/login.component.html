@@ -1,18 +1,16 @@
-<div class="">
-  <div *ngIf="!hidden" class="chattigo-widget chattigo-widget--welcome">
-    <a (click)="toggleClose()" class="chattigo-widget__mobile-close-icon"><span class="icon-close"></span></a>
-    <div [ngStyle]="{'background-image': headerColor}" class="chattigo-widget-header__background"></div>
-    <app-header></app-header>
-    <div class="chattigo-widget-content">
-      <div class="chattigo-widget-team">
-        <app-widget-caption></app-widget-caption>
-        <app-team></app-team>
-      </div>
-      <div class="chattigo-widget-form">
-        <app-input></app-input>
-        <app-button (click)="login()"></app-button>
-      </div>
+<div *ngIf="!hidden" [@enterAnimationFade] class="chattigo-widget chattigo-widget--welcome">
+  <a (click)="toggleClose()" class="chattigo-widget__mobile-close-icon"><span class="icon-close"></span></a>
+  <div [ngStyle]="{'background-image': headerColor}" class="chattigo-widget-header__background"></div>
+  <app-header></app-header>
+  <div class="chattigo-widget-content">
+    <div class="chattigo-widget-team">
+      <app-widget-caption></app-widget-caption>
+      <app-team *ngIf="teamHidden"></app-team>
+    </div>
+    <div class="chattigo-widget-form">
+      <app-input></app-input>
+      <app-button (click)="login()"></app-button>
     </div>
   </div>
-  <app-trigger-button></app-trigger-button>
 </div>
+<app-trigger-button></app-trigger-button>

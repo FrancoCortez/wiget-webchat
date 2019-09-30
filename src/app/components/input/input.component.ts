@@ -18,6 +18,7 @@ export class InputComponent implements OnInit {
   public inputConfig: InputUiModel[];
   public form: FormGroup;
   public loginState = false;
+
   constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 

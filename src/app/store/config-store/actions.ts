@@ -7,3 +7,4 @@ export const loadConfigFailure = createAction('[loadConfigFailure] Load Configur
 
 export const updateInputConfig = createAction('[updateInputConfig] update input config', props<{ payload: ConfigUiModel }>());
 export const updateMobile = createAction('[updateMobile] update mobile', props<{ payload: boolean }>());
+

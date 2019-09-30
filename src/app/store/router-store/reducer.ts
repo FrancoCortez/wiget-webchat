@@ -8,25 +8,46 @@ const featureReducer = createReducer(
     ...state,
     login: true,
     widget: false,
+    button: false,
     config: false
   })),
   on(featureActions.widgetOpen, (state) => ({
     ...state,
     login: false,
     widget: true,
+    button: false,
     config: false
   })),
   on(featureActions.configOpen, (state) => ({
     ...state,
     login: false,
+    button: false,
     widget: false,
     config: true
+  })),
+  on(featureActions.buttonLogin, (state) => ({
+    ...state,
+    login: false,
+    widget: false,
+    config: false,
+    button: true,
   })),
   on(featureActions.loadRouter, (state, {payload}) => ({
     ...state,
     login: payload.login,
     widget: payload.widget,
-    config: payload.config
+    config: payload.config,
+    button: payload.button,
+  })),
+  on(featureActions.initFirstLogin, (state) => ({
+    ...state,
+    firstLogin: true,
+    firstButton: false
+  })),
+  on(featureActions.initFirstButton, (state) => ({
+    ...state,
+    firstLogin: false,
+    firstButton: true
   }))
 );
 

@@ -1,6 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {ConfigSelector, ConversationSelector, InitWebChatAction, RootStoreState, RouterAction, RouterSelector} from '../../store';
+import {
+  ConfigSelector,
+  ConversationSelector,
+  InitWebChatAction,
+  RootStoreState,
+  RouterAction,
+  RouterSelector
+} from '../../store';
 import {WidgetCaptionUiModel} from '../../models/ui-model/widget-caption.ui-model';
 import {selectIsOpen} from '../../store/init-web-chat-store/selector';
 import {filter} from 'rxjs/operators';

@@ -8,6 +8,7 @@ import {
   InitWebChatSelector,
   LoginAction,
   RootStoreState,
+  RouterAction,
   RouterSelector
 } from './store';
 import {ConfigUiModel} from './models/ui-model/config.ui-model';
@@ -15,35 +16,34 @@ import {InputUiModel} from './models/ui-model/input.ui-model';
 import {filter} from 'rxjs/operators';
 import {MessageDto} from './models/message/message.dto';
 import {v4 as uuid} from 'uuid';
+import {buttonLogin} from "./store/router-store/actions";
+import {ButtonOptionUiModel} from "./models/ui-model/button-option.ui-model";
 
 
 @Component({
   selector: 'app-widget-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, AfterViewInit {
-
-  public loginOpen = true;
-  public widgetOpen = false;
-  public configOpen = false;
-  public triggerHidden = false;
-  public toggles = false;
   @Input() setting: any;
+  toggles = false;
   @Input() did: string;
-
-  //  @Input() lang?: any;
+  triggerHiden = false;
+  configUi: ConfigUiModel;
 
   constructor(private readonly store: Store<RootStoreState.AppState>) {
+    this.store.pipe(select(InitWebChatSelector.selectIsTrigger)).subscribe(resp => this.triggerHiden = resp);
+    this.store.pipe(select(InitWebChatSelector.selectIsOpen))
+      .subscribe(resp => {
+        this.toggles = resp;
+      });
   }
 
   ngAfterViewInit(): void {
-
   }
 
   ngOnInit(): void {
-    // this._compiler.clearCache();
-    this.store.pipe(select(InitWebChatSelector.selectIsTrigger)).subscribe(resp => this.triggerHidden = resp);
     const reviver = (key, value) => {
       if (typeof value === 'string'
         && value.indexOf('function ') === 0) {
@@ -52,22 +52,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       }
       return value;
     };
-
-
-    // El join se hace con el userId
-    // El mscdn es el USERID
-    // El id es ramdom
-    // El contenido son todos los parametros como primer mensaje
-    if (!this.triggerHidden) {
-      this.store.pipe(select(RouterSelector.selectLoginOpen)).subscribe(resp => this.loginOpen = resp);
-      this.store.pipe(select(RouterSelector.selectWidgetOpen)).subscribe(resp => this.widgetOpen = resp);
-      this.store.pipe(select(RouterSelector.selectConfigOpen)).subscribe(resp => this.configOpen = resp);
-      this.store.pipe(select(InitWebChatSelector.selectIsOpen)).subscribe(resp => this.toggles = resp);
-    }
-
     const setting = JSON.parse(this.setting, reviver);
-    const configUi: ConfigUiModel = {
+    this.configUi = {
       did: this.did,
+      showTeam: setting.team_enabled,
       button: {
         enabled: setting.button_enabled,
         label: setting.login_text,
@@ -105,35 +93,78 @@ export class AppComponent implements OnInit, AfterViewInit {
       },
       preserveHistory: setting.preserve_history,
       geoActive: setting.geo_active,
-      bgMenu: setting.bg_menu
+      bgMenu: setting.bg_menu,
     };
-    const formInput: InputUiModel[] = [];
-    setting.login_fields.forEach(row => {
-      const input: InputUiModel = {};
-      input.fontColor = setting.field_font_color;
-      if (typeof row === 'string') {
-        (row === setting.user_field) ? input.userField = true : input.userField = false;
-        (row === setting.name_field) ? input.nameField = true : input.nameField = false;
-        input.label = row;
-        input.required = false;
-        input.placeholder = row;
-      } else {
-        (row.label === setting.user_field) ? input.userField = true : input.userField = false;
-        (row.label === setting.name_field) ? input.nameField = true : input.nameField = false;
-        input.label = row.label;
-        input.required = (row.required === undefined) ? false : row.required;
-        input.choices = row.choices;
-        input.validation = row.validation;
-        input.placeholder = (row.placeholder === undefined || row.placeholder === null) ? row.label : row.placeholder;
-      }
-      formInput.push(input);
-    });
-    configUi.input = formInput;
-    this.store.dispatch(ConfigAction.loadConfig({payload: configUi}));
+
+
+    if(setting.init_button_prefer !== undefined && setting.init_button_prefer !== null ) {
+      const buttonConfigLogin: ButtonOptionUiModel[] = [];
+      setting.init_button_prefer.forEach(button => {
+          const obj: ButtonOptionUiModel = {
+            // colorButtonBg: button.button_bg,
+            colorButtonBg: `linear-gradient(140deg, ${button.button_bg} 40%, #000 200%)`,
+            colorText: button.button_color,
+            label: button.button_text,
+            enabled: button.button_enabled
+          };
+        const formInput: InputUiModel[] = [];
+          button.button_login_field.forEach(row => {
+            const input: InputUiModel = {};
+            input.fontColor = setting.field_font_color;
+            if (typeof row === 'string') {
+              (row === setting.user_field) ? input.userField = true : input.userField = false;
+              (row === setting.name_field) ? input.nameField = true : input.nameField = false;
+              input.label = row;
+              input.required = false;
+              input.placeholder = row;
+            } else {
+              (row.label === setting.user_field) ? input.userField = true : input.userField = false;
+              (row.label === setting.name_field) ? input.nameField = true : input.nameField = false;
+              input.label = row.label;
+              input.required = (row.required === undefined) ? false : row.required;
+              input.choices = row.choices;
+              input.validation = row.validation;
+              input.placeholder = (row.placeholder === undefined || row.placeholder === null) ? row.label : row.placeholder;
+            }
+            formInput.push(input);
+          });
+          obj.input = formInput;
+          buttonConfigLogin.push(obj);
+      });
+      this.configUi.buttonPrefer = buttonConfigLogin;
+      this.store.dispatch(RouterAction.initFirstButton());
+      this.store.dispatch(RouterAction.buttonLogin());
+    } else {
+      const formInput: InputUiModel[] = [];
+      setting.login_fields.forEach(row => {
+        const input: InputUiModel = {};
+        input.fontColor = setting.field_font_color;
+        if (typeof row === 'string') {
+          (row === setting.user_field) ? input.userField = true : input.userField = false;
+          (row === setting.name_field) ? input.nameField = true : input.nameField = false;
+          input.label = row;
+          input.required = false;
+          input.placeholder = row;
+        } else {
+          (row.label === setting.user_field) ? input.userField = true : input.userField = false;
+          (row.label === setting.name_field) ? input.nameField = true : input.nameField = false;
+          input.label = row.label;
+          input.required = (row.required === undefined) ? false : row.required;
+          input.choices = row.choices;
+          input.validation = row.validation;
+          input.placeholder = (row.placeholder === undefined || row.placeholder === null) ? row.label : row.placeholder;
+        }
+        formInput.push(input);
+      });
+      this.configUi.input = formInput;
+      this.store.dispatch(RouterAction.initFirstLogin());
+      this.store.dispatch(RouterAction.loginOpen());
+    }
+    // this.configUi.input = formInput;
+    this.store.dispatch(ConfigAction.loadConfig({payload: this.configUi}));
   }
 
   @Input() public init = () => {
-    this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
     this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
       .subscribe(resp => {
         this.store.subscribe(state => {
@@ -141,6 +172,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         });
       });
     // this.store.dispatch(InitWebChatAction.open({payload: true}));
+    this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
   };
   @Input() public toggle = () => {
     this.store.dispatch(InitWebChatAction.open({payload: !this.toggles}));

@@ -11,7 +11,8 @@
            class="c-input"
            formControlName="input_{{i}}"
            type="text"/>
-    <p *ngIf="loginState && form.getError('messageValidation', [('input_' + i)]) as error" class="c-input__error-message">
+    <p *ngIf="loginState && form.getError('messageValidation', [('input_' + i)]) as error"
+       class="c-input__error-message">
       {{ error }}
     </p>
     <p *ngIf="loginState && form.getError('required', [('input_' + i)]) as error" class="c-input__error-message">

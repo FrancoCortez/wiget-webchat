@@ -13,7 +13,6 @@ export class TriggerButtonComponent implements OnInit {
 
   public hidden = false;
   public mobileHidden = false;
-  public triggerHidden = false;
 
   backgroundColor = '';
 

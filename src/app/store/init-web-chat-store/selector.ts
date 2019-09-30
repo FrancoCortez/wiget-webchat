@@ -6,22 +6,12 @@ const selectInitWebChatState = (state: AppState) => state.initWebChat;
 
 export const selectIsOpen = createSelector(
   selectInitWebChatState,
-  (state: State): boolean => {
-    if (state !== undefined && state !== null) {
-      return state.open;
-    }
-    return state.open;
-  }
+  (state: State): boolean => state.open
 );
 
 export const selectIsTrigger = createSelector(
   selectInitWebChatState,
-  (state: State): boolean => {
-    if (state !== undefined && state !== null) {
-      return state.trigger;
-    }
-    return state.trigger;
-  }
+  (state: State): boolean => state.trigger
 );
 
 export const selectIdUser = createSelector(

@@ -21,7 +21,8 @@
                size="10000000" type="file">
         <a (click)="attachmentInput.click();" href="javascript:void(0)"><span class="icon-attachment"></span></a>
         <a (click)="displayPanelEmoji()" href="javascript:void(0)"><span class="icon-emoji"></span></a>
-        <a (click)="sendMessage(form.value)" [ngClass]="{'c-send-button--ready': (form.controls['sendMessage'].value !== '') && (form.controls['sendMessage'].value !== null)}"
+        <a (click)="sendMessage(form.value)"
+           [ngClass]="{'c-send-button--ready': (form.controls['sendMessage'].value !== '') && (form.controls['sendMessage'].value !== null)}"
            class="c-send-button"
            href="javascript:void(0)"><span class="icon-send"></span></a>
       </div>

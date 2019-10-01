@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {
   ConfigAction,
@@ -8,16 +8,15 @@ import {
   InitWebChatSelector,
   LoginAction,
   RootStoreState,
-  RouterAction,
-  RouterSelector
+  RouterAction
 } from './store';
 import {ConfigUiModel} from './models/ui-model/config.ui-model';
 import {InputUiModel} from './models/ui-model/input.ui-model';
-import {filter} from 'rxjs/operators';
+import {delay, filter} from 'rxjs/operators';
 import {MessageDto} from './models/message/message.dto';
 import {v4 as uuid} from 'uuid';
-import {buttonLogin} from "./store/router-store/actions";
 import {ButtonOptionUiModel} from "./models/ui-model/button-option.ui-model";
+import {ConfigService} from "./services/config.service";
 
 
 @Component({
@@ -25,25 +24,88 @@ import {ButtonOptionUiModel} from "./models/ui-model/button-option.ui-model";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
   @Input() setting: any;
   toggles = false;
   @Input() did: string;
-  triggerHiden = false;
+  triggerHidden = false;
   configUi: ConfigUiModel;
 
-  constructor(private readonly store: Store<RootStoreState.AppState>) {
-    this.store.pipe(select(InitWebChatSelector.selectIsTrigger)).subscribe(resp => this.triggerHiden = resp);
+  @Input() remote: boolean;
+
+  constructor(private readonly store: Store<RootStoreState.AppState>,
+              private readonly configService: ConfigService,
+              private cd: ChangeDetectorRef) {
+    this.store.pipe(select(InitWebChatSelector.selectIsTrigger)).subscribe(resp => this.triggerHidden = resp);
     this.store.pipe(select(InitWebChatSelector.selectIsOpen))
       .subscribe(resp => {
         this.toggles = resp;
       });
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
+    if(this.remote) {
+      this.initConfigRemote();
+    } else {
+      this.initConfigLocal();
+    }
   }
 
-  ngOnInit(): void {
+  @Input() public init = () => {
+    this.store.pipe(select(ConfigSelector.selectConfig),
+      delay(1000),
+      filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
+      .subscribe(resp => {
+        this.store.subscribe(state => {
+          localStorage.setItem('state', JSON.stringify(state));
+        });
+      });
+    this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
+  };
+  @Input() public toggle = () => {
+    this.store.dispatch(InitWebChatAction.open({payload: !this.toggles}));
+  };
+  @Input() public visibilityWC = (show: boolean) => {
+    this.store.dispatch(InitWebChatAction.triggerInit({payload: show}));
+    this.store.dispatch(InitWebChatAction.open({payload: show}));
+  };
+  @Input() public expandChat = () => {
+    this.store.dispatch(InitWebChatAction.open({payload: true}));
+  };
+
+  @Input() public collapseChat = () => {
+    this.store.dispatch(InitWebChatAction.open({payload: false}));
+  };
+  @Input() public logout = () => {
+    this.store.dispatch(ConversationAction.leaveChat());
+  };
+  @Input() public startChat = (data: any) => {
+    const message: MessageDto = {
+      msisdn: (data.msisdn === undefined || data.msisdn === null || data.msisdn === '') ? uuid() : data.msisdn,
+      isAttachment: false,
+      type: 'text',
+      id: uuid(),
+      name: (data.name === undefined || data.name === null || data.name === '') ? 'Anonimo' : data.name,
+      attachment: null,
+      timestamp: new Date(),
+      content: data.content,
+      idUser: data.idUser
+    };
+    message.content = `\n Nombre: ${message.name} \n ${data.content}`;
+    this.store.dispatch(LoginAction.login({payload: message}));
+    this.expandChat();
+  }
+
+  @Input() public initChatWithAgent = (data: string) => {
+    this.store.dispatch(InitWebChatAction.loadIdUser({payload: data}));
+    this.init();
+    this.expandChat();
+  }
+
+  /**
+   * LocalConfig
+   */
+  private initConfigLocal () {
     const reviver = (key, value) => {
       if (typeof value === 'string'
         && value.indexOf('function ') === 0) {
@@ -53,6 +115,19 @@ export class AppComponent implements OnInit, AfterViewInit {
       return value;
     };
     const setting = JSON.parse(this.setting, reviver);
+    this.generateConfig(setting);
+  }
+
+  /**
+   * Remote config
+   */
+  private initConfigRemote() {
+    this.configService.getConfig(this.did).subscribe(resp => {
+      this.generateConfig(resp);
+    });
+  }
+
+  private generateConfig(setting: any) {
     this.configUi = {
       did: this.did,
       showTeam: setting.team_enabled,
@@ -94,42 +169,41 @@ export class AppComponent implements OnInit, AfterViewInit {
       preserveHistory: setting.preserve_history,
       geoActive: setting.geo_active,
       bgMenu: setting.bg_menu,
+      question: setting.question,
     };
-
-
-    if(setting.init_button_prefer !== undefined && setting.init_button_prefer !== null ) {
+    if (setting.init_button_prefer !== undefined && setting.init_button_prefer !== null) {
       const buttonConfigLogin: ButtonOptionUiModel[] = [];
       setting.init_button_prefer.forEach(button => {
-          const obj: ButtonOptionUiModel = {
-            // colorButtonBg: button.button_bg,
-            colorButtonBg: `linear-gradient(140deg, ${button.button_bg} 40%, #000 200%)`,
-            colorText: button.button_color,
-            label: button.button_text,
-            enabled: button.button_enabled
-          };
+        const obj: ButtonOptionUiModel = {
+          // colorButtonBg: button.button_bg,
+          colorButtonBg: `linear-gradient(140deg, ${button.button_bg} 40%, #000 200%)`,
+          colorText: button.button_color,
+          label: button.button_text,
+          enabled: button.button_enabled
+        };
         const formInput: InputUiModel[] = [];
-          button.button_login_field.forEach(row => {
-            const input: InputUiModel = {};
-            input.fontColor = setting.field_font_color;
-            if (typeof row === 'string') {
-              (row === setting.user_field) ? input.userField = true : input.userField = false;
-              (row === setting.name_field) ? input.nameField = true : input.nameField = false;
-              input.label = row;
-              input.required = false;
-              input.placeholder = row;
-            } else {
-              (row.label === setting.user_field) ? input.userField = true : input.userField = false;
-              (row.label === setting.name_field) ? input.nameField = true : input.nameField = false;
-              input.label = row.label;
-              input.required = (row.required === undefined) ? false : row.required;
-              input.choices = row.choices;
-              input.validation = row.validation;
-              input.placeholder = (row.placeholder === undefined || row.placeholder === null) ? row.label : row.placeholder;
-            }
-            formInput.push(input);
-          });
-          obj.input = formInput;
-          buttonConfigLogin.push(obj);
+        button.button_login_field.forEach(row => {
+          const input: InputUiModel = {};
+          input.fontColor = setting.field_font_color;
+          if (typeof row === 'string') {
+            (row === setting.user_field) ? input.userField = true : input.userField = false;
+            (row === setting.name_field) ? input.nameField = true : input.nameField = false;
+            input.label = row;
+            input.required = false;
+            input.placeholder = row;
+          } else {
+            (row.label === setting.user_field) ? input.userField = true : input.userField = false;
+            (row.label === setting.name_field) ? input.nameField = true : input.nameField = false;
+            input.label = row.label;
+            input.required = (row.required === undefined) ? false : row.required;
+            input.choices = row.choices;
+            input.validation = row.validation;
+            input.placeholder = (row.placeholder === undefined || row.placeholder === null) ? row.label : row.placeholder;
+          }
+          formInput.push(input);
+        });
+        obj.input = formInput;
+        buttonConfigLogin.push(obj);
       });
       this.configUi.buttonPrefer = buttonConfigLogin;
       this.store.dispatch(RouterAction.initFirstButton());
@@ -162,56 +236,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
     // this.configUi.input = formInput;
     this.store.dispatch(ConfigAction.loadConfig({payload: this.configUi}));
-  }
-
-  @Input() public init = () => {
-    this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
-      .subscribe(resp => {
-        this.store.subscribe(state => {
-          localStorage.setItem('state', JSON.stringify(state));
-        });
-      });
-    // this.store.dispatch(InitWebChatAction.open({payload: true}));
-    this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
-  };
-  @Input() public toggle = () => {
-    this.store.dispatch(InitWebChatAction.open({payload: !this.toggles}));
-  };
-  @Input() public visibilityWC = (show: boolean) => {
-    this.store.dispatch(InitWebChatAction.triggerInit({payload: show}));
-    this.store.dispatch(InitWebChatAction.open({payload: show}));
-  };
-  @Input() public expandChat = () => {
-    this.store.dispatch(InitWebChatAction.open({payload: true}));
-  };
-
-  @Input() public collapseChat = () => {
-    this.store.dispatch(InitWebChatAction.open({payload: false}));
-  };
-  @Input() public logout = () => {
-    this.store.dispatch(ConversationAction.leaveChat());
-  };
-  @Input() public startChat = (data: any) => {
-    const message: MessageDto = {
-      msisdn: (data.msisdn === undefined || data.msisdn === null || data.msisdn === '') ? uuid() : data.msisdn,
-      isAttachment: false,
-      type: 'text',
-      id: uuid(),
-      name: (data.name === undefined || data.name === null || data.name === '') ? 'Anonimo' : data.name,
-      attachment: null,
-      timestamp: new Date(),
-      content: data.content,
-      idUser: data.idUser
-    };
-    message.content = `\n Nombre: ${message.name} \n ${data.content}`;
-    this.store.dispatch(LoginAction.login({payload: message}));
-    this.expandChat();
-  }
-
-  @Input() public initChatWithAgent = (data: string) => {
-    this.store.dispatch(InitWebChatAction.loadIdUser({payload: data}));
-    this.init();
-    this.expandChat();
+    this.cd.detectChanges();
+    this.cd.markForCheck();
   }
 
 }

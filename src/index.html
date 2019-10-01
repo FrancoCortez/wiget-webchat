@@ -11,128 +11,15 @@
   <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
 </head>
 <body>
-<app-widget-root did="AtencionChattigo@WC"></app-widget-root>
+<!--
+<app-widget-root remote="true" did="santotomas@WC" ></app-widget-root>
+<app-widget-root remote="true" did="afphabitat@WC" ></app-widget-root>
+<app-widget-root remote="true" did="AtencionChattigo@WC" ></app-widget-root>
+-->
+<app-widget-root remote="true" did="santotomas@WC" ></app-widget-root>
 <script>
-    var config = {
-        header_text: 'Web Chat',
-        header_status: 'En linea',
-        agent_name_enabled: true,
-        team_enabled: true,
-        logo: 'https://cdn.chattigo.com/assets/img/isotipo-grey.svg',
-        caption_title: 'Inicia una conversación',
-        caption_title_color: '#424243',
-        caption_subtitle: 'Estaremos gustosos de atender tus dudas y/o consultas.',
-        caption_subtitle_color: '#424243',
-        welcome_text: 'Bienvenido al servicio de chat web de AFP Habitat',
-        // subtitle_text: '',
-        message_placeholder: 'Escriba un mensaje...',
-        login_fields: [
-            { label: 'Rut', placeholder: 'Ingresa tu documento de Identidad o RUC'}
-        ],
-        send_color: '#cb1e74',
-        header_background_color: '#c1012a',
-        header_font_color: '#ffffff',
-        locale: 'es',
-        // name_field: 'Rut',
-        user_field: 'Rut',
-        button_enabled: true,
-        button_login_color: 'white',
-        button_login_bg: '#c1012a',
-        login_text: 'Iniciar sesión',
-        field_font_color: '#424243',
-        welcome_color: '#ffffff',
-        subtitle_color: '#ffffff',
-        preserve_history: false,
-        bg_menu: '#1f1f1f',
-        geo_active: true,
-        init_button_prefer: [{
-            button_bg: '#c1012a',
-            button_text: 'Empresa',
-            button_color: 'white',
-            button_enabled: true,
-            button_login_field: [
-                { label: 'Razon Social', placeholder: 'Ingresa el nombre de la empresa' },
-                { label: 'Rut', placeholder: 'Rut de la empresa' }
-            ]
-        },{
-            button_bg: '#c1012a',
-            button_text: 'Persona',
-            button_color: 'white',
-            button_enabled: true,
-            button_login_field: [{ label: 'Rut', placeholder: 'Ingresa tu documento de Identidad o RUC', required: true }]
-        }]
-    };
-
-    var i18n = {
-        es: {
-            header_text: 'Web Chat',
-            header_status: 'En linea',
-            caption_title: 'Inicia una conversación',
-            caption_subtitle: 'El equipo usualmente responde en pocas horas.',
-            welcome_text: 'Bienvenido al servicio de web chat de nuestra página.',
-            subtitle_text: 'SUBTITULO DE PRUEBA',
-            message_placeholder: 'Escriba un mensaje...',
-            login_text: 'Iniciar sesión',
-            login_fields: [
-                'Nombre',
-                {label: 'Correo', placeholder: 'Escriba su correo'}
-            ]
-        },
-        en: {
-            header_text: 'Web Chat',
-            header_status: 'Online',
-            caption_title: 'Start a conversation\n',
-            caption_subtitle: 'The team usually responds in a few hours.',
-            welcome_text: 'The team usually responds in a few hours.',
-            subtitle_text: 'TEST SUBTITLE',
-            message_placeholder: 'Write a message...',
-            login_text: 'Log in',
-            login_fields: [
-                'Name',
-                {label: 'Mail', placeholder: 'Enter your email'}
-            ]
-        },
-        ru: {
-            header_text: 'Web Chat',
-            header_status: 'В линии',
-            caption_title: 'Начать разговор',
-            caption_subtitle: 'Команда обычно отвечает через несколько часов.',
-            welcome_text: 'Добро пожаловать на наш веб-чат.',
-            subtitle_text: 'СУБТИТР ТЕСТА',
-            message_placeholder: 'Написать сообщение...',
-            login_text: 'Войти в систему',
-        },
-        pt: {
-            header_text: 'Web Chat',
-            header_status: 'Em linha',
-            caption_title: 'Iniciar uma conversa',
-            caption_subtitle: 'A equipe geralmente responde em algumas horas.',
-            welcome_text: 'Bem-vindo ao serviço de bate-papo na web da nossa página.',
-            subtitle_text: 'LEGENDA DO TESTE',
-            message_placeholder: 'Escreva uma mensagem ...',
-            login_text: 'Iniciar sessão'
-        },
-        zh: {
-            header_text: 'Web Chat',
-            header_status: '在線',
-            caption_title: '開始對話',
-            caption_subtitle: '團隊通常會在幾個小時內做出回應。',
-            welcome_text: '歡迎使用我們頁面的網絡聊天服務。',
-            subtitle_text: '測試字幕',
-            message_placeholder: '寫一條消息...',
-            login_text: '登錄'
-        }
-    };
-    var replacer = function(key, value) {
-        if (typeof value === 'function') {
-            return value.toString();
-        }
-        return value;
-    };
     widget = document.querySelector('app-widget-root');
-    widget.setAttribute('setting', JSON.stringify(config, replacer, 2));
     document.addEventListener('DOMContentLoaded', function () {
-        widget = document.querySelector('app-widget-root');
         widget.init();
     });
 </script>

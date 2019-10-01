@@ -21,5 +21,6 @@ export interface ConfigUiModel {
   geoActive?: boolean;
   did?: string;
   showTeam?: boolean;
-  buttonPrefer? :ButtonOptionUiModel[];
+  buttonPrefer?: ButtonOptionUiModel[];
+  question?: string;
 }

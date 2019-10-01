@@ -4,7 +4,7 @@ import {ConfigSelector, InitWebChatAction, InitWebChatSelector, LoginAction, Roo
 import {InputComponent} from '../../components/input/input.component';
 import {FormGroup} from '@angular/forms';
 import {LoginDto} from '../../models/login/login.dto';
-import {map} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 import {MessageDto} from '../../models/message/message.dto';
 import {v4 as uuid} from 'uuid';
 import {animate, state, style, transition, trigger} from "@angular/animations";
@@ -46,8 +46,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   selectIsOpen: Subscription = new Subscription();
   selectIdUser: Subscription = new Subscription();
   selectConfig: Subscription = new Subscription();
+
   constructor(private readonly store: Store<RootStoreState.AppState>, private cd: ChangeDetectorRef) {
   }
+
   ngOnDestroy(): void {
     this.selectIsOpen.unsubscribe();
     this.selectIdUser.unsubscribe();
@@ -62,7 +64,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.cd.detectChanges();
         this.cd.markForCheck();
       });
-    this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig)).subscribe(resp => {
+    this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig))
+      .pipe(filter(fill => fill.caption !== undefined))
+      .subscribe(resp => {
       this.headerColor = resp.caption.headerBackgroundColor;
       this.teamHidden = resp.showTeam;
     });

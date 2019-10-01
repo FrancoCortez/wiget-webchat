@@ -25,6 +25,6 @@ export const selectButtonOpen = createSelector(
 export const selectFirstPage = createSelector(
   selector,
   (state: State): any => {
-    return { button: state.firstButton, login: state.firstLogin }
+    return {button: state.firstButton, login: state.firstLogin}
   }
 );

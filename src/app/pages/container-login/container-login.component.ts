@@ -1,6 +1,7 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {InitWebChatSelector, RootStoreState, RouterSelector} from "../../store";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-container-login',
@@ -16,6 +17,12 @@ export class ContainerLoginComponent implements OnInit, OnDestroy {
   public toggles = false;
   public triggerHidden = false;
 
+  selectIsOpen: Subscription = new Subscription();
+  selectIsTrigger: Subscription = new Subscription();
+  selectLoginOpen: Subscription = new Subscription();
+  selectButtonOpen: Subscription = new Subscription();
+  selectWidgetOpen: Subscription = new Subscription();
+  selectConfigOpen: Subscription = new Subscription();
   constructor(private readonly store: Store<RootStoreState.AppState>,
               private cd: ChangeDetectorRef) {
   }
@@ -23,61 +30,52 @@ export class ContainerLoginComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.cd.checkNoChanges();
     this.cd.detach();
+    this.selectIsOpen.unsubscribe();
+    this.selectIsTrigger.unsubscribe();
+    this.selectLoginOpen.unsubscribe();
+    this.selectButtonOpen.unsubscribe();
+    this.selectWidgetOpen.unsubscribe();
+    this.selectConfigOpen.unsubscribe();
   }
 
   ngOnInit() {
     this.cd.reattach();
-    this.store.pipe(select(InitWebChatSelector.selectIsOpen))
+    this.selectIsOpen = this.store.pipe(select(InitWebChatSelector.selectIsOpen))
       .subscribe(resp => {
-        //this.cd.detectChanges();
         this.toggles = resp;
         this.cd.detectChanges();
         this.cd.markForCheck();
-        //this.cd.detach();
-        //this.cd.checkNoChanges();
       });
-    this.store.pipe(select(InitWebChatSelector.selectIsTrigger))
+    this.selectIsTrigger = this.store.pipe(select(InitWebChatSelector.selectIsTrigger))
       .subscribe(resp => {
-        //this.cd.detectChanges();
         this.triggerHidden = resp;
         this.cd.detectChanges();
         this.cd.markForCheck();
-        //this.cd.detach();
-        //this.cd.checkNoChanges();
       });
-    this.store.pipe(select(RouterSelector.selectLoginOpen))
+    this.selectLoginOpen = this.store.pipe(select(RouterSelector.selectLoginOpen))
       .subscribe(resp => {
-        //this.cd.detectChanges();
         this.loginOpen = resp;
         this.cd.detectChanges();
-        //this.cd.detach();
         this.cd.markForCheck();
-        //this.cd.checkNoChanges();
       });
-    this.store.pipe(select(RouterSelector.selectButtonOpen))
+    this.selectButtonOpen = this.store.pipe(select(RouterSelector.selectButtonOpen))
       .subscribe(resp => {
-        //this.cd.detectChanges();
         this.buttonLogin = resp;
         this.cd.detectChanges();
         this.cd.markForCheck();
-        //this.cd.checkNoChanges();
       });
-    this.store.pipe(select(RouterSelector.selectWidgetOpen))
+    this.selectWidgetOpen = this.store.pipe(select(RouterSelector.selectWidgetOpen))
       .subscribe(resp => {
-        //this.cd.detectChanges();
         this.widgetOpen = resp;
         this.configOpen = resp;
         this.cd.detectChanges();
         this.cd.markForCheck();
-        //this.cd.checkNoChanges();
       });
-    this.store.pipe(select(RouterSelector.selectConfigOpen))
+    this.selectConfigOpen = this.store.pipe(select(RouterSelector.selectConfigOpen))
       .subscribe(resp => {
-        //this.cd.detectChanges();
         this.configOpen = resp;
         this.cd.detectChanges();
         this.cd.markForCheck();
-        //this.cd.checkNoChanges();
       });
 
   }

@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ConfigSelector, ConversationAction, LoginSelector, RootStoreState} from '../../store';
 import {MessageUiModel} from '../../models/ui-model/message.ui.model';
@@ -10,14 +10,14 @@ import {TypeFileEnum} from '../../models/utils/type-file.enum';
 import {MessageDto} from '../../models/message/message.dto';
 import {filter} from 'rxjs/operators';
 import {FormatService} from '../../services/format.service';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-input-send',
   templateUrl: './input-send.component.html',
   styleUrls: [],
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputSendComponent implements OnInit, AfterViewInit {
+export class InputSendComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('send', {static: false}) sendElement: ElementRef;
   @ViewChild('attachmentInput', {static: false}) sendAttachmentElement: ElementRef;
   sendConfig: MessageSendUiModel;
@@ -61,6 +61,10 @@ export class InputSendComponent implements OnInit, AfterViewInit {
     },
   };
 
+  selectDid: Subscription = new Subscription();
+  selectConfig: Subscription = new Subscription();
+  selectLogin: Subscription = new Subscription();
+
   constructor(private readonly store: Store<RootStoreState.AppState>,
               private readonly format: FormatService,
               private readonly uploadFileClient: UploadFileClient,
@@ -73,14 +77,19 @@ export class InputSendComponent implements OnInit, AfterViewInit {
     this.enableSend();
   }
 
+  ngOnDestroy(): void {
+    this.selectDid.unsubscribe();
+    // this.selectConfig.unsubscribe();
+    this.selectLogin.unsubscribe();
+  }
   ngOnInit() {
     this.form = new FormGroup({});
     this.form.addControl('sendMessage', new FormControl());
     this.form.addControl('uploadInput', new FormControl());
-    this.store.pipe(select(ConfigSelector.selectDid)).subscribe(resp => this.did = resp);
+    this.selectDid = this.store.pipe(select(ConfigSelector.selectDid)).subscribe(resp => this.did = resp);
     this.eventScrollForTextArea();
-    this.store.pipe(select(ConfigSelector.selectConfig)).subscribe(resp => this.sendConfig = resp.messageSend);
-    this.store.pipe(select(LoginSelector.selectLogin))
+    this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig)).subscribe(resp => this.sendConfig = resp.messageSend);
+    this.selectLogin = this.store.pipe(select(LoginSelector.selectLogin))
       .pipe(filter(fill => fill !== null))
       .subscribe((resp: MessageDto) => this.loginResp = resp);
   }
@@ -189,7 +198,7 @@ export class InputSendComponent implements OnInit, AfterViewInit {
       }
     }
     // tslint:disable-next-line:max-line-length
-    this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
+    this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
       .subscribe(resp => {
         this.store.subscribe(state => {
           localStorage.setItem('state', JSON.stringify(state));

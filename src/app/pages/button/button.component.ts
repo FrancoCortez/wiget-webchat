@@ -1,5 +1,4 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {ButtonUiModel} from "../../models/ui-model/button.ui-model";
 import {select, Store} from "@ngrx/store";
 import {
   ConfigAction,
@@ -12,8 +11,8 @@ import {
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ButtonOptionUiModel} from "../../models/ui-model/button-option.ui-model";
 import {ConfigUiModel} from "../../models/ui-model/config.ui-model";
-import {InputUiModel} from "../../models/ui-model/input.ui-model";
 import {Subscription} from "rxjs";
+import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'app-button-page',
@@ -40,15 +39,18 @@ import {Subscription} from "rxjs";
 
 })
 export class ButtonComponent implements OnInit, OnDestroy {
-  public buttonConfig: ButtonOptionUiModel[];
+  public buttonConfig?: ButtonOptionUiModel[];
   public hidden = true;
-  private config: ConfigUiModel;
-  headerColor: string;
+  headerColor?: string;
   selectIsOpen: Subscription = new Subscription();
   selectConfig: Subscription = new Subscription();
   teamHidden = false;
+  question = '';
+  private config?: ConfigUiModel;
+
   constructor(private readonly store: Store<RootStoreState.AppState>, private cd: ChangeDetectorRef) {
   }
+
   ngOnDestroy(): void {
     this.selectIsOpen.unsubscribe();
     this.selectConfig.unsubscribe();
@@ -61,16 +63,15 @@ export class ButtonComponent implements OnInit, OnDestroy {
         this.cd.detectChanges();
         this.cd.markForCheck();
       });
-    this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig)).subscribe(resp => {
+    this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig))
+      .pipe(filter(fill => fill.caption !== undefined))
+      .subscribe(resp => {
       this.headerColor = resp.caption.headerBackgroundColor;
+      this.teamHidden = resp.showTeam;
       this.buttonConfig = resp.buttonPrefer;
-      this.teamHidden = resp.showTeam;
       this.config = resp;
-    });
-
-    this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig)).subscribe(resp => {
-      this.headerColor = resp.caption.headerBackgroundColor;
-      this.teamHidden = resp.showTeam;
+      this.question = (resp.question === undefined) ? '' : resp.question;
+      this.cd.detectChanges();
     });
   }
 
@@ -80,7 +81,6 @@ export class ButtonComponent implements OnInit, OnDestroy {
   }
 
   public navegate(index: number) {
-    // const input: InputUiModel =
     this.config.input = this.config.buttonPrefer[index].input;
     this.store.dispatch(ConfigAction.updateInputConfig({payload: this.config}));
     this.store.dispatch(RouterAction.loginOpen());

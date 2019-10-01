@@ -1,17 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {InputUiModel} from '../../models/ui-model/input.ui-model';
-import {ConfigAction, LoginSelector, RootStoreState} from '../../store';
+import {ConfigAction, ConfigSelector, LoginSelector, RootStoreState} from '../../store';
 import {select, Store} from '@ngrx/store';
 import {selectConfig} from '../../store/config-store/selector';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {validationGeneric, validationOfNull} from '../../validation/parametric.validation';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: []
 })
-export class InputComponent implements OnInit {
+export class InputComponent implements OnInit, OnDestroy {
   /**
    * Input model for configuration
    */
@@ -19,12 +20,18 @@ export class InputComponent implements OnInit {
   public form: FormGroup;
   public loginState = false;
 
+  loginStateSub: Subscription = new Subscription();
+  selectConfig: Subscription = new Subscription();
   constructor(private readonly store: Store<RootStoreState.AppState>) {
+  }
+  ngOnDestroy(): void {
+    this.loginStateSub.unsubscribe();
+    this.selectConfig.unsubscribe();
   }
 
   ngOnInit() {
-    this.store.pipe(select(LoginSelector.loginState)).subscribe(resp => this.loginState = resp);
-    this.store.pipe(select(selectConfig)).subscribe(resp => {
+    this.loginStateSub = this.store.pipe(select(LoginSelector.loginState)).subscribe(resp => this.loginState = resp);
+    this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig)).subscribe(resp => {
       let count = 0;
       this.form = new FormGroup({});
       resp.input.forEach(row => {

@@ -11,7 +11,8 @@ import {
   InitWebChatAction,
   LoginAction,
   RootStoreState,
-  RouterAction, RouterSelector
+  RouterAction,
+  RouterSelector
 } from '../index';
 
 @Injectable()
@@ -28,36 +29,6 @@ export class ConversationStoreEffects {
           catchError(error => of(featureActions.sendMessageFailure({payload: error})))
         );
     })
-    )
-  );
-
-  leaveChat$: Observable<Action> = createEffect(() => this.actions$.pipe(
-    ofType(featureActions.leaveChat),
-    mergeMap(() => this.messageService.leaveChat()
-      .pipe(
-        map((message) => {
-          if(this.firstPageElection.button) {
-            console.log(this.firstPageElection.button);
-            this.store.dispatch(RouterAction.buttonLogin());
-          } else if (this.firstPageElection.login) {
-            console.log(this.firstPageElection.login);
-            this.store.dispatch(RouterAction.loginOpen());
-          }
-          this.store.dispatch(LoginAction.leaveLogin());
-          this.store.dispatch(featureActions.cleanConversation());
-          localStorage.removeItem('state');
-          localStorage.clear();
-          this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
-          this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
-            .subscribe(resp => {
-              this.store.subscribe(state => {
-                localStorage.setItem('state', JSON.stringify(state));
-              });
-            });
-          return featureActions.leaveChatSuccess();
-        }),
-        catchError(error => of(featureActions.leaveChatFailure({payload: error})))
-      ))
     )
   );
   audio = null;
@@ -80,6 +51,34 @@ export class ConversationStoreEffects {
     )
   );
   private firstPageElection: any;
+  leaveChat$: Observable<Action> = createEffect(() => this.actions$.pipe(
+    ofType(featureActions.leaveChat),
+    mergeMap(() => this.messageService.leaveChat()
+      .pipe(
+        map((message) => {
+          if (this.firstPageElection.button) {
+            this.store.dispatch(RouterAction.buttonLogin());
+          } else if (this.firstPageElection.login) {
+            this.store.dispatch(RouterAction.loginOpen());
+          }
+          this.store.dispatch(LoginAction.leaveLogin());
+          this.store.dispatch(featureActions.cleanConversation());
+          localStorage.removeItem('state');
+          localStorage.clear();
+          this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
+          this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
+            .subscribe(resp => {
+              this.store.subscribe(state => {
+                localStorage.setItem('state', JSON.stringify(state));
+              });
+            });
+          return featureActions.leaveChatSuccess();
+        }),
+        catchError(error => of(featureActions.leaveChatFailure({payload: error})))
+      ))
+    )
+  );
+
   constructor(private actions$: Actions,
               private readonly store: Store<RootStoreState.AppState>,
               private readonly messageService: MessageService) {

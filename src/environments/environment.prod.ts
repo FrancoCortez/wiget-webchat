@@ -1,7 +1,7 @@
-const globalBffServer = 'https://k8s.chattigo.com';
+const globalBffServer = 'https://channels.chattigo.com';
 export const environment = {
   production: false,
-  socketServer: 'https://k8s.chattigo.com',
+  socketServer: 'https://channels.chattigo.com',
   socketPath: '/webchat/socket.io/',
   socketTransports: 'websocket',
   bffServer: globalBffServer,

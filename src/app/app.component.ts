@@ -54,7 +54,8 @@ export class AppComponent implements OnInit {
   @Input() public init = () => {
     this.store.pipe(select(ConfigSelector.selectConfig),
       delay(1000),
-      filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
+      filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory),
+      )
       .subscribe(resp => {
         this.store.subscribe(state => {
           localStorage.setItem('state', JSON.stringify(state));

@@ -19,6 +19,7 @@ export const environment = {
   leaveChat: 'leave-chat',
 
   configProfile: 'qa',
+
   configPath: 'https://kops.chattigo.com/config'
 };
 

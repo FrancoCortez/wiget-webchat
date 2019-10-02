@@ -17,3 +17,14 @@ export const selectConfigOpen = createSelector(
   selector,
   (state: State): boolean => state.config
 );
+export const selectButtonOpen = createSelector(
+  selector,
+  (state: State): boolean => state.button
+);
+
+export const selectFirstPage = createSelector(
+  selector,
+  (state: State): any => {
+    return {button: state.firstButton, login: state.firstLogin}
+  }
+);

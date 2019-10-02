@@ -1,2 +1,5 @@
+<div *ngIf="loginEnabled && !fistLoading.login" style="margin-bottom: 20px;">
+  <a (click)="back()" [ngStyle]="{'color': configPanel.linkColor}" class="c-action-link">Volver</a>
+</div>
 <label [ngStyle]="{'color': caption.titleColor}" class="chattigo-widget-team__label">{{caption.title}}</label>
 <div [ngStyle]="{'color': caption.captionColor}" class="chattigo-widget-team__caption">{{caption.caption}}</div>

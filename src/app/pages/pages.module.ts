@@ -9,6 +9,8 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ValidateHtmlPipe} from '../validation/validate-html.pipe';
 import {PickerModule} from '@ctrl/ngx-emoji-mart';
 import {EmojiModule} from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import {ButtonComponent} from './button/button.component';
+import {ContainerLoginComponent} from './container-login/container-login.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import {EmojiModule} from '@ctrl/ngx-emoji-mart/ngx-emoji';
     WidgetConfigComponent,
     WidgetChatComponent,
     ContainerWidgetComponent,
-    ValidateHtmlPipe
+    ValidateHtmlPipe,
+    ButtonComponent,
+    ContainerLoginComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +33,9 @@ import {EmojiModule} from '@ctrl/ngx-emoji-mart/ngx-emoji';
     LoginComponent,
     WidgetConfigComponent,
     ContainerWidgetComponent,
-    ValidateHtmlPipe
+    ValidateHtmlPipe,
+    ButtonComponent,
+    ContainerLoginComponent
   ]
 })
 export class PagesModule {

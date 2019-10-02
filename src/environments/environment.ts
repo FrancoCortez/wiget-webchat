@@ -19,6 +19,10 @@ export const environment = {
   newMessage: 'newMessage',
   leaveChat: 'leave-chat',
 
+  configProfile: 'development',
+  // configPath: 'https://kops.chattigo.com/config'
+  configPath: 'http://localhost:8888'
+
 
 };
 // This file can be replaced during build by using the `fileReplacements` array.

@@ -3,7 +3,7 @@
   <img [src]="caption.src" class="chattigo-widget-header__image"/>
   <div class="chattigo-widget-header__agent-info">
     <label [ngStyle]="{'color': caption.headerFontColor}"
-           class="chattigo-widget-header__agent-info--name" [title]="caption.title">{{caption.title}}</label>
+           [title]="caption.title" class="chattigo-widget-header__agent-info--name">{{caption.title}}</label>
     <span [ngStyle]="{'color': caption.headerFontColor}"
           class="chattigo-widget-header__agent-info--status">{{caption.caption}}</span>
   </div>

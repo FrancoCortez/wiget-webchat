@@ -4,6 +4,7 @@ export interface State {
   open: boolean;
   trigger: boolean;
   error?: any;
+  idUser?: string;
 }
 
 

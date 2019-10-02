@@ -1,0 +1,26 @@
+<div *ngIf="!hidden" [@enterAnimationFade] class="chattigo-widget chattigo-widget--welcome">
+  <a (click)="toggleClose()" class="chattigo-widget__mobile-close-icon"><span class="icon-close"></span></a>
+  <div [ngStyle]="{'background-image': headerColor}" class="chattigo-widget-header__background"></div>
+  <app-header></app-header>
+  <div class="chattigo-widget-content">
+    <div class="chattigo-widget-team">
+      <app-widget-caption></app-widget-caption>
+      <app-team *ngIf="teamHidden"></app-team>
+    </div>
+    <div class="chattigo-widget-form" style="margin-top: 0px">
+      <p *ngIf="(question !== null && question.length !== 0)"
+         style="margin-top: 0px; text-align: center">{{question}}</p>
+      <div style="text-align: center">
+        <div *ngFor="let item of buttonConfig; let i = index">
+          <button (click)="navegate(i)" [disabled]="!item.enabled"
+                  [ngStyle]="{'background-image': item.colorButtonBg}" class="c-button"
+                  style="width: 100% !important; margin-top: 4px !important;">{{item.label}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-trigger-button></app-trigger-button>
+

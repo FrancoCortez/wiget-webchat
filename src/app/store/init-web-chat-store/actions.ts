@@ -7,3 +7,4 @@ export const openFailure = createAction('[openFailure] open-webchat feailure', p
 export const loadInitWeb = createAction('[loadInitWeb] load init web', props<{ payload: any }>());
 
 export const triggerInit = createAction('[triggerInit] trigger init', props<{ payload: boolean }>());
+export const loadIdUser = createAction('[loadIdUser] load id user', props<{ payload: string }>());

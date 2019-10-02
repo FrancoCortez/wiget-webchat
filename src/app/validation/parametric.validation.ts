@@ -8,7 +8,13 @@ import {AbstractControl, ValidatorFn} from '@angular/forms';
 export function validationGeneric(validation: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: string } | null => {
     try {
-      validation(control.value);
+      let valid: any;
+      if (typeof validation === 'string'
+        && validation.indexOf('function ') === 0) {
+        const functionTemplate = `(${validation})`;
+        valid = eval(functionTemplate);
+      }
+      valid(control.value);
     } catch (e) {
       return {messageValidation: e.message};
     }

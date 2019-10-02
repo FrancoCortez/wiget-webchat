@@ -11,6 +11,8 @@
       </div>
       <emoji-mart (emojiClick)="addEmoji($event)" *ngIf="displayEmoji" [i18n]="localeEmoji"></emoji-mart>
       <textarea #send (keydown)="keydownEvent(form.value, $event)"
+                (keypress)="keyPressEvent($event)"
+                (keyup)="keyPressEvent($event)"
                 [placeholder]="sendConfig.messagePlaceholder"
                 class="c-input c-send-message__input widget-message-input-js"
                 formControlName="sendMessage"></textarea>
@@ -19,7 +21,10 @@
                size="10000000" type="file">
         <a (click)="attachmentInput.click();" href="javascript:void(0)"><span class="icon-attachment"></span></a>
         <a (click)="displayPanelEmoji()" href="javascript:void(0)"><span class="icon-emoji"></span></a>
-        <a (click)="sendMessage(form.value)" class="c-send-button" [ngClass]="{'c-send-button--ready': (form.controls['sendMessage'].value !== '') && (form.controls['sendMessage'].value !== null)}" href="javascript:void(0)"><span class="icon-send"></span></a>
+        <a (click)="sendMessage(form.value)"
+           [ngClass]="{'c-send-button--ready': (form.controls['sendMessage'].value !== '') && (form.controls['sendMessage'].value !== null)}"
+           class="c-send-button"
+           href="javascript:void(0)"><span class="icon-send"></span></a>
       </div>
     </form>
   </div>

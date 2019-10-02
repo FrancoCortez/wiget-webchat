@@ -1,41 +1,62 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {ConfigSelector, ConversationSelector, InitWebChatAction, RootStoreState, RouterAction, RouterSelector} from '../../store';
+import {
+  ConfigSelector,
+  ConversationSelector,
+  InitWebChatAction,
+  RootStoreState,
+  RouterAction,
+  RouterSelector
+} from '../../store';
 import {WidgetCaptionUiModel} from '../../models/ui-model/widget-caption.ui-model';
 import {selectIsOpen} from '../../store/init-web-chat-store/selector';
 import {filter} from 'rxjs/operators';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-header-widget',
   templateUrl: './header-widget.component.html',
   styleUrls: []
 })
-export class HeaderWidgetComponent implements OnInit {
+export class HeaderWidgetComponent implements OnInit, OnDestroy {
 
   hidden = false;
   configToggle = false;
   widgetToggle = true;
   caption: WidgetCaptionUiModel;
 
+  selectConfigOpen: Subscription = new Subscription();
+  selectWidgetOpen: Subscription = new Subscription();
+  selectIsOpen: Subscription = new Subscription();
+  selectConfig: Subscription = new Subscription();
+  selectAgentName: Subscription = new Subscription();
   constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 
+  ngOnDestroy(): void {
+    this.selectConfigOpen.unsubscribe();
+    this.selectWidgetOpen.unsubscribe();
+    this.selectIsOpen.unsubscribe();
+    this.selectConfig.unsubscribe();
+    this.selectAgentName.unsubscribe();
+  }
+
   ngOnInit() {
-    this.store.pipe(select(RouterSelector.selectConfigOpen))
+    this.selectConfigOpen = this.store.pipe(select(RouterSelector.selectConfigOpen))
       .pipe(filter(fill => fill !== null && fill !== undefined))
       .subscribe(resp => this.configToggle = resp);
-    this.store.pipe(select(RouterSelector.selectWidgetOpen))
+    this.selectWidgetOpen = this.store.pipe(select(RouterSelector.selectWidgetOpen))
       .pipe(filter(fill => fill !== null && fill !== undefined))
       .subscribe(resp => this.widgetToggle = resp);
-    this.store.pipe(select(selectIsOpen))
+    this.selectIsOpen = this.store.pipe(select(selectIsOpen))
       .pipe(filter(fill => fill !== null && fill !== undefined))
       .subscribe(resp => this.hidden = !resp);
-    this.store.pipe(select(ConfigSelector.selectConfig))
+    this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig))
       .pipe(filter(fill => fill !== null && fill !== undefined))
       .subscribe(resp => {
         this.caption = {...resp.caption};
         if (this.caption.agentNameEnabled) {
-          this.store.pipe(select(ConversationSelector.selectAgentName))
+          this.selectAgentName = this.store.pipe(select(ConversationSelector.selectAgentName))
             .pipe(filter(fill => fill !== null && fill !== undefined && fill !== ''))
             .subscribe(name => this.caption.title = name);
         }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ConfigSelector, ConversationAction, LoginSelector, RootStoreState} from '../../store';
 import {MessageUiModel} from '../../models/ui-model/message.ui.model';
@@ -10,13 +10,14 @@ import {TypeFileEnum} from '../../models/utils/type-file.enum';
 import {MessageDto} from '../../models/message/message.dto';
 import {filter} from 'rxjs/operators';
 import {FormatService} from '../../services/format.service';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-input-send',
   templateUrl: './input-send.component.html',
-  styleUrls: []
+  styleUrls: [],
 })
-export class InputSendComponent implements OnInit, AfterViewInit {
+export class InputSendComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('send', {static: false}) sendElement: ElementRef;
   @ViewChild('attachmentInput', {static: false}) sendAttachmentElement: ElementRef;
   sendConfig: MessageSendUiModel;
@@ -60,29 +61,41 @@ export class InputSendComponent implements OnInit, AfterViewInit {
     },
   };
 
+  selectDid: Subscription = new Subscription();
+  selectConfig: Subscription = new Subscription();
+  selectLogin: Subscription = new Subscription();
+
   constructor(private readonly store: Store<RootStoreState.AppState>,
               private readonly format: FormatService,
-              private readonly uploadFileClient: UploadFileClient) {
+              private readonly uploadFileClient: UploadFileClient,
+              private cd: ChangeDetectorRef) {
 
   }
+
   ngAfterViewInit(): void {
     this.sendElement.nativeElement.focus();
     this.enableSend();
   }
 
+  ngOnDestroy(): void {
+    this.selectDid.unsubscribe();
+    // this.selectConfig.unsubscribe();
+    this.selectLogin.unsubscribe();
+  }
   ngOnInit() {
     this.form = new FormGroup({});
     this.form.addControl('sendMessage', new FormControl());
     this.form.addControl('uploadInput', new FormControl());
-    this.store.pipe(select(ConfigSelector.selectDid)).subscribe(resp => this.did = resp);
+    this.selectDid = this.store.pipe(select(ConfigSelector.selectDid)).subscribe(resp => this.did = resp);
     this.eventScrollForTextArea();
-    this.store.pipe(select(ConfigSelector.selectConfig)).subscribe(resp => this.sendConfig = resp.messageSend);
-    this.store.pipe(select(LoginSelector.selectLogin))
+    this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig)).subscribe(resp => this.sendConfig = resp.messageSend);
+    this.selectLogin = this.store.pipe(select(LoginSelector.selectLogin))
       .pipe(filter(fill => fill !== null))
       .subscribe((resp: MessageDto) => this.loginResp = resp);
   }
 
   public uploadFile($event: any): void {
+    this.cd.detectChanges();
     const files = $event.target.files[0];
     if (files.size > 10000000) {
       alert('El archivo pesa mas de 10mb');
@@ -99,6 +112,8 @@ export class InputSendComponent implements OnInit, AfterViewInit {
         this.typeFile = 'images';
         reader.onload = () => {
           this.imgURL = reader.result;
+          this.cd.detectChanges();
+          this.cd.markForCheck();
         };
       } else if (mimeType.match(/application\/*/) !== null) {
         this.imagePath = files;
@@ -115,7 +130,8 @@ export class InputSendComponent implements OnInit, AfterViewInit {
       this.nameFile = files.name;
       this.sendFile = files;
       this.sendElement.nativeElement.focus();
-
+      this.cd.detectChanges();
+      this.cd.markForCheck();
     }
   }
 
@@ -148,8 +164,15 @@ export class InputSendComponent implements OnInit, AfterViewInit {
             mimeType: fileResp.mimeType,
             nameFile: this.nameFile
           };
-          this.store.dispatch(ConversationAction.sendMessage({message: {messageUi: messageFront, messageDto: this.loginResp}}));
+          this.store.dispatch(ConversationAction.sendMessage({
+            message: {
+              messageUi: messageFront,
+              messageDto: this.loginResp
+            }
+          }));
           this.resetFeatures();
+          this.cd.detectChanges();
+          this.cd.markForCheck();
         });
       } else {
         if (value.sendMessage.replace(/\s/g, '').length > 0) {
@@ -162,13 +185,20 @@ export class InputSendComponent implements OnInit, AfterViewInit {
             mediaUrl: null,
             mimeType: null
           };
-          this.store.dispatch(ConversationAction.sendMessage({message: {messageUi: messageFront, messageDto: this.loginResp}}));
+          this.store.dispatch(ConversationAction.sendMessage({
+            message: {
+              messageUi: messageFront,
+              messageDto: this.loginResp
+            }
+          }));
           this.resetFeatures();
+          this.cd.detectChanges();
+          this.cd.markForCheck();
         }
       }
     }
     // tslint:disable-next-line:max-line-length
-    this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
+    this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
       .subscribe(resp => {
         this.store.subscribe(state => {
           localStorage.setItem('state', JSON.stringify(state));
@@ -192,11 +222,18 @@ export class InputSendComponent implements OnInit, AfterViewInit {
     }
   }
 
+  keyPressEvent(event) {
+    this.cd.detectChanges();
+    this.cd.markForCheck();
+  }
+
   addEmoji($event) {
     this.displayEmoji = !this.displayEmoji;
     // tslint:disable-next-line:max-line-length
     this.form.controls.sendMessage.setValue(((this.form.controls.sendMessage.value == null) ? '' : this.form.controls.sendMessage.value) + $event.emoji.native);
     this.sendElement.nativeElement.focus();
+    this.cd.detectChanges();
+    this.cd.markForCheck();
   }
 
   displayPanelEmoji() {
@@ -204,7 +241,10 @@ export class InputSendComponent implements OnInit, AfterViewInit {
     if (!this.displayEmoji) {
       this.sendElement.nativeElement.focus();
     }
+    this.cd.detectChanges();
+    this.cd.markForCheck();
   }
+
   private resetFeatures(): void {
     this.sendElement.nativeElement.focus();
     this.enableSend();
@@ -240,6 +280,7 @@ export class InputSendComponent implements OnInit, AfterViewInit {
         });
       }
     }
+
   }
 
   private evetScrollForCustomPx() {

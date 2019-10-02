@@ -15,14 +15,21 @@ export class ConfigStoreEffects {
       .pipe(
         map(login => {
           if (login.payload.preserveHistory) {
-            if (JSON.parse(localStorage.getItem('state')).login.login !== null) {
-              this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
-              this.store.dispatch(ConversationAction.loadMessages({payload: JSON.parse(localStorage.getItem('state')).conversation}));
-              this.store.dispatch(LoginAction.loadLogin({payload: JSON.parse(localStorage.getItem('state')).login}));
-              this.store.dispatch(InitWebChatAction.loadInitWeb({payload: JSON.parse(localStorage.getItem('state')).initWebChat}));
-              this.store.dispatch(RouterAction.loadRouter({payload: JSON.parse(localStorage.getItem('state')).router}));
-              if (JSON.parse(localStorage.getItem('state')).login.login.msisdn !== null) {
-                this.loginService.reconnect(JSON.parse(localStorage.getItem('state')).login.login.msisdn);
+            const stateLocal = localStorage.getItem('state');
+            if (stateLocal !== null) {
+              const state = JSON.parse(stateLocal);
+              console.log(state.config.config.did)
+              if(login.payload.did === state.config.config.did) {
+                this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
+                this.store.dispatch(ConversationAction.loadMessages({payload: state.conversation}));
+                this.store.dispatch(LoginAction.loadLogin({payload: state.login}));
+                this.store.dispatch(InitWebChatAction.loadInitWeb({payload: state.initWebChat}));
+                this.store.dispatch(RouterAction.loadRouter({payload: state.router}));
+                if (state.login.login !== null) {
+                  if (state.login.login.msisdn !== null) {
+                    this.loginService.reconnect(state.login.login.msisdn);
+                  }
+                }
               }
             }
           }

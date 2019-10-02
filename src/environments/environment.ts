@@ -19,7 +19,7 @@ export const environment = {
   newMessage: 'newMessage',
   leaveChat: 'leave-chat',
 
-  configProfile: 'developed',
+  configProfile: 'development',
   configPath: 'https://kops.chattigo.com/config'
 
 

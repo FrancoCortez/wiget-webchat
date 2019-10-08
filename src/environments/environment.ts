@@ -33,8 +33,8 @@ export const environment = {
   leaveChat: 'leave-chat',
 
   configProfile: 'development',
-  // configPath: 'https://kops.chattigo.com/config'
-  configPath: 'http://localhost:8888'
+  configPath: 'https://kops.chattigo.com/config'
+  // configPath: 'http://localhost:8888'
 
 
 };

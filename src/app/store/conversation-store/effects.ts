@@ -69,6 +69,7 @@ export class ConversationStoreEffects {
           this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
             .subscribe(resp => {
               this.store.subscribe(state => {
+                console.log('set desde conversasion');
                 localStorage.setItem('state', JSON.stringify(state));
               });
             });

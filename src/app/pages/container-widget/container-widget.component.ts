@@ -55,6 +55,7 @@ export class ContainerWidgetComponent implements OnInit, OnDestroy {
     this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
       .subscribe(resp => {
         this.store.subscribe(state => {
+          console.log('set desde container widget');
           localStorage.setItem('state', JSON.stringify(state));
         });
       });

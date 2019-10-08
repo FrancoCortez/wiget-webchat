@@ -1,28 +1,1058 @@
-<!DOCTYPE html>
-<html>
+
+<!doctype html>
+<html lang="es-ES" class="no-js">
 <head>
-  <title>Testing Webchat</title>
-  <meta
-    content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    name="viewport"/>
-  <meta content="telephone=no" name="format-detection"/>
-  <meta content="no" name="msapplication-tap-highlight"/>
-  <meta content="yes" name="apple-mobile-web-app-capable"/>
-  <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
-</head>
-<body>
-<!--
-<app-widget-root remote="true" did="santotomas@WC" ></app-widget-root>
-<app-widget-root remote="true" did="afphabitat@WC" ></app-widget-root>
-<app-widget-root remote="true" did="AtencionChattigo@WC" ></app-widget-root>
--->
-<app-widget-root remote="true" did="santotomas@WC" ></app-widget-root>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Habla Conmigo &#8211; Admisión Santo Tomás</title>
+  <meta name='robots' content='noindex,follow' />
+  <link rel='dns-prefetch' href='//maps.googleapis.com' />
+  <link rel='dns-prefetch' href='//s.w.org' />
+  <style type="text/css">
+    img.wp-smiley,
+    img.emoji {
+      display: inline !important;
+      border: none !important;
+      box-shadow: none !important;
+      height: 1em !important;
+      width: 1em !important;
+      margin: 0 .07em !important;
+      vertical-align: -0.1em !important;
+      background: none !important;
+      padding: 0 !important;
+    }
+  </style>
+  <link rel='stylesheet' id='main_style-css'  href='https://admision.santotomas.idastage.com/wp-content/themes/admision/dist/css/all.min.css' type='text/css' media='all' />
+  <link rel='stylesheet' id='font_din-css'  href='https://admision.santotomas.idastage.com/wp-content/themes/admision/dist/fonts/DinNextLTPro/stylesheet.css' type='text/css' media='all' />
+  <link rel='stylesheet' id='font_bliss-css'  href='https://admision.santotomas.idastage.com/wp-content/themes/admision/dist/fonts/BlissPro/stylesheet.css' type='text/css' media='all' />
+  <link rel='https://api.w.org/' href='https://admision.santotomas.idastage.com/wp-json/' />
+  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://admision.santotomas.idastage.com/xmlrpc.php?rsd" />
+  <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://admision.santotomas.idastage.com/wp-includes/wlwmanifest.xml" />
+
+  <link rel="canonical" href="https://admision.santotomas.idastage.com/habla-conmigo/" />
+  <link rel='shortlink' href='https://admision.santotomas.idastage.com/?p=3240' />
+  <link rel="alternate" type="application/json+oembed" href="https://admision.santotomas.idastage.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fadmision.santotomas.idastage.com%2Fhabla-conmigo%2F" />
+  <link rel="alternate" type="text/xml+oembed" href="https://admision.santotomas.idastage.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fadmision.santotomas.idastage.com%2Fhabla-conmigo%2F&#038;format=xml" />
+  <link rel="icon" href="https://admision.santotomas.idastage.com/wp-content/themes/admision/images/app-icons/favicon.ico" type="image/x-icon"><link rel="shortcut icon" href="https://admision.santotomas.idastage.com/wp-content/themes/admision/images/app-icons/favicon.ico" type="image/x-icon"><meta name="msapplication-square70x70logo" content="https://admision.santotomas.idastage.com/wp-content/themes/admision/images/app-icons/ms-icno-70x70.png"><meta name="msapplication-square150x150logo" content="https://admision.santotomas.idastage.com/wp-content/themes/admision/images/app-icons/ms-icon-150x150.png"><meta name="msapplication-square310x310logo" content="https://admision.santotomas.idastage.com/wp-content/themes/admision/images/app-icons/ms-icon-310x310.png"><link rel="apple-touch-icon" href="https://admision.santotomas.idastage.com/wp-content/themes/admision/images/app-icons/apple-icon.png"><link rel="apple-touch-icon" sizes="76x76" href="https://admision.santotomas.idastage.com/wp-content/themes/admision/images/app-icons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="120x120" href="https://admision.santotomas.idastage.com/wp-content/themes/admision/images/app-icons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="152x152" href="https://admision.santotomas.idastage.com/wp-content/themes/admision/images/app-icons/apple-icon-152x152.png"><meta name='description' content='Habla Conmigo' /><script data-no-minify="1" data-cfasync="false">(function(w,d){function a(){var b=d.createElement("script");b.async=!0;b.src="https://admision.santotomas.idastage.com/wp-content/plugins/wp-rocket/inc/front/js/lazyload.1.0.5.min.js";var a=d.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)}w.attachEvent?w.attachEvent("onload",a):w.addEventListener("load",a,!1)})(window,document);</script>        <!-- Google AdWords Async / NO BORRAR -->
+  <script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion_async.js" charset="utf-8"></script>
+  <!---Google AdWords Async / NO BORRAR-->
+  <!-- Facebook Pixel Code -->
+  <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '430773584201648');
+      fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+                 src="https://www.facebook.com/tr?id=430773584201648&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Facebook Pixel Code -->            </head>
+<body class="page-template page-template-landing-habla-conmigo page-template-landing-habla-conmigo-php page page-id-3240 page-parent" data-path="https://admision.santotomas.idastage.com/wp-content/themes/admision/" data-check="26-dic">
+<!-- Global site tag (gtag.js) - Google Ads: 782511656 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-782511656"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-782511656');
+</script>
+<!-- Global site tag (gtag.js) - Google Ads: 714382904 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-714382904"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-714382904');
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics 15853615-26-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-15853615-26"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-15853615-26');
+</script>
+<!-- Lightning Bolt Begins -->
+<script type="text/javascript">
+    var lbTrans = '[TRANSACTION ID]';
+    var lbValue = '[TRANSACTION VALUE]';
+    var lbData = '[Attribute/Value Pairs for Custom Data]';
+    var lb_rn = new String(Math.random()); var lb_rns = lb_rn.substring(2, 12);
+    var boltProtocol = ('https:' == document.location.protocol) ? 'https://' : 'http://';
+    try {
+        var newScript = document.createElement('script');
+        var scriptElement = document.getElementsByTagName('script')[0];
+        newScript.type = 'text/javascript';
+        newScript.id = 'lightning_bolt_' + lb_rns;
+        newScript.src = boltProtocol + 'b3.mookie1.com/2/LB/' + lb_rns + '@x96?';
+        scriptElement.parentNode.insertBefore(newScript, scriptElement);
+        scriptElement = null; newScript = null;
+    } catch (e) { }
+</script>
+<!-- Lightning Bolt Ends --><header id="main-header" class="main-header main-header--hc">
+  <section class="hide-on-vertical-tablet-down bg-corporativo">
+    <div class="container">
+      <div class="top-bar-menu" data-name="sitios-santo-tomas">
+        <div class="top-bar-menu-items-holder columns-list" data-area-name="desktop-sitios" ><ul id="sitios-list" class="top-bar-menu-list" data-mutable="vertical-tablet-down" data-desktop-area="desktop-sitios" data-mobile-area="mobile-sitios" ><li><a href="http://www.santotomas.cl" title="Ver sitio" rel="external">Santo Tomás</a></li><li><a href="http://www.ust.cl" title="Ver sitio" rel="external">Universidad Santo Tomás - UST</a></li><li><a href="http://www.ipcft.santotomas.cl" title="Ver sitio" rel="external">IP-CFT Santo Tomás</a></li><li><a href="http://www.postgradoust.cl/" title="Ver sitio" rel="external">Postgrados UST</a></li><li><a href="http://www.capacitacion.santotomas.cl/" title="Ver sitio" rel="external">Capacitación - Educación Continua</a></li><li><a href="http://www.universidadenverano.cl/" title="Ver sitio" rel="external">Universidad en Verano</a></li><li><a href="http://www.confucioust.cl" title="Ver sitio" rel="external">Instituto Confucio</a></li><li><a href="http://www.ust.cl/investigacion/" title="Ver sitio" rel="external">Investigación UST</a></li><li><a href="http://www.ust.cl/sobre-la-universidad/editorial-ust/" title="Ver sitio" rel="external">Editorial UST</a></li><li><a href="http://www.santotomas.cl/formacion-e-identidad/" title="Ver sitio" rel="external">Formación e Identidad</a></li><li><a href="http://www.daesantotomas.cl/" title="Ver sitio" rel="external">Sitio Alumnos - DAE</a></li><li><a href="http://egresados.santotomas.cl/" title="Ver sitio" rel="external">Egresados</a></li><li><a href="http://enlinea.santotomas.cl/" title="Ver sitio" rel="external">Santo Tomás en Línea</a></li></ul></div>            </div>
+    </div>
+  </section>
+  <section id="menu-top" class="menu-top bg-corporativo dark hide-on-vertical-tablet-down" >
+    <div class="container">
+      <div class="grid-3 no-gutter-left">
+        <button id="topbartoggle" class="top-bar-toggle" data-func="toggleTarget" data-target='[data-name="sitios-santo-tomas"], #topbartoggle'>Sitios Santo Tomás</button>
+      </div>
+      <div class="grid-9 no-gutter-right righted-text" data-area-name="menu-socials-desktop">
+        <a class="menu-top-link icon email" href="https://admision.santotomas.idastage.com/contacto/" title="Contáctanos">Contáctanos</a>
+        <a class="menu-top-link icon chat" href="https://admision.santotomas.idastage.com/te-llamamos/" title="¿Tienes dudas? Te llamamos">¿Tienes dudas? Te llamamos</a>
+        <a class="menu-top-link icon phone" href="tel:6004444444" title="Llámanos">600 444 4444</a>
+
+        <a href="https://www.facebook.com/SantoTomas.Admision/" target="_blank" rel="help external" title="Ver Perfil de facebook" class="social-square-link facebook" data-mutable="vertical-tablet-down" data-desktop-area="menu-socials-desktop" data-mobile-area="menu-socials-mobile" data-order="1" data-track data-gtm-event="facebook" data-gtm-eventcategory="conversemos-fb" data-gtm-eventaction="clic" data-gtm-eventlabel="btn-facebook" >Facebook</a>
+        <a href="https://twitter.com/SantoTomas_ST" target="_blank" rel="help external" title="Ver Perfil de twitter" class="social-square-link twitter" data-mutable="vertical-tablet-down" data-desktop-area="menu-socials-desktop" data-mobile-area="menu-socials-mobile" data-order="2" data-track data-gtm-event="twitter" data-gtm-eventcategory="conversemos-tw" data-gtm-eventaction="clic" data-gtm-eventlabel="btn-twitter"  >Twitter</a>
+        <a href="https://www.youtube.com/SantoTomasChile" target="_blank" rel="help external" title="Ver Perfil de youtube" class="social-square-link youtube" data-mutable="vertical-tablet-down" data-desktop-area="menu-socials-desktop" data-mobile-area="menu-socials-mobile" data-order="3" data-track data-gtm-event="youtube" data-gtm-eventcategory="conversemos-yt" data-gtm-eventaction="clic" data-gtm-eventlabel="btn-youtube" >Youtube</a>
+        <a href="https://www.instagram.com/Santotomas_st/" target="_blank" rel="help external" title="Ver Perfil de instagram" class="social-square-link instagram" data-mutable="vertical-tablet-down" data-desktop-area="menu-socials-desktop" data-mobile-area="menu-socials-mobile" data-order="4" data-track data-gtm-event="instagram" data-gtm-eventcategory="conversemos-it" data-gtm-eventaction="clic" data-gtm-eventlabel="btn-instagram" >Instagram</a>
+        <!-- <a href="#" rel="help external" title="Ver QR de snapchat" class="social-square-link snapchat icon-active-snap" data-mutable="vertical-tablet-down" data-desktop-area="menu-socials-desktop" data-mobile-area="menu-socials-mobile" data-order="5" data-track data-gtm-event="snapchat" data-gtm-eventcategory="conversemos-it" data-gtm-eventaction="clic" data-gtm-eventlabel="btn-snapchat" >Snapchat</a> -->
+      </div>
+    </div>
+  </section>
+  <section class="header-body" >
+    <button class="mobile-deployer nav-deployer" title="Mostrar menú principal" data-func="deployMainNav" >
+      <span></span>
+    </button>
+
+    <div class="container">
+      <nav id="secondary-nav" class="secondary-nav righted-text hide-on-vertical-tablet-down" data-area-name="menu-sec-desktop">
+        <ul id="menu-secundario" class="secondary-nav-items" data-mutable="vertical-tablet-down" data-desktop-area="menu-sec-desktop" data-mobile-area="menu-sec-mobile" data-order="1" ><li id="menu-item-2994" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2994"><a href="https://admision.santotomas.idastage.com/por-que-santo-tomas/">¿Por qué Santo Tomás?</a></li>
+          <li id="menu-item-2807" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2807"><a href="https://admision.santotomas.idastage.com/orientadores/">Orientadores</a></li>
+          <li id="menu-item-520" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-520"><a href="https://admision.santotomas.idastage.com/mas-informacion/">Más información</a>
+            <ul class="sub-menu">
+              <li id="menu-item-524" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-524"><a href="/calendario">Calendario</a></li>
+              <li id="menu-item-521" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-521"><a href="https://admision.santotomas.idastage.com/mas-informacion/centros-de-investigacion/">Centros de Investigación</a></li>
+              <li id="menu-item-522" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-522"><a href="https://admision.santotomas.idastage.com/mas-informacion/experiencia-internacional/">Experiencia Internacional</a></li>
+              <li id="menu-item-523" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-523"><a href="https://admision.santotomas.idastage.com/mas-informacion/vida-estudiantil/">Vida Estudiantil</a></li>
+              <li id="menu-item-1406" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1406"><a href="https://admision.santotomas.idastage.com/mas-informacion/circulo-de-egresados/">Círculo de Egresados</a></li>
+            </ul>
+          </li>
+        </ul>            </nav>
+
+      <!--check for changes-->
+      <div class="header-logos">
+        <a id="logo-holder" class="logo-holder admision" href="https://admision.santotomas.idastage.com" title="Ir a la página de inicio" rel="index">
+          <img class="elastic-img cover hide-on-vertical-tablet-down hide-on-fixed logo-general" src="https://admision.santotomas.idastage.com/wp-content/themes/admision/images/logos/logo-ust.svg" width="223" height="100"><img src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2018/09/logo-admision-2019.svg" class="elastic-img cover hide-on-vertical-tablet-down hide-on-fixed logo-admision" alt="" /><img class="elastic-img cover logo-down" src="https://admision.santotomas.idastage.com/wp-content/themes/admision/images/logos/logo-ust-horizontal.svg" width="195" height="39" >
+          <!-- <img class="elastic-img cover logo-down-tablet" src="/images/logos/logo-st-badge.svg" width="40" height="40" > -->
+          <!-- <img class="elastic-img cover logo-down" src="/images/logos/logo-ust-horizontal.svg" width="195" height="39" > -->
+        </a>
+
+        <nav id="main-nav" class="main-nav">
+          <ul class="main-nav-items">
+            <li id="menu-item-4109" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-3240 current_page_item menu-item-has-children menu-item-4109"><a href="https://admision.santotomas.idastage.com/habla-conmigo/">#HablaConmigo</a>
+              <ul class="sub-menu">
+                <li id="menu-item-4106" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4106"><a href="https://admision.santotomas.idastage.com/habla-conmigo/facebook-live/">Facebook live</a></li>
+                <li id="menu-item-4107" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4107"><a href="https://admision.santotomas.idastage.com/habla-conmigo/video-preguntas/">Video preguntas</a></li>
+              </ul>
+            </li>
+            <li id="menu-item-831" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-831"><a href="https://admision.santotomas.idastage.com/por-que-santo-tomas/">¿Por qué Santo Tomás?</a>
+              <ul class="sub-menu">
+                <li id="menu-item-835" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-835"><a href="https://admision.santotomas.idastage.com/por-que-santo-tomas/sello-santo-tomas/">Sello</a></li>
+                <li id="menu-item-833" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-833"><a href="https://admision.santotomas.idastage.com/por-que-santo-tomas/acreditacion/">Acreditación</a></li>
+                <li id="menu-item-834" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-834"><a href="https://admision.santotomas.idastage.com/por-que-santo-tomas/formatos-de-estudios/">Formatos de Estudios</a></li>
+                <li id="menu-item-836" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-836"><a href="https://admision.santotomas.idastage.com/por-que-santo-tomas/centros-de-aprendizaje/">Centros de Aprendizaje</a></li>
+                <li id="menu-item-1284" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1284"><a href="https://admision.santotomas.idastage.com/por-que-santo-tomas/programa-ejecutivo-semipresencial-pes/">Programa Ejecutivo Semipresencial PES</a></li>
+                <li id="menu-item-832" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-832"><a href="https://admision.santotomas.idastage.com/por-que-santo-tomas/carreras-vespertinas/">Carreras Vespertinas</a></li>
+                <li id="menu-item-837" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-837"><a href="https://admision.santotomas.idastage.com/por-que-santo-tomas/experiencia-santo-tomas/">Experiencia Santo Tomás</a></li>
+              </ul>
+            </li>
+            <li id="menu-item-2630" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2630"><a href="https://admision.santotomas.idastage.com/areas-ust/">Áreas</a></li>
+            <li id="menu-item-838" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-838"><a href="https://admision.santotomas.idastage.com/carreras/">Carreras</a></li>
+            <li id="menu-item-842" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-842"><a href="/sedes/">Sedes</a></li>
+            <li id="menu-item-843" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-843"><a href="https://admision.santotomas.idastage.com/becas-y-financiamiento/">Becas y financiamiento</a>
+              <ul class="sub-menu">
+                <li id="menu-item-2276" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2276"><a href="https://admision.santotomas.idastage.com/becas-y-financiamiento/becas-santo-tomas/">Becas Santo Tomás</a></li>
+                <li id="menu-item-844" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-844"><a href="https://admision.santotomas.idastage.com/becas-y-financiamiento/aranceles/">Aranceles</a></li>
+                <li id="menu-item-845" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-845"><a href="https://admision.santotomas.idastage.com/becas-y-financiamiento/becas-y-creditos/">Becas y créditos</a></li>
+                <li id="menu-item-846" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-846"><a href="https://admision.santotomas.idastage.com/becas-y-financiamiento/estudia-y-trabaja/">Estudia y trabaja</a></li>
+              </ul>
+            </li>
+            <li><button class="show-main-form-btn admision hide-on-vertical-tablet-down" title="Ver fomulario de cotización" data-func="deployHeaderForm">Consulta tu arancel Aquí</button></li>
+          </ul>
+
+
+          <div class="only-on-vertical-tablet-down" data-area-name="menu-sec-mobile"></div>
+
+          <div class="mobile-help-holder only-on-vertical-tablet-down">
+            <a class="help-link icon chat" href="https://admision.santotomas.idastage.com/te-llamamos/" title="¿Tienes dudas? Te llamamos" rel="help" data-track data-gtm-event="te-llamamos" data-gtm-eventcategory="te-llamamos" data-gtm-eventaction="clic" data-gtm-eventlabel="btn-tellamamos" >¿Tienes dudas? Te llamamos</a><a class="help-link icon clock" href="https://admision.santotomas.idastage.com/sedes/" title="Horarios de atención" rel="help" data-track data-gtm-event="horarios-de-atencion" data-gtm-eventcategory="horarios" data-gtm-eventaction="clic" data-gtm-eventlabel="btn-horarios" >Horarios de atención</a><a class="help-link icon mail" href="https://admision.santotomas.idastage.com/contacto/" title="Contáctanos" rel="help" data-track data-gtm-event="clic-to-call" data-gtm-eventcategory="clic-to-call" data-gtm-eventaction="clic" data-gtm-eventlabel="btn-clictocall">Contáctanos</a><a class="help-link icon phone" href="tel:6004444444" title="Llámanos" rel="help">600 444 4444</a><a class="help-link icon question" href="https://admision.santotomas.idastage.com/preguntas-frecuentes/" title="Preguntas frecuentes" rel="help">Preguntas frecuentes</a>                   </div>
+
+          <div class="mobile-social-nav only-on-vertical-tablet-down" data-area-name="menu-socials-mobile"></div>
+        </nav>
+      </div>
+
+    </div>
+
+    <div class="mobile-main-form-holder">
+      <button id="mobile-form-deployer" class="show-main-form-btn only-on-vertical-tablet-down" title="Ver fomulario de cotización" data-func="deployHeaderForm">Consulta tu arancel Aquí</button>
+
+      <div class="mobile-main-form-box bg-blanco collapsed-form" data-role="header-form" data-override-eq="true">
+        <div class="container full-container" data-gtm-tag="cotizacion" data-require>
+          <form id="header-formulario-cotizacion" class="complex-form" action="#" method="post" data-validation="cotizacion" autocomplete="off" >
+            <section class="complex-form-header">
+              <div class="complex-form-progress-holder">
+                <span class="progress current" data-index="0">Paso 1:<br>Datos personales</span>
+                <span class="progress" data-index="1">Paso 2:<br>Educación</span>
+                <span class="progress" data-index="2">Paso 3:<br>Carreras</span>
+              </div>
+              <h2 class="complex-form-title">Consulta tu arancel <small>en 3 simples pasos</small></h2>
+            </section>
+
+            <div class="form-fieldsets">
+
+              <fieldset id="header-paso-1" class="complex-form-step current" data-index="0" data-equalize="children" data-mq="vertical-tablet-down">
+                <legend class="first">
+              <span>
+                  <strong>Ingresa</strong> tus datos personales y de contacto
+              </span>
+                </legend>
+                <div class="fieldset-body">
+                  <div class="island">
+                    <p class="regular-form-helper">Los campos con (*) son obligatorios</p>
+                  </div>
+                  <div class="parent">
+                    <div class="grid-6 grid-smalltablet-12 no-gutter-left no-gutter-smalltablet">
+
+                      <label for="contacto-documento" class="regular-label required">Tipo de Documento</label>
+                      <div style="padding: 16px 0 16px;">
+                        <input type="radio" id="tipo-doc-rut" name="tipo-documento" class="input-tipo-doc" value="C" style="margin-right: 5px;" checked="checked"/> <label for="tipo-doc-rut">RUT</label>
+                        <input type="radio" id="tipo-doc-pass" name="tipo-documento" class="input-tipo-doc" value="P" style="margin-right: 7px;margin-left: 10px;"/><label for="tipo-doc-pass">Pasaporte</label>
+                      </div>
+
+                    </div>
+                    <div class="grid-6 grid-smalltablet-12 no-gutter-right no-gutter-smalltablet">
+
+                      <label for="header-contacto-rut" class="regular-label required option-rut">RUT</label>
+                      <input class="regular-input option-rut" type="text" id="header-contacto-rut" data-max="10" maxlength="10" data-min="9"  minlength="9" name="contacto-rut" placeholder="Ingresa tu RUT con guión y sin puntos" data-name="input-rut" data-custom-validation="validateRut" required>
+
+                      <label for="header-contacto-pasaporte" class="regular-label required option-pass" style="display:none;margin-top:1.5em;">Pasaporte</label>
+                      <input class="regular-input option-pass" type="text" id="header-contacto-pasaporte" data-max="12" maxlength="12" data-min="8"  minlength="8" name="contacto-pasaporte" placeholder="Ingresa tu Pasaporte" data-name="input-rut" data-error-message="Obligatorio, pasaporte invalido" data-min="10" data-custom-validation="passport" style="display:none;">
+
+                    </div>
+                  </div>
+                  <div class="parent">
+                    <div class="grid-6 grid-smalltablet-12 no-gutter-left no-gutter-smalltablet">
+
+                      <label for="contacto-rut" class="regular-label required">Nacionalidad</label>
+                      <select class="regular-input select" id="header-cotizacion-pais" name="cotizacion-pais" required>
+                        <option value='' disabled>Selecciona un país</option><option value="210430b8-7ab4-e511-80ca-005056829680" >Alemania</option><option value="230430b8-7ab4-e511-80ca-005056829680" >Argentina</option><option value="250430b8-7ab4-e511-80ca-005056829680" >Australia</option><option value="270430b8-7ab4-e511-80ca-005056829680" >Austria</option><option value="290430b8-7ab4-e511-80ca-005056829680" >Bolivia</option><option value="2b0430b8-7ab4-e511-80ca-005056829680" >Brasil</option><option value="2d0430b8-7ab4-e511-80ca-005056829680" >Canada</option><option value="2f0430b8-7ab4-e511-80ca-005056829680" selected>Chile</option><option value="310430b8-7ab4-e511-80ca-005056829680" >China</option><option value="330430b8-7ab4-e511-80ca-005056829680" >Colombia</option><option value="350430b8-7ab4-e511-80ca-005056829680" >Cuba</option><option value="370430b8-7ab4-e511-80ca-005056829680" >Ecuador</option><option value="390430b8-7ab4-e511-80ca-005056829680" >España</option><option value="3b0430b8-7ab4-e511-80ca-005056829680" >Estados Unidos</option><option value="3d0430b8-7ab4-e511-80ca-005056829680" >Francia</option><option value="3f0430b8-7ab4-e511-80ca-005056829680" >Guatemala</option><option value="410430b8-7ab4-e511-80ca-005056829680" >Haiti</option><option value="430430b8-7ab4-e511-80ca-005056829680" >Holanda</option><option value="450430b8-7ab4-e511-80ca-005056829680" >Honduras</option><option value="470430b8-7ab4-e511-80ca-005056829680" >Inglaterra</option><option value="490430b8-7ab4-e511-80ca-005056829680" >Italia</option><option value="4b0430b8-7ab4-e511-80ca-005056829680" >Japon</option><option value="4d0430b8-7ab4-e511-80ca-005056829680" >Mexico</option><option value="4f0430b8-7ab4-e511-80ca-005056829680" >Panamá</option><option value="510430b8-7ab4-e511-80ca-005056829680" >Paraguay</option><option value="530430b8-7ab4-e511-80ca-005056829680" >Peru</option><option value="550430b8-7ab4-e511-80ca-005056829680" >Portugal</option><option value="570430b8-7ab4-e511-80ca-005056829680" >Puerto Rico</option><option value="590430b8-7ab4-e511-80ca-005056829680" >República Dominicana</option><option value="5b0430b8-7ab4-e511-80ca-005056829680" >Rusia</option><option value="5d0430b8-7ab4-e511-80ca-005056829680" >Sueca</option><option value="5f0430b8-7ab4-e511-80ca-005056829680" >Suiza</option><option value="610430b8-7ab4-e511-80ca-005056829680" >Taiwan</option><option value="630430b8-7ab4-e511-80ca-005056829680" >Uruguay</option><option value="650430b8-7ab4-e511-80ca-005056829680" >Venezuela</option> ?>
+                      </select>
+
+                      <label for="contacto-nombre" class="regular-label required">Nombre(s) </label>
+                      <input class="regular-input" type="text" id="header-contacto-nombre" maxlength="25" name="contacto-nombre" required  data-error-message="Campo obligatorio, solo letras"  placeholder="Ingresa tu(s) nombre(s)" data-ws="name.first" data-custom-validation="onlyString">
+
+
+                      <label for="contacto-apellido-paterno" class="regular-label required">Apellido paterno</label>
+                      <input class="regular-input" type="text" id="header-contacto-apellido-paterno" maxlength="15" name="contacto-apellido-paterno" required data-error-message="Campo obligatorio, solo letras" placeholder="Ingresa tu apellido paterno" data-ws="name.last" data-custom-validation="onlyString">
+
+
+                      <label for="contacto-apellido-materno" class="regular-label">Apellido materno</label>
+                      <input class="regular-input required" type="text" id="header-contacto-apellido-materno" maxlength="15" name="contacto-apellido-materno" data-error-message="Solo letras" placeholder="Ingresa tu apellido materno" data-custom-validation="onlyString">
+
+                    </div>
+                    <div class="grid-6 grid-smalltablet-12 no-gutter-right no-gutter-smalltablet">
+
+
+                      <div class="input-group inline-group">
+                        <label for="contacto-celular" class="regular-label required">Celular</label>
+                        <select class="regular-input select inline-input" id="header-contacto-celular-codigo" name="contacto-celular-codigo" style="min-width: 105px;" required >
+                          <option value="9">9</option>
+                        </select>
+
+                        <input class="regular-input inline-input" type="text" id="header-contacto-celular-numero" data-max="8" maxlength="8" data-min="8"  minlength="8" name="contacto-celular-numero"  placeholder="Escribe tu celular" required data-error-message="Obligatorio, solo números" data-custom-validation="onlyNumbers" data-ws="mobilePhone.number">
+                      </div>
+
+
+                      <div class="input-group inline-group">
+                        <label for="contacto-telefono" class="regular-label ">Teléfono</label>
+                        <select class="regular-input select inline-input" id="header-contacto-telefono-codigo" name="contacto-telefono-codigo">
+                          <option value="">Elige</option>
+                          <option value="2">2</option><option value="32">32</option><option value="33">33</option><option value="34">34</option><option value="35">35</option><option value="39">39</option><option value="41">41</option><option value="42">42</option><option value="43">43</option><option value="44">44</option><option value="45">45</option><option value="51">51</option><option value="52">52</option><option value="53">53</option><option value="55">55</option><option value="57">57</option><option value="58">58</option><option value="61">61</option><option value="63">63</option><option value="64">64</option><option value="65">65</option><option value="67">67</option><option value="68">68</option><option value="71">71</option><option value="72">72</option><option value="73">73</option><option value="75">75</option>                          </select>
+
+
+                        <input class="regular-input inline-input" type="text" id="header-contacto-telefono-numero" name="contacto-telefono-numero" data-max="8" maxlength="8" data-min="7"  minlength="7"  placeholder="Escribe tu teléfono" data-custom-validation="onlyNumbers" data-ws="phone.number">
+                      </div>
+
+                      <label for="contacto-email" class="regular-label required">Mail</label>
+                      <input class="regular-input" type="email" id="header-contacto-email" name="contacto-email" required data-error-message="Campo obligatorio, formato email" placeholder="Ingresa tu mail" data-ws="email" data-space-bottom>
+
+                      <label for="contacto-mail-confirm" class="regular-label required">Confirmar mail</label>
+                      <input class="regular-input" type="email" id="header-contacto-mail-confirm" name="contacto-mail-confirm" required data-error-message="Campo obligatorio, formato email" placeholder="Confirma tu mail" data-custom-validation="equalToEmail" data-sample="header-contacto-email" data-func="preventPaste" data-events="paste" data-space-bottom>
+                    </div>
+                  </div>
+
+                  <div class="form-controls-holder form-control">
+                    <div class="island">
+                      <p class="regular-form-helper">*Campos requeridos</p>
+                    </div>
+                    <div class="island">
+                      <button class="button secundario small wide full-vertical-tablet-down" data-func="formControl" data-direction="next">Siguiente</button>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset id="header-paso-2" class="complex-form-step" data-index="1" data-equalize="children" data-mq="vertical-tablet-down">
+                <legend class="second">
+                <span>
+                    <strong>Indica</strong> en qué curso vas o si ya egresaste del colegio
+                </span>
+                </legend>
+                <div class="fieldset-body">
+                  <div class="island">
+                    <p class="regular-form-helper">Los campos con (*) son obligatorios</p>
+                  </div>
+                  <div class="parent">
+                    <div class="grid-6 grid-smalltablet-12 no-gutter-left no-gutter-smalltablet">
+                      <label for="cotizacion-region" class="regular-label required">Región</label>
+                      <select class="regular-input select" id="header-cotizacion-region" name="cotizacion-region" required data-name="selector-region">
+                        <option value='' >Selecciona una Región</option><option value="931b8c73-e10f-e511-80c4-00155dfd1662">Región De Antofagasta</option><option value="7b652ec9-9d0f-e511-80c4-00155dfd1662">Región De Arica Y Parinacota</option><option value="3365587a-e10f-e511-80c4-00155dfd1662">Región De Atacama</option><option value="a1b488ce-e10f-e511-80c4-00155dfd1662">Región De Aysén Del General Carlos Ibáñez Del Campo</option><option value="b33e7d83-e10f-e511-80c4-00155dfd1662">Región De Coquimbo</option><option value="2172ddb9-e10f-e511-80c4-00155dfd1662">Región De La Araucanía</option><option value="bb13c2c5-e10f-e511-80c4-00155dfd1662">Región De Los Lagos</option><option value="8562d7e6-e10f-e511-80c4-00155dfd1662">Region De Los Ríos</option><option value="625873d8-e10f-e511-80c4-00155dfd1662">Región De Magallanes Y La Antártica Chilena</option><option value="102fe37b-bff1-e811-80d2-00505682a9c1">Región De ñuble</option><option value="bf33ae69-e10f-e511-80c4-00155dfd1662">Región De Tarapacá</option><option value="6decd389-e10f-e511-80c4-00155dfd1662">Región De Valparaiso</option><option value="70fb77b2-e10f-e511-80c4-00155dfd1662">Región Del Bío - Bío</option><option value="b72f609e-e10f-e511-80c4-00155dfd1662">Región Del Libertador General Bernardo O'higgins</option><option value="ed60fda5-e10f-e511-80c4-00155dfd1662">Región Del Maule</option><option value="e3894896-e10f-e511-80c4-00155dfd1662">Región Metropolitana</option>                        </select>
+
+                      <label for="cotizacion-comuna" class="regular-label required">Comuna</label>
+                      <select class="regular-input select" id="header-cotizacion-comuna" name="cotizacion-comuna" required  data-name="selector-comuna">
+                        <option value="" >Selecciona una Comuna</option>
+                      </select>
+
+                      <label for="cotizacion-colegio" class="regular-label required">Colegio</label>
+                      <select class="regular-input select" id="header-cotizacion-colegio" name="cotizacion-colegio" required data-name="selector-colegio">
+                        <option value="" >Selecciona un Colegio</option>
+                      </select>
+                    </div>
+                    <div class="grid-6 grid-smalltablet-12 no-gutter-right no-gutter-smalltablet">
+                      <label for="cotizacion-ano-cursado" class="regular-label required">¿Qué año cursas?</label>
+                      <select class="regular-input select" id="header-cotizacion-ano-cursado" name="cotizacion-ano-cursado" required data-name="selector-curso" data-func="inputControl" data-events="change.st" data-group="situacion-type">
+                        <option value="" >Selecciona un año</option>
+                        <option value="1" >Primero Medio</option>
+                        <option value="2" >Segundo Medio</option>
+                        <option value="3" >Tercero Medio</option>
+                        <option value="4" >Cuarto Medio</option>
+                        <option value="egresado" >Egresado</option>
+                      </select>
+
+                      <div class="changing-inputs" data-role="situacion-type" data-name="egresado" style="margin-top:20px;">
+                        <label for="cotizacion-ano-egreso" class="regular-label required">Año de egreso</label>
+                        <select class="regular-input select" id="header-cotizacion-ano-egreso" name="cotizacion-ano-egreso" data-name="selector-egreso">
+                          <option value="" >Selecciona una año de egreso</option>
+                          <option value="2018" >2018</option><option value="2017" >2017</option><option value="2016" >2016</option><option value="2015" >2015</option><option value="2014" >2014</option><option value="2013" >2013</option><option value="2012" >2012</option><option value="2011" >2011</option><option value="2010" >2010</option><option value="2009" >2009</option><option value="2008" >2008</option><option value="antes del 2007" >Antes del 2007</option>                            </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-controls-holder form-control">
+                    <div class="island">
+                      <p class="regular-form-helper">*Campos requeridos</p>
+                    </div>
+                    <div class="island">
+                      <button class="button seamless back-icon back-arrow full-vertical-tablet-down" data-func="formControl" data-direction="prev">Anterior</button>
+                      <button class="button secundario small wide full-vertical-tablet-down" data-func="formControl" data-direction="next">Siguiente</button>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset id="header-paso-3" class="complex-form-step" data-index="2" data-equalize="children" data-mq="vertical-tablet-down">
+                <legend class="third">
+                <span>
+                    <strong>Selecciona</strong> hasta tres carreras de tu interés
+                </span>
+                </legend>
+                <div class="fieldset-body">
+                  <div class="island">
+                    <p class="regular-form-helper">Los campos con (*) son obligatorios</p>
+                  </div>
+                  <div class="combos">
+                    <div class="career-combo deployed added" data-count="1">
+                      <h3 class="career-combo-title">
+                        Carrera 1
+                        <button class="career-combo-btn expand" data-func="deployCareerCombo" ></button>
+                      </h3>
+
+
+                      <div class="career-combo-fields">
+                        <div class="input-group parent">
+                          <div class="grid-6 grid-smalltablet-12 no-gutter-left no-gutter-smalltablet">
+
+                            <label class="regular-label required">¿Dónde quieres estudiar?</label>
+                            <select class="regular-input select" name="combo-carreras[0][sede]" required data-name="selector-sede" id="selector-sede">
+                              <option value='' >Selecciona una Sede</option><option value="a03744fa-e70e-e511-80c4-00155dfd1662">Antofagasta</option><option value="31dc2329-f30d-e511-80c4-00155dfd1662">Arica</option><option value="3fa1c64f-3615-e511-80c5-00155dfd1662">Chillán</option><option value="40a1c64f-3615-e511-80c5-00155dfd1662">Concepción</option><option value="920cd910-3615-e511-80c5-00155dfd1662">Copiapó</option><option value="dad4e945-3615-e511-80c5-00155dfd1662">Curicó</option><option value="9baaba2f-3615-e511-80c5-00155dfd1662">Estación Central</option><option value="2229f930-f30d-e511-80c4-00155dfd1662">Iquique</option><option value="930cd910-3615-e511-80c5-00155dfd1662">La Serena</option><option value="818bb95c-3615-e511-80c5-00155dfd1662">Los Ángeles</option><option value="aadafb9a-3615-e511-80c5-00155dfd1662">Osorno</option><option value="7cb56e1a-3615-e511-80c5-00155dfd1662">Ovalle</option><option value="e631493b-3615-e511-80c5-00155dfd1662">Puente Alto</option><option value="cb03e3a6-3615-e511-80c5-00155dfd1662">Puerto Montt</option><option value="cc03e3a6-3615-e511-80c5-00155dfd1662">Punta Arenas</option><option value="e731493b-3615-e511-80c5-00155dfd1662">Rancagua</option><option value="9caaba2f-3615-e511-80c5-00155dfd1662">San Joaquín</option><option value="268a3c25-843b-e511-80ce-00155dfd1662">Santiago Centro</option><option value="15a9542a-793b-e511-80ce-00155dfd1662">Santiago UST</option><option value="dbd4e945-3615-e511-80c5-00155dfd1662">Talca</option><option value="56629339-f30d-e511-80c4-00155dfd1662">Temuco</option><option value="a9dafb9a-3615-e511-80c5-00155dfd1662">Valdivia</option><option value="7db56e1a-3615-e511-80c5-00155dfd1662">Viña del Mar</option></optgroup >                                    </select>
+
+
+                            <label class="regular-label required">Jornada</label>
+                            <select class="regular-input select" name="combo-carreras[0][jornada]" required data-name="selector-jornada"  id="selector-jornada" >
+                              <option value="">Selecciona una jornada</option>
+                            </select>
+
+                          </div>
+                          <div class="grid-6 grid-smalltablet-12 no-gutter-right no-gutter-smalltablet">
+
+                            <label class="regular-label required">Carrera</label>
+                            <select class="regular-input select" name="combo-carreras[0][carrera]" required data-name="selector-carrera" id="selector-carrera" >
+                              <option value="">Selecciona una carrera</option>
+                            </select>
+
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="career-combo" data-count="2">
+                      <h3 class="career-combo-title">
+                        Carrera 2 <span>(opcional)</span>
+                        <a href="#" title="Agregar otra carrera" data-func="addRemoveCareerComboPrev" class="addothercareer">AGREGAR OTRA CARRERA</a>
+                        <button class="career-combo-btn close gtm_desplegar_carrera" data-func="addRemoveCareerCombo"></button>
+                        <button class="career-combo-btn expand" data-func="deployCareerCombo"></button>
+                      </h3>
+
+                      <div class="career-combo-fields">
+                        <div class="input-group parent">
+                          <div class="grid-6 grid-smalltablet-12 no-gutter-left no-gutter-smalltablet">
+
+                            <label class="regular-label required">¿Dónde quieres estudiar?</label>
+                            <select class="regular-input select" name="combo-carreras[1][sede]" data-name="selector-sede">
+                              <option value='' >Selecciona una Sede</option><option value="a03744fa-e70e-e511-80c4-00155dfd1662">Antofagasta</option><option value="31dc2329-f30d-e511-80c4-00155dfd1662">Arica</option><option value="3fa1c64f-3615-e511-80c5-00155dfd1662">Chillán</option><option value="40a1c64f-3615-e511-80c5-00155dfd1662">Concepción</option><option value="920cd910-3615-e511-80c5-00155dfd1662">Copiapó</option><option value="dad4e945-3615-e511-80c5-00155dfd1662">Curicó</option><option value="9baaba2f-3615-e511-80c5-00155dfd1662">Estación Central</option><option value="2229f930-f30d-e511-80c4-00155dfd1662">Iquique</option><option value="930cd910-3615-e511-80c5-00155dfd1662">La Serena</option><option value="818bb95c-3615-e511-80c5-00155dfd1662">Los Ángeles</option><option value="aadafb9a-3615-e511-80c5-00155dfd1662">Osorno</option><option value="7cb56e1a-3615-e511-80c5-00155dfd1662">Ovalle</option><option value="e631493b-3615-e511-80c5-00155dfd1662">Puente Alto</option><option value="cb03e3a6-3615-e511-80c5-00155dfd1662">Puerto Montt</option><option value="cc03e3a6-3615-e511-80c5-00155dfd1662">Punta Arenas</option><option value="e731493b-3615-e511-80c5-00155dfd1662">Rancagua</option><option value="9caaba2f-3615-e511-80c5-00155dfd1662">San Joaquín</option><option value="268a3c25-843b-e511-80ce-00155dfd1662">Santiago Centro</option><option value="15a9542a-793b-e511-80ce-00155dfd1662">Santiago UST</option><option value="dbd4e945-3615-e511-80c5-00155dfd1662">Talca</option><option value="56629339-f30d-e511-80c4-00155dfd1662">Temuco</option><option value="a9dafb9a-3615-e511-80c5-00155dfd1662">Valdivia</option><option value="7db56e1a-3615-e511-80c5-00155dfd1662">Viña del Mar</option></optgroup >                                    </select>
+
+                            <label class="regular-label required">Jornada</label>
+                            <select class="regular-input select" name="combo-carreras[1][jornada]" data-name="selector-jornada">
+                              <option value="">Selecciona una jornada</option>
+                            </select>
+
+                          </div>
+
+                          <div class="grid-6 grid-smalltablet-12 no-gutter-right no-gutter-smalltablet">
+
+                            <label class="regular-label required">Carrera</label>
+                            <select class="regular-input select" name="combo-carreras[1][carrera]" data-name="selector-carrera">
+                              <option value="">Selecciona una carrera</option>
+                            </select>
+
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="career-combo" data-count="3">
+                      <h3 class="career-combo-title">
+                        Carrera 3 <span>(opcional)</span>
+                        <a href="#" title="Agregar otra carrera" data-func="addRemoveCareerComboPrev" class="addothercareer">AGREGAR OTRA CARRERA</a>
+                        <button class="career-combo-btn close gtm_desplegar_carrera" data-func="addRemoveCareerCombo"></button>
+                        <button class="career-combo-btn expand" data-func="deployCareerCombo"></button>
+                      </h3>
+
+                      <div class="career-combo-fields">
+                        <div class="input-group parent">
+                          <div class="grid-6 grid-smalltablet-12 no-gutter-left no-gutter-smalltablet">
+
+                            <label class="regular-label required">¿Dónde quieres estudiar?</label>
+                            <select class="regular-input select" name="combo-carreras[2][sede]" data-name="selector-sede">
+                              <option value='' >Selecciona una Sede</option><option value="a03744fa-e70e-e511-80c4-00155dfd1662">Antofagasta</option><option value="31dc2329-f30d-e511-80c4-00155dfd1662">Arica</option><option value="3fa1c64f-3615-e511-80c5-00155dfd1662">Chillán</option><option value="40a1c64f-3615-e511-80c5-00155dfd1662">Concepción</option><option value="920cd910-3615-e511-80c5-00155dfd1662">Copiapó</option><option value="dad4e945-3615-e511-80c5-00155dfd1662">Curicó</option><option value="9baaba2f-3615-e511-80c5-00155dfd1662">Estación Central</option><option value="2229f930-f30d-e511-80c4-00155dfd1662">Iquique</option><option value="930cd910-3615-e511-80c5-00155dfd1662">La Serena</option><option value="818bb95c-3615-e511-80c5-00155dfd1662">Los Ángeles</option><option value="aadafb9a-3615-e511-80c5-00155dfd1662">Osorno</option><option value="7cb56e1a-3615-e511-80c5-00155dfd1662">Ovalle</option><option value="e631493b-3615-e511-80c5-00155dfd1662">Puente Alto</option><option value="cb03e3a6-3615-e511-80c5-00155dfd1662">Puerto Montt</option><option value="cc03e3a6-3615-e511-80c5-00155dfd1662">Punta Arenas</option><option value="e731493b-3615-e511-80c5-00155dfd1662">Rancagua</option><option value="9caaba2f-3615-e511-80c5-00155dfd1662">San Joaquín</option><option value="268a3c25-843b-e511-80ce-00155dfd1662">Santiago Centro</option><option value="15a9542a-793b-e511-80ce-00155dfd1662">Santiago UST</option><option value="dbd4e945-3615-e511-80c5-00155dfd1662">Talca</option><option value="56629339-f30d-e511-80c4-00155dfd1662">Temuco</option><option value="a9dafb9a-3615-e511-80c5-00155dfd1662">Valdivia</option><option value="7db56e1a-3615-e511-80c5-00155dfd1662">Viña del Mar</option></optgroup >                                    </select>
+
+                            <label class="regular-label required">Jornada</label>
+                            <select class="regular-input select" name="combo-carreras[2][jornada]" data-name="selector-jornada">
+                              <option value="">Selecciona una jornada</option>
+                            </select>
+
+                          </div>
+                          <div class="grid-6 grid-smalltablet-12 no-gutter-right no-gutter-smalltablet">
+
+                            <label class="regular-label required">Carrera</label>
+                            <select class="regular-input select" name="combo-carreras[2][carrera]" data-name="selector-carrera">
+                              <option value="">Selecciona una carrera</option>
+                            </select>
+
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="island">
+                    <p class="regular-form-helper">*Campos requeridos</p>
+                  </div>
+                  <div class="island">
+                    <button class="button seamless back-icon back-arrow form-control full-vertical-tablet-down" data-func="formControl" data-direction="prev">Anterior</button>
+                    <input class="button secundario small wide full-vertical-tablet-down" type="submit" value="Enviar datos">
+                  </div>
+                </div>
+              </fieldset>
+              <input type="hidden" name="formulario" value="header" >
+              <input type="hidden" name="ws-form-name" value="postulacion" >
+              <input type="hidden" name="id-table-user" value="">
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="header-body--border"></div>
+  </section>
+</header>
+
+<main id="main-content" class="landing-main-content main-content" role="main" data-apikey="HablaConmigo">
+  <section id="top" class="index-section slider-home bg-blanco">
+    <section class="index-slider-holder" data-role="simple-slider-module">
+      <div class="index-slider" data-role="slider"><figure class="slide current" data-index="0"><img width="1200" height="350" src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2018/10/Captura-de-pantalla-2019-08-14-a-las-11.14.31-e1567187271127-1200x350.png" class="hide-on-vertical-tablet-down" alt="" /><img width="600" height="400" src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2018/10/Captura-de-pantalla-2019-08-14-a-las-11.14.31-e1567187271127-600x400.png" class="only-on-vertical-tablet-down" alt="" srcset="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2018/10/Captura-de-pantalla-2019-08-14-a-las-11.14.31-e1567187271127-600x400.png 600w, https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2018/10/Captura-de-pantalla-2019-08-14-a-las-11.14.31-e1567187271127-382x256.png 382w" sizes="(max-width: 600px) 100vw, 600px" /></figure><figure class="slide " data-index="1"><img width="1200" height="350" src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2018/10/animal-blur-chameleon-567540-1200x350.jpg" class="hide-on-vertical-tablet-down" alt="" /><img width="600" height="400" src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2018/10/animal-blur-chameleon-567540-600x400.jpg" class="only-on-vertical-tablet-down" alt="" srcset="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2018/10/animal-blur-chameleon-567540-600x400.jpg 600w, https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2018/10/animal-blur-chameleon-567540-382x256.jpg 382w" sizes="(max-width: 600px) 100vw, 600px" /></figure></div>
+      <div class="container-landing" style="position:relative">
+        <div class="index-slider-bullets" data-role="bullets"><button class="bullet current" data-target="0"></button><button class="bullet " data-target="1"></button></div>
+      </div>
+    </section>
+
+    <div class="container-landing">
+      <div class="hc-landing__phone-holder">
+        <img src="https://admision.santotomas.idastage.com/wp-content/themes/admision/images/habla-conmigo/whatsapp_logo.svg" class="elastic-img cover">
+      </div>
+    </div>
+  </section>
+  <section class="horizon no-margin-top">
+    <div class="container-landing">
+      <section class="parent hc-landing__intro">
+        <div class="hc-landing__pilar">
+          <h4 class="hc-landing__intro__subtitle">Horarios de chat, whatsapp y llamados</h4>
+          <div class="hc-landing__intro__content">
+            <p>Lunes a viernes: 09:00 a 22:00 hrs.  / Sábados de 10:00 a 16:00 hrs.</p>
+          </div>
+        </div>
+        <div class="hc-landing__pilar grid-row">
+          <div class="grid-6 grid-mobile-4">
+            <a class="button hc gradient green phone" href="tel:" target="_blank" data-track data-gtm-event="landing-habla-conmigo" data-gtm-eventcategory="habla-conmigo-llamanos" data-gtm-eventaction="clic" data-gtm-eventlabel="btn-llamanos"><i class="icon"></i> Llámanos</a>
+          </div>
+          <div class="grid-6 grid-mobile-4">
+            <a class="button hc gradient green wsp" href="https://api.whatsapp.com/send?phone=56927956200&text=&source=&data="
+               target="_blank" data-track data-gtm-event="landing-habla-conmigo" data-gtm-eventcategory="habla-conmigo-wsp" data-gtm-eventaction="clic" data-gtm-eventlabel="btn-wsp"><i class="icon"></i> Envíanos un whatsapp</a>
+          </div>
+        </div>
+        <ul class="hc-landing__intro__extra">
+          <li>Whatsapp y llamados son asignados al azar</li><li>Si tu carrera no se muestra en las opciones llámanos al 600 444 4444</li><li>Whatsapp no disponible por el momento. Chat directo y llamadas disponibles.</li>				</ul>
+      </section>
+
+      <section class="subsection">
+        <form id="form-habla-conmigo" action="" method="get"
+              class="form form-habla-conmigo complex-form hc-landing__filter">
+          <div class="grid-row ">
+            <div class=" grid-4 grid-smalltablet-12 flex-column">
+              <label for="areas_general" class="regular-label oswald">Filtra por área</label>
+              <select name="areas_general" id="areas_general" class="regular-input select" data-filter="area">
+                <option value="" data-id="0">Seleccione un área</option>
+                <option value="53" data-id="53">Educación</option><option value="54" data-id="54">Informática</option><option value="55" data-id="55">Ingeniería</option><option value="59" data-id="59">Salud</option>							</select>
+            </div>
+            <div class=" grid-4  grid-smalltablet-12 flex-column">
+              <label for="sede" class="regular-label oswald">Filtra por sede</label>
+              <select name="sede" id="sede" class="regular-input select" data-filter="sede">
+                <option value="" data-id="0">Seleccione una sede</option>
+                <option value="20" data-id="20">Iquique</option><option value="21" data-id="21">Antofagasta</option><option value="22" data-id="22">Copiapó</option><option value="24" data-id="24">Ovalle</option><option value="26" data-id="26">Rancagua</option><option value="28" data-id="28">Talca</option><option value="29" data-id="29">Chillán</option><option value="30" data-id="30">Concepción</option><option value="35" data-id="35">Osorno</option><option value="39" data-id="39">IP/CFT Estación Central</option><option value="41" data-id="41">CFT Puente Alto</option>							</select>
+            </div>
+            <div class=" grid-4  grid-smalltablet-12 flex-column">
+              <label for="carrera" class="regular-label oswald">Filtra por carrera</label>
+              <select name="carrera" id="carrera" class="regular-input select" data-filter="carrera">
+                <option value="" data-id="0">Seleccione una carrera</option>
+                <option value="Analista Programador" data-id="Analista Programador">Analista Programador</option><option value="Ingeniería Civil Industrial" data-id="Ingeniería Civil Industrial">Ingeniería Civil Industrial</option><option value="Nutrición y Dietética" data-id="Nutrición y Dietética">Nutrición y Dietética</option><option value="Técnico en Educación Especial" data-id="Técnico en Educación Especial">Técnico en Educación Especial</option><option value="Técnico en Enfermería Gineco-Obstétrica y Neonatal" data-id="Técnico en Enfermería Gineco-Obstétrica y Neonatal">Técnico en Enfermería Gineco-Obstétrica y Neonatal</option><option value="administracion" data-id="administracion">administracion</option><option value="derecho" data-id="derecho">derecho</option><option value="diseno" data-id="diseno">diseno</option><option value="educacion" data-id="educacion">educacion</option><option value="ingenieria" data-id="ingenieria">ingenieria</option><option value="odontologia" data-id="odontologia">odontologia</option>							</select>
+            </div>
+          </div>
+          <div style="display:flex; align-item: flex-end; justify-content: flex-end;">
+            <a href="/habla-conmigo" class="link-clean" data-role="clean-filter">Limpiar filtros</a>
+          </div>
+        </form>
+      </section>
+
+      <section class="subsection subsection__results no-margin-top">
+        <div class="subsection__headtitle">
+          <h3 class="subsection__title subsection__title--hc">Resultados de tu búsqueda</h3>
+          <div class="title__rs">
+            <span class="title__rs__title">Síguenos en</span>
+            <a href="https://twitter.com/" target="_blank" class="round__rs twitter"><i class="icon"></i></a>
+            <a href="https://facebook.com/" target="_blank" class="round__rs facebook"><i class="icon"></i></a>
+          </div>
+        </div>
+
+        <div id="content-landing" data-id="3240" class="hc-results">
+          <div class="grid-3 grid-tablet-6 grid-smalltablet-12 box-person" data-role="persona" data-persona-id="4169" data-persona-name="Agente Paul Diaz 6" data-chatstatus="closed">
+            <article class="person inactive" style="margin-bottom:20px;">
+
+              <figure class="person__figure red">
+
+                <img src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/habla-conmigo/no-image.jpg" class="elastic-img" />
+
+                <span class="person__status">Desconectado</span>
+
+              </figure>
+              <div class="person__body">
+                <div class="person__body__info">
+                  <h4 class="person__title">Agente Paul Diaz 6</h4>
+                  <div class="person__excerpt">
+                    <p>Educacion</p>
+                    <p style="margin-top:5px;">Sede Copiapó</p>
+                  </div>
+                </div>
+                <div class="msg-habla-conmigo" style="display:none;">
+                  Lo sentimos, Agente Paul Diaz 6 ya no se encuentra en línea. Déjanos tus datos para que te
+                  contacte.
+                </div>
+                <div class="person__body__action">
+                  <a href="#" data-role="modal-chat" data-module="modal" data-role="modal-btn" data-class="habla-conmigo small" data-method="post"
+                     data-query="postid=3240&userid=4169"
+                     data-target="/wp-json/deploy/modal/" class="button small full" title="conversemos"
+                     onclick="ga('send', 'pageview', '/habla-conmigo/modal-formulario/'); ga('send', 'event', 'habla-conmigo chat inactivo', 'clic - ', 'chat inactivo');"><i class="icon icon-chat"></i> Dejar mensaje</a>
+
+                </div>
+              </div>
+            </article>
+          </div><div class="grid-3 grid-tablet-6 grid-smalltablet-12 box-person" data-role="persona" data-persona-id="4168" data-persona-name="Agente Paul Diaz 5" data-chatstatus="closed">
+          <article class="person inactive" style="margin-bottom:20px;">
+
+            <figure class="person__figure red">
+
+              <img src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/habla-conmigo/no-image.jpg" class="elastic-img" />
+
+              <span class="person__status">Desconectado</span>
+
+            </figure>
+            <div class="person__body">
+              <div class="person__body__info">
+                <h4 class="person__title">Agente Paul Diaz 5</h4>
+                <div class="person__excerpt">
+                  <p>Ingenieria</p>
+                  <p style="margin-top:5px;">Sede Iquique</p>
+                </div>
+              </div>
+              <div class="msg-habla-conmigo" style="display:none;">
+                Lo sentimos, Agente Paul Diaz 5 ya no se encuentra en línea. Déjanos tus datos para que te
+                contacte.
+              </div>
+              <div class="person__body__action">
+                <a href="#" data-role="modal-chat" data-module="modal" data-role="modal-btn" data-class="habla-conmigo small" data-method="post"
+                   data-query="postid=3240&userid=4168"
+                   data-target="/wp-json/deploy/modal/" class="button small full" title="conversemos"
+                   onclick="ga('send', 'pageview', '/habla-conmigo/modal-formulario/'); ga('send', 'event', 'habla-conmigo chat inactivo', 'clic - ', 'chat inactivo');"><i class="icon icon-chat"></i> Dejar mensaje</a>
+
+              </div>
+            </div>
+          </article>
+        </div><div class="grid-3 grid-tablet-6 grid-smalltablet-12 box-person" data-role="persona" data-persona-id="4167" data-persona-name="Agente Paul Diaz 4" data-chatstatus="closed">
+          <article class="person inactive" style="margin-bottom:20px;">
+
+            <figure class="person__figure red">
+
+              <img src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/habla-conmigo/no-image.jpg" class="elastic-img" />
+
+              <span class="person__status">Desconectado</span>
+
+            </figure>
+            <div class="person__body">
+              <div class="person__body__info">
+                <h4 class="person__title">Agente Paul Diaz 4</h4>
+                <div class="person__excerpt">
+                  <p>Diseno</p>
+                  <p style="margin-top:5px;">Sede Talca</p>
+                </div>
+              </div>
+              <div class="msg-habla-conmigo" style="display:none;">
+                Lo sentimos, Agente Paul Diaz 4 ya no se encuentra en línea. Déjanos tus datos para que te
+                contacte.
+              </div>
+              <div class="person__body__action">
+                <a href="#" data-role="modal-chat" data-module="modal" data-role="modal-btn" data-class="habla-conmigo small" data-method="post"
+                   data-query="postid=3240&userid=4167"
+                   data-target="/wp-json/deploy/modal/" class="button small full" title="conversemos"
+                   onclick="ga('send', 'pageview', '/habla-conmigo/modal-formulario/'); ga('send', 'event', 'habla-conmigo chat inactivo', 'clic - ', 'chat inactivo');"><i class="icon icon-chat"></i> Dejar mensaje</a>
+
+              </div>
+            </div>
+          </article>
+        </div><div class="grid-3 grid-tablet-6 grid-smalltablet-12 box-person" data-role="persona" data-persona-id="4166" data-persona-name="Agente Paul Diaz 3" data-chatstatus="closed">
+          <article class="person inactive" style="margin-bottom:20px;">
+
+            <figure class="person__figure red">
+
+              <img src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/habla-conmigo/no-image.jpg" class="elastic-img" />
+
+              <span class="person__status">Desconectado</span>
+
+            </figure>
+            <div class="person__body">
+              <div class="person__body__info">
+                <h4 class="person__title">Agente Paul Diaz 3</h4>
+                <div class="person__excerpt">
+                  <p>Derecho</p>
+                  <p style="margin-top:5px;">Sede Rancagua</p>
+                </div>
+              </div>
+              <div class="msg-habla-conmigo" style="display:none;">
+                Lo sentimos, Agente Paul Diaz 3 ya no se encuentra en línea. Déjanos tus datos para que te
+                contacte.
+              </div>
+              <div class="person__body__action">
+                <a href="#" data-role="modal-chat" data-module="modal" data-role="modal-btn" data-class="habla-conmigo small" data-method="post"
+                   data-query="postid=3240&userid=4166"
+                   data-target="/wp-json/deploy/modal/" class="button small full" title="conversemos"
+                   onclick="ga('send', 'pageview', '/habla-conmigo/modal-formulario/'); ga('send', 'event', 'habla-conmigo chat inactivo', 'clic - ', 'chat inactivo');"><i class="icon icon-chat"></i> Dejar mensaje</a>
+
+              </div>
+            </div>
+          </article>
+        </div><div class="grid-3 grid-tablet-6 grid-smalltablet-12 box-person" data-role="persona" data-persona-id="4165" data-persona-name="Agente Paul Diaz 2" data-chatstatus="closed">
+          <article class="person active" style="margin-bottom:20px;">
+
+            <figure class="person__figure red">
+
+              <img src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/habla-conmigo/no-image.jpg" class="elastic-img" />
+
+              <span class="person__status">En Línea</span>
+
+            </figure>
+            <div class="person__body">
+              <div class="person__body__info">
+                <h4 class="person__title">Agente Paul Diaz 2</h4>
+                <div class="person__excerpt">
+                  <p>Administracion</p>
+                  <p style="margin-top:5px;">Sede Osorno</p>
+                </div>
+              </div>
+              <div class="msg-habla-conmigo" style="display:none;">
+                Lo sentimos, Agente Paul Diaz 2 ya no se encuentra en línea. Déjanos tus datos para que te
+                contacte.
+              </div>
+              <div class="person__body__action">
+                <a href="#" data-role="start-chat" data-id-agent="3302" class="button small full" title="conversemos"
+                   data-rut-sin-digito="" data-rut=""
+                   data-query="postid=3240&userid=4165" data-track
+                   data-gtm-event="landing-habla-conmigo" data-gtm-eventcategory="habla-conmigo chat activo"
+                   data-gtm-eventaction="clic - " data-gtm-eventlabel="chat activo"><i class="icon icon-chat"></i> Chatear</a>
+
+              </div>
+            </div>
+          </article>
+        </div><div class="grid-3 grid-tablet-6 grid-smalltablet-12 box-person" data-role="persona" data-persona-id="4164" data-persona-name="Agente Paul Diaz 1" data-chatstatus="closed">
+          <article class="person active" style="margin-bottom:20px;">
+
+            <figure class="person__figure red">
+
+              <img src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/habla-conmigo/no-image.jpg" class="elastic-img" />
+
+              <span class="person__status">En Línea</span>
+
+            </figure>
+            <div class="person__body">
+              <div class="person__body__info">
+                <h4 class="person__title">Agente Paul Diaz 1</h4>
+                <div class="person__excerpt">
+                  <p>Odontologia</p>
+                  <p style="margin-top:5px;">Sede Chillán</p>
+                </div>
+              </div>
+              <div class="msg-habla-conmigo" style="display:none;">
+                Lo sentimos, Agente Paul Diaz 1 ya no se encuentra en línea. Déjanos tus datos para que te
+                contacte.
+              </div>
+              <div class="person__body__action">
+                <a href="#" data-role="start-chat" data-id-agent="3302" class="button small full" title="conversemos"
+                   data-rut-sin-digito="" data-rut=""
+                   data-query="postid=3240&userid=4164" data-track
+                   data-gtm-event="landing-habla-conmigo" data-gtm-eventcategory="habla-conmigo chat activo"
+                   data-gtm-eventaction="clic - " data-gtm-eventlabel="chat activo"><i class="icon icon-chat"></i> Chatear</a>
+
+              </div>
+            </div>
+          </article>
+        </div><div class="grid-3 grid-tablet-6 grid-smalltablet-12 box-person" data-role="persona" data-persona-id="4061" data-persona-name="Belén" data-chatstatus="closed">
+          <article class="person inactive" style="margin-bottom:20px;">
+
+            <figure class="person__figure red">
+
+              <img src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/habla-conmigo/no-image.jpg" class="elastic-img" />
+
+              <span class="person__status">Desconectado</span>
+
+            </figure>
+            <div class="person__body">
+              <div class="person__body__info">
+                <h4 class="person__title">Belén</h4>
+                <div class="person__excerpt">
+                  <p>Técnico En Educación Especial</p>
+                  <p style="margin-top:5px;">Sede IP/CFT Estación Central</p>
+                </div>
+              </div>
+              <div class="msg-habla-conmigo" style="display:none;">
+                Lo sentimos, Belén ya no se encuentra en línea. Déjanos tus datos para que te
+                contacte.
+              </div>
+              <div class="person__body__action">
+                <a href="#" data-role="watch-video" class="button small full video" title="Ver video"
+                   data-module="modal" data-role="modal-btn" data-method="post" data-class="habla-conmigo"
+                   data-query="postid=3240&urlvideo=https://www.youtube.com/watch?v=JWpinVv5R1I&userid=4061"
+                   data-target="/wp-json/deploy/video/" class="button small full" title="conversemos" data-track
+                   data-gtm-event="landing-habla-conmigo" data-gtm-eventcategory="habla-conmigo"
+                   data-gtm-eventaction="clic - " data-gtm-eventlabel="video"><i class="icon icon-video"></i> Ver video</a>
+                <a href="#" data-role="modal-chat" data-module="modal" data-role="modal-btn" data-class="habla-conmigo small" data-method="post"
+                   data-query="postid=3240&userid=4061"
+                   data-target="/wp-json/deploy/modal/" class="button small full" title="conversemos"
+                   onclick="ga('send', 'pageview', '/habla-conmigo/modal-formulario/'); ga('send', 'event', 'habla-conmigo chat inactivo', 'clic - ', 'chat inactivo');"><i class="icon icon-chat"></i> Dejar mensaje</a>
+
+              </div>
+            </div>
+          </article>
+        </div><div class="grid-3 grid-tablet-6 grid-smalltablet-12 box-person" data-role="persona" data-persona-id="4060" data-persona-name="Bárbara" data-chatstatus="closed">
+          <article class="person inactive" style="margin-bottom:20px;">
+
+            <figure class="person__figure red">
+
+              <img width="382" height="256" src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2019/08/175180133-382x256.jpg" class="elastic-img wp-post-image" alt="" />
+              <span class="person__status">Desconectado</span>
+
+            </figure>
+            <div class="person__body">
+              <div class="person__body__info">
+                <h4 class="person__title">Bárbara</h4>
+                <div class="person__excerpt">
+                  <p>Técnico En Enfermería Gineco-Obstétrica Y Neonatal</p>
+                  <p style="margin-top:5px;">Sede CFT Puente Alto</p>
+                </div>
+              </div>
+              <div class="msg-habla-conmigo" style="display:none;">
+                Lo sentimos, Bárbara ya no se encuentra en línea. Déjanos tus datos para que te
+                contacte.
+              </div>
+              <div class="person__body__action">
+                <a href="#" data-role="watch-video" class="button small full video" title="Ver video"
+                   data-module="modal" data-role="modal-btn" data-method="post" data-class="habla-conmigo"
+                   data-query="postid=3240&urlvideo=https://www.youtube.com/watch?v=JWpinVv5R1I&userid=4060"
+                   data-target="/wp-json/deploy/video/" class="button small full" title="conversemos" data-track
+                   data-gtm-event="landing-habla-conmigo" data-gtm-eventcategory="habla-conmigo"
+                   data-gtm-eventaction="clic - " data-gtm-eventlabel="video"><i class="icon icon-video"></i> Ver video</a>
+                <a href="#" data-role="modal-chat" data-module="modal" data-role="modal-btn" data-class="habla-conmigo small" data-method="post"
+                   data-query="postid=3240&userid=4060"
+                   data-target="/wp-json/deploy/modal/" class="button small full" title="conversemos"
+                   onclick="ga('send', 'pageview', '/habla-conmigo/modal-formulario/'); ga('send', 'event', 'habla-conmigo chat inactivo', 'clic - ', 'chat inactivo');"><i class="icon icon-chat"></i> Dejar mensaje</a>
+
+              </div>
+            </div>
+          </article>
+        </div><div class="grid-3 grid-tablet-6 grid-smalltablet-12 box-person" data-role="persona" data-persona-id="4059" data-persona-name="Andrea" data-chatstatus="closed">
+          <article class="person active" style="margin-bottom:20px;">
+
+            <figure class="person__figure red">
+
+              <img width="382" height="256" src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2019/08/179748584-382x256.jpg" class="elastic-img wp-post-image" alt="" />
+              <span class="person__status">En Línea</span>
+
+            </figure>
+            <div class="person__body">
+              <div class="person__body__info">
+                <h4 class="person__title">Andrea</h4>
+                <div class="person__excerpt">
+                  <p>Ingeniería Civil Industrial</p>
+                  <p style="margin-top:5px;">Sede Antofagasta</p>
+                </div>
+              </div>
+              <div class="msg-habla-conmigo" style="display:none;">
+                Lo sentimos, Andrea ya no se encuentra en línea. Déjanos tus datos para que te
+                contacte.
+              </div>
+              <div class="person__body__action">
+                <a href="#" data-role="watch-video" class="button small full video" title="Ver video"
+                   data-module="modal" data-role="modal-btn" data-method="post" data-class="habla-conmigo"
+                   data-query="postid=3240&urlvideo=https://www.youtube.com/watch?v=JWpinVv5R1I&userid=4059"
+                   data-target="/wp-json/deploy/video/" class="button small full" title="conversemos" data-track
+                   data-gtm-event="landing-habla-conmigo" data-gtm-eventcategory="habla-conmigo"
+                   data-gtm-eventaction="clic - " data-gtm-eventlabel="video"><i class="icon icon-video"></i> Ver video</a>
+                <a href="#" data-role="start-chat" data-id-agent="3302" class="button small full" title="conversemos"
+                   data-rut-sin-digito="" data-rut=""
+                   data-query="postid=3240&userid=4059" data-track
+                   data-gtm-event="landing-habla-conmigo" data-gtm-eventcategory="habla-conmigo chat activo"
+                   data-gtm-eventaction="clic - " data-gtm-eventlabel="chat activo"><i class="icon icon-chat"></i> Chatear</a>
+
+              </div>
+            </div>
+          </article>
+        </div><div class="grid-3 grid-tablet-6 grid-smalltablet-12 box-person" data-role="persona" data-persona-id="4058" data-persona-name="Álvaro" data-chatstatus="closed">
+          <article class="person inactive" style="margin-bottom:20px;">
+
+            <figure class="person__figure red">
+
+              <img width="382" height="256" src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2019/08/174005869-382x256.jpg" class="elastic-img wp-post-image" alt="" srcset="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2019/08/174005869-382x256.jpg 382w, https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2019/08/174005869-300x200.jpg 300w, https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2019/08/174005869-768x512.jpg 768w, https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2019/08/174005869-1024x683.jpg 1024w" sizes="(max-width: 382px) 100vw, 382px" />
+              <span class="person__status">Desconectado</span>
+
+            </figure>
+            <div class="person__body">
+              <div class="person__body__info">
+                <h4 class="person__title">Álvaro</h4>
+                <div class="person__excerpt">
+                  <p>Nutrición Y Dietética</p>
+                  <p style="margin-top:5px;">Sede Concepción</p>
+                </div>
+              </div>
+              <div class="msg-habla-conmigo" style="display:none;">
+                Lo sentimos, Álvaro ya no se encuentra en línea. Déjanos tus datos para que te
+                contacte.
+              </div>
+              <div class="person__body__action">
+                <a href="#" data-role="watch-video" class="button small full video" title="Ver video"
+                   data-module="modal" data-role="modal-btn" data-method="post" data-class="habla-conmigo"
+                   data-query="postid=3240&urlvideo=https://www.youtube.com/watch?v=JWpinVv5R1I&userid=4058"
+                   data-target="/wp-json/deploy/video/" class="button small full" title="conversemos" data-track
+                   data-gtm-event="landing-habla-conmigo" data-gtm-eventcategory="habla-conmigo"
+                   data-gtm-eventaction="clic - " data-gtm-eventlabel="video"><i class="icon icon-video"></i> Ver video</a>
+                <a href="#" data-role="modal-chat" data-module="modal" data-role="modal-btn" data-class="habla-conmigo small" data-method="post"
+                   data-query="postid=3240&userid=4058"
+                   data-target="/wp-json/deploy/modal/" class="button small full" title="conversemos"
+                   onclick="ga('send', 'pageview', '/habla-conmigo/modal-formulario/'); ga('send', 'event', 'habla-conmigo chat inactivo', 'clic - ', 'chat inactivo');"><i class="icon icon-chat"></i> Dejar mensaje</a>
+
+              </div>
+            </div>
+          </article>
+        </div><div class="grid-3 grid-tablet-6 grid-smalltablet-12 box-person" data-role="persona" data-persona-id="4057" data-persona-name="Alexandra" data-chatstatus="closed">
+          <article class="person inactive" style="margin-bottom:20px;">
+
+            <figure class="person__figure red">
+
+              <img width="382" height="256" src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2019/08/183654675-382x256.jpg" class="elastic-img wp-post-image" alt="" />
+              <span class="person__status">Desconectado</span>
+
+            </figure>
+            <div class="person__body">
+              <div class="person__body__info">
+                <h4 class="person__title">Alexandra</h4>
+                <div class="person__excerpt">
+                  <p>Técnico En Educación Especial</p>
+                  <p style="margin-top:5px;">Sede CFT Puente Alto</p>
+                </div>
+              </div>
+              <div class="msg-habla-conmigo" style="display:none;">
+                Lo sentimos, Alexandra ya no se encuentra en línea. Déjanos tus datos para que te
+                contacte.
+              </div>
+              <div class="person__body__action">
+                <a href="#" data-role="watch-video" class="button small full video" title="Ver video"
+                   data-module="modal" data-role="modal-btn" data-method="post" data-class="habla-conmigo"
+                   data-query="postid=3240&urlvideo=https://www.youtube.com/watch?v=JWpinVv5R1I&userid=4057"
+                   data-target="/wp-json/deploy/video/" class="button small full" title="conversemos" data-track
+                   data-gtm-event="landing-habla-conmigo" data-gtm-eventcategory="habla-conmigo"
+                   data-gtm-eventaction="clic - " data-gtm-eventlabel="video"><i class="icon icon-video"></i> Ver video</a>
+                <a href="#" data-role="modal-chat" data-module="modal" data-role="modal-btn" data-class="habla-conmigo small" data-method="post"
+                   data-query="postid=3240&userid=4057"
+                   data-target="/wp-json/deploy/modal/" class="button small full" title="conversemos"
+                   onclick="ga('send', 'pageview', '/habla-conmigo/modal-formulario/'); ga('send', 'event', 'habla-conmigo chat inactivo', 'clic - ', 'chat inactivo');"><i class="icon icon-chat"></i> Dejar mensaje</a>
+
+              </div>
+            </div>
+          </article>
+        </div><div class="grid-3 grid-tablet-6 grid-smalltablet-12 box-person" data-role="persona" data-persona-id="4056" data-persona-name="Adán" data-chatstatus="closed">
+          <article class="person active" style="margin-bottom:20px;">
+
+            <figure class="person__figure red">
+
+              <img width="382" height="256" src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2019/08/200909402-382x256.jpg" class="elastic-img wp-post-image" alt="" />
+              <span class="person__status">En Línea</span>
+
+            </figure>
+            <div class="person__body">
+              <div class="person__body__info">
+                <h4 class="person__title">Adán</h4>
+                <div class="person__excerpt">
+                  <p>Analista Programador</p>
+                  <p style="margin-top:5px;">Sede Ovalle</p>
+                </div>
+              </div>
+              <div class="msg-habla-conmigo" style="display:none;">
+                Lo sentimos, Adán ya no se encuentra en línea. Déjanos tus datos para que te
+                contacte.
+              </div>
+              <div class="person__body__action">
+                <a href="#" data-role="watch-video" class="button small full video" title="Ver video"
+                   data-module="modal" data-role="modal-btn" data-method="post" data-class="habla-conmigo"
+                   data-query="postid=3240&urlvideo=https://www.youtube.com/watch?v=JWpinVv5R1I&userid=4056"
+                   data-target="/wp-json/deploy/video/" class="button small full" title="conversemos" data-track
+                   data-gtm-event="landing-habla-conmigo" data-gtm-eventcategory="habla-conmigo"
+                   data-gtm-eventaction="clic - " data-gtm-eventlabel="video"><i class="icon icon-video"></i> Ver video</a>
+                <a href="#" data-role="start-chat" data-id-agent="3302" class="button small full" title="conversemos"
+                   data-rut-sin-digito="" data-rut=""
+                   data-query="postid=3240&userid=4056" data-track
+                   data-gtm-event="landing-habla-conmigo" data-gtm-eventcategory="habla-conmigo chat activo"
+                   data-gtm-eventaction="clic - " data-gtm-eventlabel="chat activo"><i class="icon icon-chat"></i> Chatear</a>
+
+              </div>
+            </div>
+          </article>
+        </div>				</div>
+
+      </section>
+
+
+      <section class="subsection subsection__submenu">
+        <div class="container-landing">
+          <div class="submenu__holder">
+            <div class="submenu__button">
+              <a href="https://admision.santotomas.idastage.com/habla-conmigo/facebook-live/" class="button hc gradient green hablemos" title="Ir a Hablemos de">
+								<span class="titles">
+									<span class="title-main">Hablemos de</span>
+									<span class="title-tag">Videos de</span>
+								</span>
+                <span class="icons"><i class="icon-facebook"></i><i class="icon-instagram"></i></span>
+                <span class="live">Live</span>
+              </a>
+            </div>
+            <div class="submenu__button">
+              <a href="https://admision.santotomas.idastage.com/habla-conmigo/video-preguntas/" class="button hc gradient green preguntas"><i class="icon-preguntas"></i> <span class="content">Video preguntas</span></a>
+            </div>
+            <div class="submenu__button" data-chat-button>
+              <a href="#" class="button chat" data-role="show-chat"></a>
+            </div>
+            <div class="submenu__button">
+              <a href="#top" class="button top" data-func="scrollToTarget"></a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</main>
+<footer class="main-footer bg-primario">
+  <section class="main-footer-section auxiliar-section centered-text">
+  </section>
+  <section class="main-footer-section secondary-section">
+    <div class="container">
+      <div class="footer-logos centered-text hide-on-vertical-tablet-down">
+        <img class="elastic-img" src="https://admision.santotomas.idastage.com/wp-content/themes/admision/images/logos/logo-ust.svg" alt="Logotipo Santo Tomás">
+        <img src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2017/10/comision-nacional-acreditacion.svg" class="elastic-img" alt="" /><img src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2018/09/tupuedes-ust-desk.svg" class="elastic-img" alt="" /><img src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2018/09/tupuedes-ip-nov.svg" class="elastic-img" alt="" /><img src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2018/09/tupuedes-cft.svg" class="elastic-img" alt="" />                </div>
+      <div class="footer-logos centered-text only-on-vertical-tablet-down">
+        <img src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2017/10/comision-nacional-acreditacion.svg" class="elastic-img" alt="" /><img src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2018/09/tupuedes-ust-desk.svg" class="elastic-img" alt="" /><img src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2018/09/tupuedes-ip-nov.svg" class="elastic-img" alt="" /><img src="https://admision.santotomas.idastage.com/wp-content/uploads/sites/5/2018/09/tupuedes-cft.svg" class="elastic-img" alt="" />                </div>
+    </div>
+  </section>
+  <section class="main-footer-section bottom-section">
+    <div class="container centered-text">
+      <p class="footer-disclaimer">Derechos reservados Santo Tomás. Casa Central AV. Ejército 146, Barrio Universitario, Santiago.</p>
+    </div>
+  </section>
+</footer>
+<script type='text/javascript'>
+    /* <![CDATA[ */
+    var data = {"base_uri":"https:\/\/admision.santotomas.idastage.com\/wp-json\/","base_url":"https:\/\/admision.santotomas.idastage.com\/wp-json\/sim\/v1\/","base_url_suscripcion":"https:\/\/admision.santotomas.idastage.com\/wp-json\/suscripcion\/"};
+    /* ]]> */
+</script>
+<script id="all-script_script" src="https://admision.santotomas.idastage.com/wp-content/themes/admision/dist/js/scripts.min.js" type="text/javascript"></script><script id="mainScript_script" src="https://admision.santotomas.idastage.com/wp-content/themes/admision/dist/js/main.min.js" type="text/javascript"></script><script id="wp-embed_script" src="https://admision.santotomas.idastage.com/wp-includes/js/wp-embed.min.js" type="text/javascript"></script><script id="chattigo_script" src="https://channels.chattigo.com/webchat-widget/widget.js" type="text/javascript"></script><script id="modaljs_script" src="https://admision.santotomas.idastage.com/wp-content/themes/admision/assets/scripts/support/modal.js" type="text/javascript"></script><script id="funciones_hconmigo_script" src="https://admision.santotomas.idastage.com/wp-content/themes/admision/assets/scripts/habla-conmigo-2019.js" type="text/javascript"></script>    </body>
+
+<app-widget-root remote="true" did="santotomas@WC"></app-widget-root>
 <script>
     widget = document.querySelector('app-widget-root');
-    document.addEventListener('DOMContentLoaded', function () {
-        widget.init();
+    etiqueta = document.querySelectorAll('a');
+    etiqueta.forEach(function(elem) {
+        elem.addEventListener("click", function(event) {
+            widget.initChatWithAgent('3302');
+        });
     });
 </script>
-</body>
-</html>
 
+
+</html>

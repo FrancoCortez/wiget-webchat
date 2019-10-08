@@ -5,7 +5,7 @@ COPY package.json .
 RUN npm install
 RUN npm install -g http-serve
 COPY . .
-RUN npm run build:elements-prod
+RUN npm run build:elements-qa
 
 # DEPLOY STAGE
 EXPOSE 4200

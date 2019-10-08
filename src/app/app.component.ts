@@ -58,6 +58,7 @@ export class AppComponent implements OnInit {
       )
       .subscribe(resp => {
         this.store.subscribe(state => {
+          console.log('entre al init subs')
           localStorage.setItem('state', JSON.stringify(state));
         });
       });
@@ -99,6 +100,8 @@ export class AppComponent implements OnInit {
 
   @Input() public initChatWithAgent = (data: string) => {
     this.store.dispatch(InitWebChatAction.loadIdUser({payload: data}));
+    this.store.dispatch(RouterAction.loginOpen());
+    this.store.dispatch(ConversationAction.leaveChat());
     this.init();
     this.expandChat();
   }

@@ -54,9 +54,7 @@ export class AppComponent implements OnInit {
   @Input() public init = () => {
     this.store.pipe(select(ConfigSelector.selectConfig),
       delay(1000),
-      filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory),
-      )
-      .subscribe(resp => {
+      filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory)).subscribe(resp => {
         this.store.subscribe(state => {
           localStorage.setItem('state', JSON.stringify(state));
         });
@@ -124,6 +122,69 @@ export class AppComponent implements OnInit {
    */
   private initConfigRemote() {
     this.configService.getConfig(this.did).subscribe(resp => {
+      resp = JSON.parse('{ \n' +
+        '   "agent_name_enabled":false,\n' +
+        '   "bg_menu":"#1f1f1f",\n' +
+        '   "button_enabled":true,\n' +
+        '   "button_login_bg":"#c1012a",\n' +
+        '   "button_login_color":"white",\n' +
+        '   "caption_subtitle":"Estaremos gustosos de atender tus dudasconsultas.",\n' +
+        '   "caption_subtitle_color":"#424243",\n' +
+        '   "caption_title":"Inicia una conversación",\n' +
+        '   "caption_title_color":"#424243",\n' +
+        '   "field_font_color":"#424243",\n' +
+        '   "geo_active":true,\n' +
+        '   "header_background_color":"#c1012a",\n' +
+        '   "header_font_color":"#ffffff",\n' +
+        '   "header_status":"En linea",\n' +
+        '   "header_text":"AFP Habitat",\n' +
+        '   "init_button_prefer":[ \n' +
+        '      { \n' +
+        '         "button_bg":"#c1012a",\n' +
+        '         "button_color":"#ffffff",\n' +
+        '         "button_enabled":true,\n' +
+        '         "button_login_field":[ \n' +
+        '            { \n' +
+        '               "label":"(DNI o Carnet de extrangeria) o RUC",\n' +
+        '               "placeholder":"CD/DNI",\n' +
+        '               "required":true\n' +
+        '            }\n' +
+        '         ],\n' +
+        '         "button_text":"Personas"\n' +
+        '      },\n' +
+        '      { \n' +
+        '         "button_bg":"#c1012a",\n' +
+        '         "button_color":"#ffffff",\n' +
+        '         "button_enabled":true,\n' +
+        '         "button_login_field":[ \n' +
+        '            { \n' +
+        '               "label":"Ruc",\n' +
+        '               "placeholder":"Ingrese el RUC de la empresa",\n' +
+        '               "required":true,\n' +
+        '               "type": "text",\n' +
+        '               "min": "3",\n' +
+        '               "max": "30",\n' +
+        '               "defaultValidation": [{"validation": "rut", "message": "El correo ingresado es incorrecto"}, "rut", "url"]\n' +
+        '            }\n' +
+        '         ],\n' +
+        '         "button_text":"Empresa"\n' +
+        '      }\n' +
+        '   ],\n' +
+        '   "locale":"es",\n' +
+        '   "login_text":"Iniciar sesión",\n' +
+        '   "logo":"https://media.licdn.com/dms/image/C4D0BAQGLbj7ukxdRbQ/company-logo_200_200/0?e=2159024400&v=beta&t=5kKwP6K_Bd89lEHYa57va1-T3EgbBri-eYLGrN26h7g",\n' +
+        '   "message_placeholder":"Escriba un mensaje...",\n' +
+        '   "preserve_history":true,\n' +
+        '   "send_color":"#cb1e74",\n' +
+        '   "subtitle_color":"#ffffff",\n' +
+        '   "team_enabled":false,\n' +
+        '   "user_field":[ \n' +
+        '      "(DNI o Carnet de extrangeria) o RUC",\n' +
+        '      "Ruc"\n' +
+        '   ],\n' +
+        '   "welcome_color":"#ffffff",\n' +
+        '   "welcome_text":"Bienvenido al chat de AFP Habitat"\n' +
+        '}');
       this.generateConfig(resp);
     });
   }
@@ -176,7 +237,6 @@ export class AppComponent implements OnInit {
       const buttonConfigLogin: ButtonOptionUiModel[] = [];
       setting.init_button_prefer.forEach(button => {
         const obj: ButtonOptionUiModel = {
-          // colorButtonBg: button.button_bg,
           colorButtonBg: `linear-gradient(140deg, ${button.button_bg} 40%, #000 200%)`,
           colorText: button.button_color,
           label: button.button_text,
@@ -192,6 +252,10 @@ export class AppComponent implements OnInit {
             input.label = row;
             input.required = false;
             input.placeholder = row;
+            input.soloTextAndNumber = false;
+            input.soloNumber = false;
+            input.soloText = false;
+            input.defaultValidation = [];
           } else {
             (row.label === setting.user_field) ? input.userField = true : input.userField = false;
             (row.label === setting.name_field) ? input.nameField = true : input.nameField = false;
@@ -200,6 +264,35 @@ export class AppComponent implements OnInit {
             input.choices = row.choices;
             input.validation = row.validation;
             input.placeholder = (row.placeholder === undefined || row.placeholder === null) ? row.label : row.placeholder;
+            input.defaultValidation = (row.defaultValidation === undefined || row.defaultValidation === null) ? [] : row.defaultValidation
+            input.max = row.max;
+            input.min = row.min;
+            const typeText = (row.type === undefined || row.type === null) ? null : row.type;
+            switch (typeText) {
+              case 'text': {
+                input.soloTextAndNumber = false;
+                input.soloNumber = false;
+                input.soloText = true;
+                break;
+              }
+              case 'number': {
+                input.soloTextAndNumber = false;
+                input.soloText = false;
+                input.soloNumber = true;
+                break;
+              }
+              case 'text_number': {
+                input.soloNumber = false;
+                input.soloText = false;
+                input.soloTextAndNumber = true;
+                break;
+              }
+              default: {
+                input.soloTextAndNumber = false;
+                input.soloNumber = false;
+                input.soloText = false;
+              }
+            }
           }
           formInput.push(input);
         });
@@ -220,6 +313,11 @@ export class AppComponent implements OnInit {
           input.label = row;
           input.required = false;
           input.placeholder = row;
+          // input.type = 'text';
+          input.soloTextAndNumber = false;
+          input.soloNumber = false;
+          input.soloText = false;
+          input.defaultValidation = [];
         } else {
           (row.label === setting.user_field) ? input.userField = true : input.userField = false;
           (row.label === setting.name_field) ? input.nameField = true : input.nameField = false;
@@ -228,6 +326,27 @@ export class AppComponent implements OnInit {
           input.choices = row.choices;
           input.validation = row.validation;
           input.placeholder = (row.placeholder === undefined || row.placeholder === null) ? row.label : row.placeholder;
+          input.defaultValidation = (row.defaultValidation === undefined || row.defaultValidation === null) ? [] : row.defaultValidation
+          const typeText = (row.type === undefined || row.type === null) ? null : row.type;
+          switch (typeText) {
+            case 'text': {
+              input.soloText = true;
+              break;
+            }
+            case 'number': {
+              input.soloNumber = true;
+              break;
+            }
+            case 'text_number': {
+              input.soloTextAndNumber = true;
+              break;
+            }
+            default: {
+              input.soloTextAndNumber = false;
+              input.soloNumber = false;
+              input.soloText = false;
+            }
+          }
         }
         formInput.push(input);
       });
@@ -235,7 +354,6 @@ export class AppComponent implements OnInit {
       this.store.dispatch(RouterAction.initFirstLogin());
       this.store.dispatch(RouterAction.loginOpen());
     }
-    // this.configUi.input = formInput;
     this.store.dispatch(ConfigAction.loadConfig({payload: this.configUi}));
     this.cd.detectChanges();
     this.cd.markForCheck();

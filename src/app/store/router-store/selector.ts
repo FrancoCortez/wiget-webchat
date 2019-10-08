@@ -28,3 +28,10 @@ export const selectFirstPage = createSelector(
     return {button: state.firstButton, login: state.firstLogin}
   }
 );
+
+export const selectFirstLoginState = createSelector(
+  selector,
+  (state: State): boolean => {
+    return (state.login || state.button);
+  }
+);

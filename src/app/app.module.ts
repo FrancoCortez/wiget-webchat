@@ -14,6 +14,9 @@ import {PickerModule} from '@ctrl/ngx-emoji-mart';
 import {SocketConnect} from './client/socket.connect';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+import { OnlyNumberDirective } from './validation/directives/only-number.directive';
+import { OnlyTextDirective } from './validation/directives/only-text.directive';
+import { OnlyTextNumberDirective } from './validation/directives/only-text-number.directive';
 
 @NgModule({
   declarations: [
@@ -49,7 +52,9 @@ import {StoreDevtoolsModule} from "@ngrx/store-devtools";
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'}, SocketConnect
   ],
-  exports: [],
+  exports: [
+    OnlyNumberDirective
+  ],
   entryComponents: [
     AppComponent
   ]

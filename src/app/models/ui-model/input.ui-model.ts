@@ -9,4 +9,10 @@ export interface InputUiModel {
   fontColor?: string;
   errorText?: string[];
   choices?: string[];
+  soloText?: boolean;
+  soloNumber?: boolean;
+  soloTextAndNumber?: boolean;
+  max?: number;
+  min?: number;
+  defaultValidation?: any[];
 }

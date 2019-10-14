@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.remote) {
+    if (this.remote) {
       this.initConfigRemote();
     } else {
       this.initConfigLocal();
@@ -54,7 +54,9 @@ export class AppComponent implements OnInit {
   @Input() public init = () => {
     this.store.pipe(select(ConfigSelector.selectConfig),
       delay(1000),
-      filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory)).subscribe(resp => {
+      filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory),
+    )
+      .subscribe(resp => {
         this.store.subscribe(state => {
           localStorage.setItem('state', JSON.stringify(state));
         });
@@ -97,6 +99,8 @@ export class AppComponent implements OnInit {
 
   @Input() public initChatWithAgent = (data: string) => {
     this.store.dispatch(InitWebChatAction.loadIdUser({payload: data}));
+    this.store.dispatch(RouterAction.loginOpen());
+    this.store.dispatch(ConversationAction.leaveChat());
     this.init();
     this.expandChat();
   }
@@ -104,7 +108,7 @@ export class AppComponent implements OnInit {
   /**
    * LocalConfig
    */
-  private initConfigLocal () {
+  private initConfigLocal() {
     const reviver = (key, value) => {
       if (typeof value === 'string'
         && value.indexOf('function ') === 0) {
@@ -162,9 +166,9 @@ export class AppComponent implements OnInit {
         '               "placeholder":"Ingrese el RUC de la empresa",\n' +
         '               "required":true,\n' +
         '               "type": "text",\n' +
-        '               "min": "3",\n' +
-        '               "max": "30",\n' +
-        '               "defaultValidation": [{"validation": "rut", "message": "El correo ingresado es incorrecto"}, "rut", "url"]\n' +
+        '               "min": {"value": 3, "message":"Mensaje de prueba de min value 3"},\n' +
+        '               "max": {"value": 30, "message":"Mensaje de prueba de max value 30"},\n' +
+        '               "defaultValidation": [{"validation": "email", "message": "El correo ingresado es incorrecto"}, "rut", "url"]\n' +
         '            }\n' +
         '         ],\n' +
         '         "button_text":"Empresa"\n' +
@@ -237,6 +241,7 @@ export class AppComponent implements OnInit {
       const buttonConfigLogin: ButtonOptionUiModel[] = [];
       setting.init_button_prefer.forEach(button => {
         const obj: ButtonOptionUiModel = {
+          // colorButtonBg: button.button_bg,
           colorButtonBg: `linear-gradient(140deg, ${button.button_bg} 40%, #000 200%)`,
           colorText: button.button_color,
           label: button.button_text,
@@ -313,7 +318,6 @@ export class AppComponent implements OnInit {
           input.label = row;
           input.required = false;
           input.placeholder = row;
-          // input.type = 'text';
           input.soloTextAndNumber = false;
           input.soloNumber = false;
           input.soloText = false;
@@ -354,6 +358,7 @@ export class AppComponent implements OnInit {
       this.store.dispatch(RouterAction.initFirstLogin());
       this.store.dispatch(RouterAction.loginOpen());
     }
+    // this.configUi.input = formInput;
     this.store.dispatch(ConfigAction.loadConfig({payload: this.configUi}));
     this.cd.detectChanges();
     this.cd.markForCheck();

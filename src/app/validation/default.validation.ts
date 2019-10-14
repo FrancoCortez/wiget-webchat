@@ -13,5 +13,9 @@ export function rutValidation(control: AbstractControl): {[key: string]: boolean
   return null
 }
 export function urlValidation(control: AbstractControl): {[key: string]: boolean | null} {
+  const re = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]$/;
+  if(!re.test(control.value)){
+    return {'url': true}
+  }
   return null;
 }

@@ -8,12 +8,6 @@ import {Subscription} from "rxjs";
 import {emailValidation, rutValidation, urlValidation} from "../../validation/default.validation";
 import {ValidationEnum} from "../../models/utils/validation.enum";
 
-export interface ValidationInput {
-  msg?: string;
-  input?: string;
-  errorCode?: string;
-}
-
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
@@ -54,54 +48,7 @@ export class InputComponent implements OnInit, OnDestroy {
       let count = 0;
       this.form = new FormGroup({});
       resp.input.forEach(row => {
-        const validation: any = [];
-        validation.push((row.validation !== undefined) ? validationGeneric(row.validation) : validationOfNull);
-        validation.push((row.required !== undefined && row.required !== false && row.required !== null) ? Validators.required : validationOfNull);
-        validation.push((row.max !== undefined && row.max !== null) ? Validators.maxLength(row.max): validationOfNull);
-        validation.push((row.min !== undefined && row.min !== null) ? Validators.minLength(row.min): validationOfNull);
-        if(row.defaultValidation.length > 0) {
-          row.defaultValidation.forEach(validations => {
-            if(typeof validations === 'string') {
-              switch (validations) {
-                case ValidationEnum.EMAIL: {
-                  validation.push(emailValidation);
-                  this.inputValidationFront.push({key: validations, msg: `Error en el formato del correo`});
-                  break;
-                }
-                case ValidationEnum.RUT: {
-                  validation.push(rutValidation);
-                  this.inputValidationFront.push({key: validations, msg: `El rut ingresado es incorrecto`});
-                  break;
-                }
-                case ValidationEnum.URL: {
-                  validation.push(urlValidation);
-                  this.inputValidationFront.push({key: validations, msg: `El formato de la url es incorrecto`});
-                  break;
-                }
-                default: {validation.push(validationOfNull);}
-              }
-            } else {
-              switch (validations.validation) {
-                case ValidationEnum.EMAIL: {
-                  validation.push(emailValidation);
-                  this.inputValidationFront.push({key: validations.validation, msg: validations.message});
-                  break;
-                }
-                case ValidationEnum.RUT: {
-                  validation.push(rutValidation);
-                  this.inputValidationFront.push({key: validations.validation, msg: validations.message});
-                  break;
-                }
-                case ValidationEnum.URL: {
-                  validation.push(urlValidation);
-                  this.inputValidationFront.push({key: validations.validation, msg: validations.message});
-                  break;
-                }
-                default: {validation.push(validationOfNull);}
-              }
-            }
-          });
-        }
+        const validation: any = this.addValidationToControl(row);
         row.id = `input_${count}`;
         this.form.addControl(row.id, new FormControl('',
           validation));
@@ -112,11 +59,80 @@ export class InputComponent implements OnInit, OnDestroy {
       });
       this.inputConfig = resp.input;
       this.store.dispatch(ConfigAction.loadConfig({payload: resp}));
-      console.log(this.inputValidationFront)
     });
   }
 
   addErrorControl (key: string): any {
     return this.inputValidationFront.filter(fill => fill.key === key)[0];
+  }
+
+  private addValidationToControl(row: InputUiModel) {
+    const validation: any = [];
+    validation.push((row.validation !== undefined) ? validationGeneric(row.validation) : validationOfNull);
+    validation.push((row.required !== undefined && row.required !== false && row.required !== null) ? Validators.required : validationOfNull);
+
+    if(row.max !== undefined && row.max !== null) {
+      if (typeof row.max === 'number') {
+        (row.soloNumber) ? validation.push(Validators.max(row.max)) : validation.push(Validators.maxLength(row.max));
+        this.inputValidationFront.push({key: 'maxlength', msg: `La cantidad maxima de caracteres es ${row.max}`})
+      } else {
+        (row.soloNumber) ? validation.push(Validators.max(row.max.value)) : validation.push(Validators.maxLength(row.max.value));
+        this.inputValidationFront.push({key: 'maxlength', msg: `${row.max.message}`})
+      }
+    }
+    if(row.min !== undefined && row.min !== null) {
+      if (typeof row.min === 'number') {
+        (row.soloNumber) ? validation.push(Validators.min(row.min)) : validation.push(Validators.minLength(row.min));
+        this.inputValidationFront.push({key: 'minlength', msg: `La cantidad minima de caracteres es ${row.min}`})
+      } else {
+        (row.soloNumber) ? validation.push(Validators.min(row.min.value)) : validation.push(Validators.minLength(row.min.value));
+        this.inputValidationFront.push({key: 'minlength', msg: `${row.min.message}`})
+      }
+    }
+
+    if(row.defaultValidation !== undefined && row.defaultValidation.length > 0) {
+      row.defaultValidation.forEach(validations => {
+        if(typeof validations === 'string') {
+          switch (validations) {
+            case ValidationEnum.EMAIL: {
+              validation.push(emailValidation);
+              this.inputValidationFront.push({key: validations, msg: `Error en el formato del correo`});
+              break;
+            }
+            case ValidationEnum.RUT: {
+              validation.push(rutValidation);
+              this.inputValidationFront.push({key: validations, msg: `El rut ingresado es incorrecto`});
+              break;
+            }
+            case ValidationEnum.URL: {
+              validation.push(urlValidation);
+              this.inputValidationFront.push({key: validations, msg: `El formato de la url es incorrecto`});
+              break;
+            }
+            default: {validation.push(validationOfNull);}
+          }
+        } else {
+          switch (validations.validation) {
+            case ValidationEnum.EMAIL: {
+              validation.push(emailValidation);
+              this.inputValidationFront.push({key: validations.validation, msg: validations.message});
+              break;
+            }
+            case ValidationEnum.RUT: {
+              validation.push(rutValidation);
+              this.inputValidationFront.push({key: validations.validation, msg: validations.message});
+              break;
+            }
+            case ValidationEnum.URL: {
+              validation.push(urlValidation);
+              this.inputValidationFront.push({key: validations.validation, msg: validations.message});
+              break;
+            }
+            default: {validation.push(validationOfNull);}
+          }
+        }
+      });
+    }
+    return validation;
   }
 }

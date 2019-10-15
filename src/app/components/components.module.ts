@@ -14,6 +14,7 @@ import {OnlyNumberDirective} from "../validation/directives/only-number.directiv
 import {AppComponent} from "../app.component";
 import {OnlyTextDirective} from "../validation/directives/only-text.directive";
 import {OnlyTextNumberDirective} from "../validation/directives/only-text-number.directive";
+import {OnlyRutDirective} from "../validation/directives/only-rut.directive";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {OnlyTextNumberDirective} from "../validation/directives/only-text-number
     InputSendComponent,
     OnlyNumberDirective,
     OnlyTextDirective,
-    OnlyTextNumberDirective
+    OnlyTextNumberDirective,
+    OnlyRutDirective
   ],
   imports: [
     CommonModule,

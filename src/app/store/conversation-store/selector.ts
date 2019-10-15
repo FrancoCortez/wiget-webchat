@@ -22,3 +22,16 @@ export const selectAgentName = createSelector(
   selector,
   (state: State): string => state.agentName
 );
+
+export const selectLastConversations = createSelector(
+  selector,
+  (state: State): MessageUiModel => {
+    if(state.conversation[state.conversation.length -1] !== undefined) {
+      if(state.conversation[state.conversation.length -1].subject === 'AGENT'){
+        console.log(state.conversation[state.conversation.length -1].content)
+        return state.conversation[state.conversation.length -1];
+      }
+    }
+
+  }
+) ;

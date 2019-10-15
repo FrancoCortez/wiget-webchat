@@ -165,10 +165,9 @@ export class AppComponent implements OnInit {
         '               "label":"Ruc",\n' +
         '               "placeholder":"Ingrese el RUC de la empresa",\n' +
         '               "required":true,\n' +
-        '               "type": "text",\n' +
         '               "min": {"value": 3, "message":"Mensaje de prueba de min value 3"},\n' +
         '               "max": {"value": 30, "message":"Mensaje de prueba de max value 30"},\n' +
-        '               "defaultValidation": [{"validation": "email", "message": "El correo ingresado es incorrecto"}, "rut", "url"]\n' +
+        '               "defaultValidation": ["rut"]\n' +
         '            }\n' +
         '         ],\n' +
         '         "button_text":"Empresa"\n' +

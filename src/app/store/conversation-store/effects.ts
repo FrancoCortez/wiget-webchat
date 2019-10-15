@@ -23,6 +23,8 @@ export class ConversationStoreEffects {
       return this.messageService.sendMessage(action.message.messageUi, action.message.messageDto)
         .pipe(
           map(message => {
+            console.log('send message');
+            console.log(message)
             this.store.dispatch(featureActions.addMessage({payload: message}));
             return featureActions.sendMessageSuccess({payload: message});
           }),
@@ -38,12 +40,26 @@ export class ConversationStoreEffects {
     mergeMap(() => this.messageService.getMessage()
       .pipe(
         map(message => {
-          this.store.dispatch(featureActions.addAgentMessage({payload: message.agentName}));
-          this.store.dispatch(featureActions.addMessage({payload: message}));
-          if (this.audioEnabled) {
-            this.audio.load();
-            this.audio.play();
-          }
+          const a = this.store.pipe(select(ConversationSelector.selectLastConversations)).subscribe(resp => {
+            if(resp !== undefined) {
+              if (resp.id !== message.id) {
+                this.store.dispatch(featureActions.addAgentMessage({payload: message.agentName}));
+                this.store.dispatch(featureActions.addMessage({payload: message}));
+                if (this.audioEnabled) {
+                  this.audio.load();
+                  this.audio.play();
+                }
+              }
+            }else {
+              this.store.dispatch(featureActions.addAgentMessage({payload: message.agentName}));
+              this.store.dispatch(featureActions.addMessage({payload: message}));
+              if (this.audioEnabled) {
+                this.audio.load();
+                this.audio.play();
+              }
+            }
+          });
+          a.unsubscribe();
           return featureActions.getMessageSuccess();
         }),
         catchError(error => of(featureActions.getMessageFailure({payload: error})))

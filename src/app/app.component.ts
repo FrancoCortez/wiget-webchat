@@ -58,7 +58,6 @@ export class AppComponent implements OnInit {
       )
       .subscribe(resp => {
         this.store.subscribe(state => {
-          console.log('entre al init subs')
           localStorage.setItem('state', JSON.stringify(state));
         });
       });

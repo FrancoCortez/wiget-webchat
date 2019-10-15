@@ -30,6 +30,12 @@ export class SocketClient {
     );
   }
 
+  public getLeaveAgentChat (): Observable<any> {
+    return this.socket.listen(environment.leaveAgentChat).pipe(
+      map(data => data)
+    )
+  }
+
   public leave() {
     this.socket.emit(environment.leaveChat);
     this.disconnectSocket();

@@ -6,7 +6,7 @@ import {catchError, filter, map, mergeMap} from 'rxjs/operators';
 import {Action, select, Store} from '@ngrx/store';
 import {MessageService} from '../../services/message.service';
 import {
-  ConfigSelector,
+  ConfigSelector, ConversationAction,
   ConversationSelector,
   InitWebChatAction,
   LoginAction,
@@ -44,6 +44,19 @@ export class ConversationStoreEffects {
             this.audio.load();
             this.audio.play();
           }
+          return featureActions.getMessageSuccess();
+        }),
+        catchError(error => of(featureActions.getMessageFailure({payload: error})))
+      ))
+    )
+  );
+
+  getLeaveAgentChat$: Observable<Action> = createEffect(() => this.actions$.pipe(
+    ofType(featureActions.getMessage),
+    mergeMap(() => this.messageService.getLeaveAgentChat()
+      .pipe(
+        map(() => {
+          this.store.dispatch(ConversationAction.leaveChat());
           return featureActions.getMessageSuccess();
         }),
         catchError(error => of(featureActions.getMessageFailure({payload: error})))

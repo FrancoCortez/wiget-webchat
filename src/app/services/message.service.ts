@@ -59,6 +59,9 @@ export class MessageService {
     );
   }
 
+  public getLeaveAgentChat () {
+    return this.socketClient.getLeaveAgentChat();
+  }
   public leaveChat() {
     return this.socketClient.leave();
   }

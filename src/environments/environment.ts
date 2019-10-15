@@ -5,32 +5,33 @@ const globalBffServer = 'https://kops.chattigo.com';
 
 export const environment = {
   production: false,
-  /*socketServer: 'https://k8s-dev.chattigo.com',
-  socketPath: '/feature-gob-328/bff-portal-webchat/socket.io/',
+  socketServer: 'https://k8s-dev.chattigo.com',
+  socketPath: '/feature-notifyclose/bff-portal-webchat/socket.io/',
   socketTransports: 'websocket',
   bffServer: globalBffServer,
-  bffGetAgent: `${globalBffServer}/feature-gob-328/bff-portal-webchat/channel/did`,
-  bffUploadFile: `${globalBffServer}/feature-gob-328/bff-portal-webchat/message/attachment/upload`,
+  bffGetAgent: `${globalBffServer}/feature-notifyclose/bff-portal-webchat/channel/did`,
+  bffUploadFile: `${globalBffServer}/feature-notifyclose/bff-portal-webchat/message/attachment/upload`,
   agentImg: 'https://develop.cdn.chattigo.com/assets/img/profiles',
 
   // Constant Websocket Action
-  joinChat: 'join-chat',
+  /* joinChat: 'join-chat',
   sendMessage: 'sendMessage',
   newMessage: 'newMessage',
   leaveChat: 'leave-chat',*/
-  socketServer: 'https://kops.chattigo.com',
+  /* socketServer: 'https://kops.chattigo.com',
   socketPath: '/webchat/socket.io/',
   socketTransports: 'websocket',
   bffServer: globalBffServer,
   bffGetAgent: `${globalBffServer}/webchat/channel/did`,
   bffUploadFile: `${globalBffServer}/webchat/message/attachment/upload`,
-  agentImg: 'https://cdn.chattigo.com/assets/img/profiles',
+  agentImg: 'https://cdn.chattigo.com/assets/img/profiles', */
 
   // Constant Websocket Action
   joinChat: 'join-chat',
   sendMessage: 'sendMessage',
   newMessage: 'newMessage',
   leaveChat: 'leave-chat',
+  leaveAgentChat: 'notifyClosed',
 
   configProfile: 'development',
   configPath: 'https://kops.chattigo.com/config'

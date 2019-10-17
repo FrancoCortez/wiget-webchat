@@ -3,6 +3,7 @@ import {SocketClient} from '../client/socket.client';
 import {MessageDto} from '../models/message/message.dto';
 import {Observable, throwError} from 'rxjs';
 import {catchError, concatAll, map} from 'rxjs/operators';
+import {ConversationAction} from "../store/conversation-store";
 
 @Injectable({
   providedIn: 'root'

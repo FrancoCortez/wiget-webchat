@@ -1,6 +1,13 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {ConfigSelector, InitWebChatAction, InitWebChatSelector, LoginAction, RootStoreState} from '../../store';
+import {
+  ConfigSelector,
+  InitWebChatAction,
+  InitWebChatSelector,
+  LoginAction,
+  LoginSelector,
+  RootStoreState
+} from '../../store';
 import {InputComponent} from '../../components/input/input.component';
 import {FormGroup} from '@angular/forms';
 import {LoginDto} from '../../models/login/login.dto';
@@ -42,10 +49,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   headerColor: string;
   idUser: string;
   teamHidden = true;
+  loading = false;
 
   selectIsOpen: Subscription = new Subscription();
   selectIdUser: Subscription = new Subscription();
   selectConfig: Subscription = new Subscription();
+  selectLoading: Subscription = new Subscription();
 
   constructor(private readonly store: Store<RootStoreState.AppState>, private cd: ChangeDetectorRef) {
   }
@@ -54,9 +63,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.selectIsOpen.unsubscribe();
     this.selectIdUser.unsubscribe();
     this.selectConfig.unsubscribe();
+    this.selectLoading.unsubscribe();
   }
 
   ngOnInit() {
+    this.selectLoading = this.store.pipe(select(LoginSelector.selectButtonLoginEnabled)).subscribe(resp => this.loading = resp);
     this.selectIdUser = this.store.pipe(select(InitWebChatSelector.selectIdUser)).subscribe(resp => this.idUser = resp);
     this.selectIsOpen = this.store.pipe(select(InitWebChatSelector.selectIsOpen))
       .subscribe(resp => {
@@ -113,7 +124,9 @@ export class LoginComponent implements OnInit, OnDestroy {
           input.forEach(row => {
             message.content += `\n ${row.label}: ${this.form.controls[row.id].value}`;
           });
+          this.store.dispatch(LoginAction.loginButtonEnabled({ payload: false}));
           this.store.dispatch(LoginAction.login({payload: message}));
+          // this.store.dispatch(LoginAction.loginState({payload: false}));
         });
     }
   }

@@ -68,23 +68,7 @@ export class MessageService {
 
   private previewImgSelector(mediaUrl: string,
                              mimeType: string): string {
-    let mediaUrlType = '';
-    if (mimeType.match(/application\/*/) !== null) {
-      ;
-      const ext = mimeType.substring(mimeType.lastIndexOf('/') + 1);
-      switch (ext) {
-        case 'pdf': {
-          mediaUrlType = PreviewAttachmentEnum.PREVIEW_TINY_PDF;
-          break;
-        }
-        default: {
-          mediaUrlType = '';
-          break;
-        }
-      }
-    } else if (mimeType.match(/image\/*/) !== null) {
-      mediaUrlType = mediaUrl;
-    }
-    return mediaUrlType;
+    const result = this.format.attachmentFile(mediaUrl, mimeType);
+    return result.mediaUrlType;
   }
 }

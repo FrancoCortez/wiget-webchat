@@ -22,3 +22,8 @@ export const selectAgentName = createSelector(
   selector,
   (state: State): string => state.agentName
 );
+
+export const selectLastConversation = createSelector(
+  selector,
+  (state: State): MessageUiModel => state.conversation[state.conversation.length -1]
+);

@@ -18,7 +18,6 @@ export class ConfigStoreEffects {
             const stateLocal = localStorage.getItem('state');
             if (stateLocal !== null) {
               const state = JSON.parse(stateLocal);
-              console.log(state.config.config.did)
               if(login.payload.did === state.config.config.did) {
                 this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
                 this.store.dispatch(ConversationAction.loadMessages({payload: state.conversation}));

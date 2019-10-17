@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as featureActions from './actions';
-import {Observable, of} from 'rxjs';
-import {catchError, filter, map, mergeMap} from 'rxjs/operators';
+import {Observable, of, Subscription} from 'rxjs';
+import {catchError, delay, filter, map, mergeMap} from 'rxjs/operators';
 import {Action, select, Store} from '@ngrx/store';
 import {MessageService} from '../../services/message.service';
 import {
@@ -38,12 +38,26 @@ export class ConversationStoreEffects {
     mergeMap(() => this.messageService.getMessage()
       .pipe(
         map(message => {
-          this.store.dispatch(featureActions.addAgentMessage({payload: message.agentName}));
-          this.store.dispatch(featureActions.addMessage({payload: message}));
-          if (this.audioEnabled) {
-            this.audio.load();
-            this.audio.play();
-          }
+          const sub = this.store.pipe(select(ConversationSelector.selectLastConversation)).subscribe(resp => {
+            if(resp !== undefined) {
+              if(message.id !== resp.id) {
+                this.store.dispatch(featureActions.addAgentMessage({payload: message.agentName}));
+                this.store.dispatch(featureActions.addMessage({payload: message}));
+                if (this.audioEnabled) {
+                  this.audio.load();
+                  this.audio.play();
+                }
+              }
+            } else {
+              this.store.dispatch(featureActions.addAgentMessage({payload: message.agentName}));
+              this.store.dispatch(featureActions.addMessage({payload: message}));
+              if (this.audioEnabled) {
+                this.audio.load();
+                this.audio.play();
+              }
+            }
+          });
+          sub.unsubscribe();
           return featureActions.getMessageSuccess();
         }),
         catchError(error => of(featureActions.getMessageFailure({payload: error})))
@@ -55,6 +69,7 @@ export class ConversationStoreEffects {
     ofType(featureActions.getMessage),
     mergeMap(() => this.messageService.getLeaveAgentChat()
       .pipe(
+        delay(5000),
         map(() => {
           this.store.dispatch(ConversationAction.leaveChat());
           return featureActions.getMessageSuccess();
@@ -82,7 +97,6 @@ export class ConversationStoreEffects {
           this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
             .subscribe(resp => {
               this.store.subscribe(state => {
-                console.log('set desde conversasion');
                 localStorage.setItem('state', JSON.stringify(state));
               });
             });

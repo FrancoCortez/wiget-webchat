@@ -14,7 +14,11 @@ export class SocketClient {
 
   public join(msisdn: string): Observable<string> {
     this.socket.connectToServer();
-    this.socket.emit(environment.joinChat, msisdn);
+    this.socket.listen('connect').pipe(
+      map(() => {
+        this.socket.emit(environment.joinChat, msisdn);
+      })
+    );
     return of('resolved');
   }
 

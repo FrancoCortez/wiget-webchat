@@ -19,16 +19,19 @@ export class MessageService {
   }
 
   public sendMessage(messageUI: MessageUiModel, messageDto: MessageDto) {
-    messageDto.content = messageUI.originalContent;
-    messageDto.type = messageUI.type;
-    messageDto.timestamp = messageUI.hour;
-    messageDto.id = uuid();
-    messageDto.isAttachment = !(messageUI.mediaUrl == null);
-    messageDto.attachment = {
+    const mess: MessageDto = {
+      ... messageDto
+    };
+    mess.content = messageUI.originalContent;
+    mess.type = messageUI.type;
+    mess.timestamp = messageUI.hour;
+    mess.id = uuid();
+    mess.isAttachment = !(messageUI.mediaUrl == null);
+    mess.attachment = {
       mediaUrl: messageUI.redirectUrl,
       mimeType: messageUI.mimeType
     };
-    this.socketClient.sendMessage(messageDto);
+    this.socketClient.sendMessage(mess);
     return of(messageUI);
   }
 

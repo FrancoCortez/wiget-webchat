@@ -15,11 +15,11 @@ export class LoginStoreEffects {
     ofType(featureActions.login),
     mergeMap(action => this.login.login(action.payload)
       .pipe(
-        map(map => {
+        map(() => {
           this.store.dispatch(ConversationAction.getMessage());
         }),
-        delay(3000),
-        map((send) => {
+        delay(1500),
+        map(() => {
           this.store.dispatch(RouterAction.widgetOpen());
           this.store.dispatch(LoginAction.loginButtonEnabled({payload: true}))
           return featureActions.loginSuccess();

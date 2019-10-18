@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as featureActions from './actions';
 import {Observable, of} from 'rxjs';
-import {catchError, map, mergeMap} from 'rxjs/operators';
+import {catchError, delay, map, mergeMap} from 'rxjs/operators';
 import {Action, Store} from '@ngrx/store';
 import {RouterAction} from '../router-store';
-import {RootStoreState} from '../index';
+import {ConversationAction, LoginAction, RootStoreState} from '../index';
 import {LoginService} from '../../services/login.service';
 
 @Injectable()
@@ -15,8 +15,13 @@ export class LoginStoreEffects {
     ofType(featureActions.login),
     mergeMap(action => this.login.login(action.payload)
       .pipe(
-        map((send) => {
+        map(() => {
+          this.store.dispatch(ConversationAction.getMessage());
+        }),
+        delay(1500),
+        map(() => {
           this.store.dispatch(RouterAction.widgetOpen());
+          this.store.dispatch(LoginAction.loginButtonEnabled({payload: true}))
           return featureActions.loginSuccess();
         }),
         catchError(error => of(featureActions.loginFailure({payload: error})))

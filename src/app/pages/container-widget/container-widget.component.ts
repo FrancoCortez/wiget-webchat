@@ -41,7 +41,6 @@ export class ContainerWidgetComponent implements OnInit, OnDestroy {
 
   constructor(private readonly store: Store<RootStoreState.AppState>,
               private cd: ChangeDetectorRef) {
-    this.store.dispatch(ConversationAction.getMessage());
   }
 
   ngOnDestroy(): void {
@@ -52,6 +51,7 @@ export class ContainerWidgetComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.store.dispatch(ConversationAction.getMessage());
     this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
       .subscribe(resp => {
         this.store.subscribe(state => {

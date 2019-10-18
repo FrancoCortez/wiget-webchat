@@ -17,6 +17,7 @@ export const environment = {
   sendMessage: 'sendMessage',
   newMessage: 'newMessage',
   leaveChat: 'leave-chat',
+  leaveAgentChat: 'notifyClosed',
 
   configProfile: 'qa',
 

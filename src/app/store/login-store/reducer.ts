@@ -38,6 +38,10 @@ const featureReducer = createReducer(
   on(featureActions.loginState, (state, {payload}) => ({
     ...state,
     isLoginState: payload
+  })),
+  on(featureActions.loginButtonEnabled, (state, {payload}) => ({
+    ...state,
+    buttonEnabled: payload
   }))
 );
 

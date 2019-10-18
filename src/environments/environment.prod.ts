@@ -14,6 +14,7 @@ export const environment = {
   sendMessage: 'sendMessage',
   newMessage: 'newMessage',
   leaveChat: 'leave-chat',
+  leaveAgentChat: 'notifyClosed',
 
   configProfile: 'production',
   configPath: 'https://k8s.chattigo.com/config'

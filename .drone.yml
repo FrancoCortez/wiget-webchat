@@ -46,11 +46,11 @@ steps:
     repo: chattigocontainers.azurecr.io/${DRONE_REPO_NAME}
     registry: chattigocontainers.azurecr.io
     tags:
-      - ${DRONE_COMMIT_BRANCH//\//-}-${DRONE_COMMIT_SHA:0:8}
+      - ${DRONE_TAG}
     dockerfile: ./Dockerfile
   when:
-    branch:
-    - master/*
+    event:
+    - tag
     
 - name: docker-dev
   image: plugins/docker

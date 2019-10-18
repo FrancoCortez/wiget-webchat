@@ -9,7 +9,7 @@
           <img [src]="imgURL" style="width:100%">
         </div>
       </div>
-      <emoji-mart (emojiClick)="addEmoji($event)" *ngIf="displayEmoji" [i18n]="localeEmoji"></emoji-mart>
+      <emoji-mart isNative="true" set="google" (emojiClick)="addEmoji($event)" *ngIf="displayEmoji" [i18n]="localeEmoji"></emoji-mart>
       <textarea #send (keydown)="keydownEvent(form.value, $event)"
                 (keypress)="keyPressEvent($event)"
                 (keyup)="keyPressEvent($event)"

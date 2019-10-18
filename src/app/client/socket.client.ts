@@ -12,10 +12,13 @@ export class SocketClient {
   constructor(private readonly socket: SocketConnect) {
   }
 
-  public join(msisdn: string): Observable<string> {
+  public join(msisdn: string): Observable<any> {
     this.socket.connectToServer();
-    this.socket.emit(environment.joinChat, msisdn);
-    return of('resolved');
+    return this.socket.listen('connect').pipe(
+      map(() => {
+        this.socket.emit(environment.joinChat, msisdn);
+      })
+    );
   }
 
   public sendMessage(message: MessageDto): Observable<string> {
@@ -28,6 +31,12 @@ export class SocketClient {
       filter(fill => fill !== undefined),
       map(data => data)
     );
+  }
+
+  public getLeaveAgentChat (): Observable<any> {
+    return this.socket.listen(environment.leaveAgentChat).pipe(
+      map(data => data)
+    )
   }
 
   public leave() {

@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as featureActions from './actions';
-import {Observable, of} from 'rxjs';
-import {catchError, filter, map, mergeMap} from 'rxjs/operators';
+import {Observable, of, Subscription} from 'rxjs';
+import {catchError, delay, filter, map, mergeMap} from 'rxjs/operators';
 import {Action, select, Store} from '@ngrx/store';
 import {MessageService} from '../../services/message.service';
 import {
-  ConfigSelector,
+  ConfigSelector, ConversationAction,
   ConversationSelector,
   InitWebChatAction,
   LoginAction,
@@ -23,8 +23,6 @@ export class ConversationStoreEffects {
       return this.messageService.sendMessage(action.message.messageUi, action.message.messageDto)
         .pipe(
           map(message => {
-            console.log('send message');
-            console.log(message)
             this.store.dispatch(featureActions.addMessage({payload: message}));
             return featureActions.sendMessageSuccess({payload: message});
           }),
@@ -40,9 +38,9 @@ export class ConversationStoreEffects {
     mergeMap(() => this.messageService.getMessage()
       .pipe(
         map(message => {
-          const a = this.store.pipe(select(ConversationSelector.selectLastConversations)).subscribe(resp => {
+          const sub = this.store.pipe(select(ConversationSelector.selectLastConversation)).subscribe(resp => {
             if(resp !== undefined) {
-              if (resp.id !== message.id) {
+              if(message.id !== resp.id) {
                 this.store.dispatch(featureActions.addAgentMessage({payload: message.agentName}));
                 this.store.dispatch(featureActions.addMessage({payload: message}));
                 if (this.audioEnabled) {
@@ -50,7 +48,7 @@ export class ConversationStoreEffects {
                   this.audio.play();
                 }
               }
-            }else {
+            } else {
               this.store.dispatch(featureActions.addAgentMessage({payload: message.agentName}));
               this.store.dispatch(featureActions.addMessage({payload: message}));
               if (this.audioEnabled) {
@@ -59,7 +57,21 @@ export class ConversationStoreEffects {
               }
             }
           });
-          a.unsubscribe();
+          sub.unsubscribe();
+          return featureActions.getMessageSuccess();
+        }),
+        catchError(error => of(featureActions.getMessageFailure({payload: error})))
+      ))
+    )
+  );
+
+  getLeaveAgentChat$: Observable<Action> = createEffect(() => this.actions$.pipe(
+    ofType(featureActions.getMessage),
+    mergeMap(() => this.messageService.getLeaveAgentChat()
+      .pipe(
+        delay(5000),
+        map(() => {
+          this.store.dispatch(ConversationAction.leaveChat());
           return featureActions.getMessageSuccess();
         }),
         catchError(error => of(featureActions.getMessageFailure({payload: error})))

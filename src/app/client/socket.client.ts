@@ -12,10 +12,13 @@ export class SocketClient {
   constructor(private readonly socket: SocketConnect) {
   }
 
-  public join(msisdn: string): Observable<string> {
+  public join(msisdn: string): Observable<any> {
     this.socket.connectToServer();
-    this.socket.emit(environment.joinChat, msisdn);
-    return of('resolved');
+    return this.socket.listen('connect').pipe(
+      map(() => {
+        this.socket.emit(environment.joinChat, msisdn);
+      })
+    );
   }
 
   public sendMessage(message: MessageDto): Observable<string> {

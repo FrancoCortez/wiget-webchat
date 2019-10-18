@@ -6,10 +6,12 @@ export interface State {
   isLoginState: boolean;
   login?: LoginDto;
   error?: any;
+  buttonEnabled?: boolean;
 }
 
 export const initialState: State = {
   isLoader: false,
   isLoading: false,
   isLoginState: false,
+  buttonEnabled: true,
 };

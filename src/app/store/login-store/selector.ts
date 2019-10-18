@@ -16,3 +16,8 @@ export const loginState = createSelector(
   selector,
   (state: State): boolean => state.isLoginState
 );
+
+export const selectButtonLoginEnabled = createSelector(
+  selector,
+  (state: State): boolean => state.buttonEnabled
+);

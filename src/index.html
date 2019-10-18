@@ -1043,15 +1043,12 @@
 </script>
 <script id="all-script_script" src="https://admision.santotomas.idastage.com/wp-content/themes/admision/dist/js/scripts.min.js" type="text/javascript"></script><script id="mainScript_script" src="https://admision.santotomas.idastage.com/wp-content/themes/admision/dist/js/main.min.js" type="text/javascript"></script><script id="wp-embed_script" src="https://admision.santotomas.idastage.com/wp-includes/js/wp-embed.min.js" type="text/javascript"></script><script id="chattigo_script" src="https://channels.chattigo.com/webchat-widget/widget.js" type="text/javascript"></script><script id="modaljs_script" src="https://admision.santotomas.idastage.com/wp-content/themes/admision/assets/scripts/support/modal.js" type="text/javascript"></script><script id="funciones_hconmigo_script" src="https://admision.santotomas.idastage.com/wp-content/themes/admision/assets/scripts/habla-conmigo-2019.js" type="text/javascript"></script>    </body>
 
-<app-widget-root remote="true" did="santotomas@WC"></app-widget-root>
+<app-widget-root remote="true" did="afphabitat@WC"></app-widget-root>
 <script>
     widget = document.querySelector('app-widget-root');
-    etiqueta = document.querySelectorAll('a');
-    etiqueta.forEach(function(elem) {
-        elem.addEventListener("click", function(event) {
-            widget.initChatWithAgent('3302');
-        });
-    });
+    document.addEventListener('DOMContentLoaded', function () {
+        widget.init();
+    })
 </script>
 
 

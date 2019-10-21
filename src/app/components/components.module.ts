@@ -13,6 +13,7 @@ import {PickerModule} from '@ctrl/ngx-emoji-mart';
 import {OnlyNumberDirective} from "../validation/directives/only-number.directive";
 import {OnlyTextDirective} from "../validation/directives/only-text.directive";
 import {OnlyTextNumberDirective} from "../validation/directives/only-text-number.directive";
+import {OnlyRutDirective} from "../validation/directives/only-rut.directive";
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {OnlyTextNumberDirective} from "../validation/directives/only-text-number
     OnlyNumberDirective,
     OnlyTextDirective,
     OnlyTextNumberDirective,
+    OnlyRutDirective
   ],
   imports: [
     CommonModule,
@@ -44,7 +46,8 @@ import {OnlyTextNumberDirective} from "../validation/directives/only-text-number
     InputSendComponent,
     OnlyNumberDirective,
     OnlyTextDirective,
-    OnlyTextNumberDirective
+    OnlyTextNumberDirective,
+    OnlyRutDirective
   ]
 })
 export class ComponentsModule {

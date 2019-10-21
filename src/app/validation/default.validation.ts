@@ -11,15 +11,24 @@ export function emailValidation(control: AbstractControl) : { [key: string]: boo
 }
 
 export function rutValidation(control: AbstractControl): {[key: string]: boolean | null} {
-  let T = control.value;
-  if(T !== null) {
+  let rut = control.value.replace('.','').replace('-', '');
+  let dv = control.value.replace('.','').replace('-', '');
+  rut = rut.replace('.', '');
+  dv = dv.replace('.', '');
+  rut = rut.substring(0, rut.length -1);
+  dv = dv.substring(dv.length -1, dv.length);
+  let resp;
+  if(rut !== null) {
     var M=0,S=1;
-    for(;T;T=Math.floor(T/10))
-      S=(S+T%10*(9-M++%6))%11;
-    const resp  = S?S-1:'K';
-    return {'rut': true}
+    for(;rut;rut=Math.floor(rut/10))
+      S=(S+rut%10*(9-M++%6))%11;
+      resp  = S?S-1:'K';
   }
-  return null;
+  if(resp == dv) {
+    return null;
+  } else {
+    return { 'rut' : true}
+  }
 }
 export function urlValidation(control: AbstractControl): {[key: string]: boolean | null} {
   const re = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]$/;

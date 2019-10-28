@@ -276,11 +276,11 @@ export class AppComponent implements OnInit {
         buttonConfigLogin.push(obj);
       });
       this.configUi.buttonPrefer = buttonConfigLogin;
-      // this.store.dispatch(RouterAction.initFirstButton());
-      //this.store.dispatch(RouterAction.buttonLogin());
+      this.store.dispatch(RouterAction.initFirstButton());
+      this.store.dispatch(RouterAction.buttonLogin());
       //TODO Temp para probar nueva pagina
       //this.store.dispatch(RouterAction.configOpen());
-      this.store.dispatch(RouterAction.finish());
+      //this.store.dispatch(RouterAction.finish());
     } else {
       const formInput: InputUiModel[] = [];
       setting.login_fields.forEach(row => {
@@ -290,7 +290,7 @@ export class AppComponent implements OnInit {
       this.store.dispatch(RouterAction.initFirstLogin());
       this.store.dispatch(RouterAction.loginOpen());
       //TODO Temp para probar nueva pagina
-      this.store.dispatch(RouterAction.configOpen());
+      // this.store.dispatch(RouterAction.configOpen());
     }
   }
 

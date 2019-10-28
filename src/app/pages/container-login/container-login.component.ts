@@ -16,6 +16,7 @@ export class ContainerLoginComponent implements OnInit, OnDestroy {
   public buttonLogin = false;
   public toggles = false;
   public triggerHidden = false;
+  public finishOpen = false;
 
   selectIsOpen: Subscription = new Subscription();
   selectIsTrigger: Subscription = new Subscription();
@@ -23,6 +24,8 @@ export class ContainerLoginComponent implements OnInit, OnDestroy {
   selectButtonOpen: Subscription = new Subscription();
   selectWidgetOpen: Subscription = new Subscription();
   selectConfigOpen: Subscription = new Subscription();
+  selectFinishOpen: Subscription = new Subscription();
+
   constructor(private readonly store: Store<RootStoreState.AppState>,
               private cd: ChangeDetectorRef) {
   }
@@ -36,6 +39,7 @@ export class ContainerLoginComponent implements OnInit, OnDestroy {
     this.selectButtonOpen.unsubscribe();
     this.selectWidgetOpen.unsubscribe();
     this.selectConfigOpen.unsubscribe();
+    this.selectFinishOpen.unsubscribe();
   }
 
   ngOnInit() {
@@ -77,7 +81,12 @@ export class ContainerLoginComponent implements OnInit, OnDestroy {
         this.cd.detectChanges();
         this.cd.markForCheck();
       });
-
+    this.selectFinishOpen = this.store.pipe(select(RouterSelector.selectFinish))
+      .subscribe(resp => {
+        this.finishOpen = resp;
+        this.cd.detectChanges();
+        this.cd.markForCheck();
+      });
   }
 
 }

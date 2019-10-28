@@ -82,6 +82,7 @@ export class InputSendComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.selectConfig.unsubscribe();
     this.selectLogin.unsubscribe();
   }
+
   ngOnInit() {
     this.form = new FormGroup({});
     this.form.addControl('sendMessage', new FormControl());

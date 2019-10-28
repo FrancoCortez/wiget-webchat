@@ -24,9 +24,11 @@ export class InputComponent implements OnInit, OnDestroy {
   loginStateSub: Subscription = new Subscription();
   selectConfig: Subscription = new Subscription();
   selectFirstLoginState: Subscription = new Subscription();
+  private soloRut = false;
 
   constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
+
   ngOnDestroy(): void {
     this.loginStateSub.unsubscribe();
     this.selectConfig.unsubscribe();
@@ -38,31 +40,32 @@ export class InputComponent implements OnInit, OnDestroy {
     this.loginStateSub = this.store.pipe(select(LoginSelector.loginState)).subscribe(resp => this.loginState = resp);
     this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig))
       .subscribe(resp => {
-      if(resp.input === undefined) {
-        this.selectFirstLoginState = this.store.pipe(select(RouterSelector.selectFirstLoginState)).subscribe(respState => {
-          if(!respState) {
+        if (resp.input === undefined) {
+          this.selectFirstLoginState = this.store.pipe(select(RouterSelector.selectFirstLoginState)).subscribe(respState => {
+            if (!respState) {
               resp.input = JSON.parse(localStorage.getItem('state')).config.config.input;
-          }
-        });
-      }
-      let count = 0;
-      this.form = new FormGroup({});
-      resp.input.forEach(row => {
-        const validation: any = this.addValidationToControl(row);
-        row.id = `input_${count}`;
-        this.form.addControl(row.id, new FormControl('',
-          validation));
-        if (row.choices !== undefined && row.choices.length > 0) {
-          this.form.controls[row.id].setValue(row.choices[0]);
+            }
+          });
         }
-        count++;
+        let count = 0;
+        this.form = new FormGroup({});
+        resp.input.forEach(row => {
+          const validation: any = this.addValidationToControl(row);
+          row.id = `input_${count}`;
+          row.soloRut = this.soloRut;
+          this.form.addControl(row.id, new FormControl('', {validators: validation, updateOn: "blur"}
+          ));
+          if (row.choices !== undefined && row.choices.length > 0) {
+            this.form.controls[row.id].setValue(row.choices[0]);
+          }
+          count++;
+        });
+        this.inputConfig = resp.input;
+        this.store.dispatch(ConfigAction.loadConfig({payload: resp}));
       });
-      this.inputConfig = resp.input;
-      this.store.dispatch(ConfigAction.loadConfig({payload: resp}));
-    });
   }
 
-  addErrorControl (key: string): any {
+  addErrorControl(key: string): any {
     return this.inputValidationFront.filter(fill => fill.key === key)[0];
   }
 
@@ -71,7 +74,7 @@ export class InputComponent implements OnInit, OnDestroy {
     validation.push((row.validation !== undefined) ? validationGeneric(row.validation) : validationOfNull);
     validation.push((row.required !== undefined && row.required !== false && row.required !== null) ? Validators.required : validationOfNull);
 
-    if(row.max !== undefined && row.max !== null) {
+    if (row.max !== undefined && row.max !== null) {
       if (typeof row.max === 'number') {
         (row.soloNumber) ? validation.push(Validators.max(row.max)) : validation.push(Validators.maxLength(row.max));
         this.inputValidationFront.push({key: 'maxlength', msg: `La cantidad maxima de caracteres es ${row.max}`})
@@ -80,7 +83,7 @@ export class InputComponent implements OnInit, OnDestroy {
         this.inputValidationFront.push({key: 'maxlength', msg: `${row.max.message}`})
       }
     }
-    if(row.min !== undefined && row.min !== null) {
+    if (row.min !== undefined && row.min !== null) {
       if (typeof row.min === 'number') {
         (row.soloNumber) ? validation.push(Validators.min(row.min)) : validation.push(Validators.minLength(row.min));
         this.inputValidationFront.push({key: 'minlength', msg: `La cantidad minima de caracteres es ${row.min}`})
@@ -90,9 +93,9 @@ export class InputComponent implements OnInit, OnDestroy {
       }
     }
 
-    if(row.defaultValidation !== undefined && row.defaultValidation.length > 0) {
+    if (row.defaultValidation !== undefined && row.defaultValidation.length > 0) {
       row.defaultValidation.forEach(validations => {
-        if(typeof validations === 'string') {
+        if (typeof validations === 'string') {
           switch (validations) {
             case ValidationEnum.EMAIL: {
               validation.push(emailValidation);
@@ -100,6 +103,7 @@ export class InputComponent implements OnInit, OnDestroy {
               break;
             }
             case ValidationEnum.RUT: {
+              this.soloRut = true;
               validation.push(rutValidation);
               this.inputValidationFront.push({key: validations, msg: `El rut ingresado es incorrecto`});
               break;
@@ -109,7 +113,9 @@ export class InputComponent implements OnInit, OnDestroy {
               this.inputValidationFront.push({key: validations, msg: `El formato de la url es incorrecto`});
               break;
             }
-            default: {validation.push(validationOfNull);}
+            default: {
+              validation.push(validationOfNull);
+            }
           }
         } else {
           switch (validations.validation) {
@@ -119,6 +125,7 @@ export class InputComponent implements OnInit, OnDestroy {
               break;
             }
             case ValidationEnum.RUT: {
+              this.soloRut = true;
               validation.push(rutValidation);
               this.inputValidationFront.push({key: validations.validation, msg: validations.message});
               break;
@@ -128,11 +135,14 @@ export class InputComponent implements OnInit, OnDestroy {
               this.inputValidationFront.push({key: validations.validation, msg: validations.message});
               break;
             }
-            default: {validation.push(validationOfNull);}
+            default: {
+              validation.push(validationOfNull);
+            }
           }
         }
       });
     }
     return validation;
   }
+
 }

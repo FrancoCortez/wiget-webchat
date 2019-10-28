@@ -30,6 +30,7 @@ export class HeaderWidgetComponent implements OnInit, OnDestroy {
   selectIsOpen: Subscription = new Subscription();
   selectConfig: Subscription = new Subscription();
   selectAgentName: Subscription = new Subscription();
+
   constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 

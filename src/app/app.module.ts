@@ -14,11 +14,14 @@ import {PickerModule} from '@ctrl/ngx-emoji-mart';
 import {SocketConnect} from './client/socket.connect';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
-import { OnlyNumberDirective } from './validation/directives/only-number.directive';
+import {OnlyNumberDirective} from './validation/directives/only-number.directive';
+import {RutPipe} from "./validation/pipe/rut.pipe";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+
+    RutPipe
   ],
   imports: [
     BrowserAnimationsModule,

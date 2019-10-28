@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public header: HeaderUiModel;
   selectConfig: Subscription = new Subscription();
+
   constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 

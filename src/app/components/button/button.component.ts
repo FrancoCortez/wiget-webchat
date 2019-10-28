@@ -16,8 +16,10 @@ export class ButtonComponent implements OnInit, OnDestroy {
   public loginButtonEnabled: boolean = false;
   selectConfig: Subscription = new Subscription();
   selectButtonEnabled: Subscription = new Subscription();
+
   constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
+
   ngOnDestroy(): void {
     this.selectConfig.unsubscribe();
     this.selectButtonEnabled.unsubscribe();

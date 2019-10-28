@@ -2,19 +2,10 @@ import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as featureActions from './actions';
 import {Observable, of, Subscription} from 'rxjs';
-import {catchError, filter, map, mergeMap} from 'rxjs/operators';
-import {Action, select, Store} from '@ngrx/store';
-import {
-  ConfigAction,
-  ConversationAction,
-  InitWebChatAction,
-  LoginAction,
-  RootStoreState,
-  RouterAction,
-  RouterSelector
-} from '../index';
+import {catchError, map, mergeMap} from 'rxjs/operators';
+import {Action, Store} from '@ngrx/store';
+import {ConversationAction, InitWebChatAction, LoginAction, RootStoreState, RouterAction} from '../index';
 import {LoginService} from '../../services/login.service';
-import {RouterLinkActive} from "@angular/router";
 
 @Injectable()
 export class ConfigStoreEffects {
@@ -30,14 +21,14 @@ export class ConfigStoreEffects {
             const stateLocal = localStorage.getItem('state');
             if (stateLocal !== null) {
               const state = JSON.parse(stateLocal);
-              if(login.payload.did === state.config.config.did) {
+              if (login.payload.did === state.config.config.did) {
                 this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
                 this.store.dispatch(ConversationAction.loadMessages({payload: state.conversation}));
                 this.store.dispatch(LoginAction.loadLogin({payload: state.login}));
                 this.store.dispatch(InitWebChatAction.loadInitWeb({payload: state.initWebChat}));
                 if (state.login.login !== null) {
                   if (state.login.login.msisdn !== null) {
-                    this.store.dispatch(RouterAction.loadRouter({ payload: state.router} ));
+                    this.store.dispatch(RouterAction.loadRouter({payload: state.router}));
                     this.loginService.reconnect(state.login.login.msisdn);
                   }
                 }

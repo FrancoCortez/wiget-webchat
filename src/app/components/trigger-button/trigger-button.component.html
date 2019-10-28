@@ -1,5 +1,5 @@
 <div>
-  <a (click)="initWebChat()" *ngIf="mobileHidden" [ngStyle]="{'background-image': backgroundColor}"
+  <a (click)="initWebChat()" *ngIf="hiddenTrigger()" [ngStyle]="{'background-image': backgroundColor}"
      class="chattigo-widget-trigger test-angular">
     <img class="chattigo-widget-trigger--logo" src="https://cdn.chattigo.com/assets/img/isotipo-grey.svg"/>
   </a>

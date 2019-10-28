@@ -6,7 +6,6 @@ import {v4 as uuid} from 'uuid';
 import {of} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
 import {SubjectEnum} from '../models/utils/subject.enum';
-import {PreviewAttachmentEnum} from '../models/utils/preview-attachment.enum';
 import {FormatService} from './format.service';
 
 @Injectable({
@@ -20,7 +19,7 @@ export class MessageService {
 
   public sendMessage(messageUI: MessageUiModel, messageDto: MessageDto) {
     const mess: MessageDto = {
-      ... messageDto
+      ...messageDto
     };
     mess.content = messageUI.originalContent;
     mess.type = messageUI.type;
@@ -62,9 +61,10 @@ export class MessageService {
     );
   }
 
-  public getLeaveAgentChat () {
+  public getLeaveAgentChat() {
     return this.socketClient.getLeaveAgentChat();
   }
+
   public leaveChat() {
     return this.socketClient.leave();
   }

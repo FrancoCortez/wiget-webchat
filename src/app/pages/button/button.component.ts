@@ -66,13 +66,13 @@ export class ButtonComponent implements OnInit, OnDestroy {
     this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig))
       .pipe(filter(fill => fill.caption !== undefined))
       .subscribe(resp => {
-      this.headerColor = resp.caption.headerBackgroundColor;
-      this.teamHidden = resp.showTeam;
-      this.buttonConfig = resp.buttonPrefer;
-      this.config = resp;
-      this.question = (resp.question === undefined) ? '' : resp.question;
-      this.cd.detectChanges();
-    });
+        this.headerColor = resp.caption.headerBackgroundColor;
+        this.teamHidden = resp.showTeam;
+        this.buttonConfig = resp.buttonPrefer;
+        this.config = resp;
+        this.question = (resp.question === undefined) ? '' : resp.question;
+        this.cd.detectChanges();
+      });
   }
 
 

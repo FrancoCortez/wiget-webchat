@@ -149,6 +149,11 @@ export class AppComponent implements OnInit {
         '         "button_enabled":true,\n' +
         '         "button_login_field":[ \n' +
         '            { \n' +
+        '               "label":"Nombre",\n' +
+        '               "placeholder":"Ingrese su nombre",\n' +
+        '               "required":true\n' +
+        '            },\n' +
+        '           { \n' +
         '               "label":"(DNI o Carnet de extrangeria) o RUC",\n' +
         '               "placeholder":"CD/DNI",\n' +
         '               "required":true\n' +
@@ -161,6 +166,14 @@ export class AppComponent implements OnInit {
         '         "button_color":"#ffffff",\n' +
         '         "button_enabled":true,\n' +
         '         "button_login_field":[ \n' +
+        '            { \n' +
+        '               "label":"Nombre",\n' +
+        '               "placeholder":"Ingrese el nombre de la empresa",\n' +
+        '               "required":true,\n' +
+        '               "min": {"value": 3, "message":"Mensaje de prueba de min value 3"},\n' +
+        '               "max": {"value": 30, "message":"Mensaje de prueba de max value 30"},\n' +
+        '               "defaultValidation": ["text"]\n' +
+        '            },\n' +
         '            { \n' +
         '               "label":"Ruc",\n' +
         '               "placeholder":"Ingrese el RUC de la empresa",\n' +
@@ -184,6 +197,9 @@ export class AppComponent implements OnInit {
         '   "user_field":[ \n' +
         '      "(DNI o Carnet de extrangeria) o RUC",\n' +
         '      "Ruc"\n' +
+        '   ],\n' +
+        '   "name_field":[ \n' +
+        '      "Nombre"\n' +
         '   ],\n' +
         '   "welcome_color":"#ffffff",\n' +
         '   "welcome_text":"Bienvenido al chat de AFP Habitat"\n' +
@@ -234,13 +250,19 @@ export class AppComponent implements OnInit {
       preserveHistory: setting.preserve_history,
       geoActive: setting.geo_active,
       bgMenu: setting.bg_menu,
-      question: setting.question,
+      question: setting.question
     };
+    this.configInput(setting);
+    this.store.dispatch(ConfigAction.loadConfig({payload: this.configUi}));
+    this.cd.detectChanges();
+    this.cd.markForCheck();
+  }
+
+  private configInput(setting: any) {
     if (setting.init_button_prefer !== undefined && setting.init_button_prefer !== null) {
       const buttonConfigLogin: ButtonOptionUiModel[] = [];
       setting.init_button_prefer.forEach(button => {
         const obj: ButtonOptionUiModel = {
-          // colorButtonBg: button.button_bg,
           colorButtonBg: `linear-gradient(140deg, ${button.button_bg} 40%, #000 200%)`,
           colorText: button.button_color,
           label: button.button_text,
@@ -248,119 +270,97 @@ export class AppComponent implements OnInit {
         };
         const formInput: InputUiModel[] = [];
         button.button_login_field.forEach(row => {
-          const input: InputUiModel = {};
-          input.fontColor = setting.field_font_color;
-          if (typeof row === 'string') {
-            (row === setting.user_field) ? input.userField = true : input.userField = false;
-            (row === setting.name_field) ? input.nameField = true : input.nameField = false;
-            input.label = row;
-            input.required = false;
-            input.placeholder = row;
-            input.soloTextAndNumber = false;
-            input.soloNumber = false;
-            input.soloText = false;
-            input.defaultValidation = [];
-          } else {
-            (row.label === setting.user_field) ? input.userField = true : input.userField = false;
-            (row.label === setting.name_field) ? input.nameField = true : input.nameField = false;
-            input.label = row.label;
-            input.required = (row.required === undefined) ? false : row.required;
-            input.choices = row.choices;
-            input.validation = row.validation;
-            input.placeholder = (row.placeholder === undefined || row.placeholder === null) ? row.label : row.placeholder;
-            input.defaultValidation = (row.defaultValidation === undefined || row.defaultValidation === null) ? [] : row.defaultValidation
-            input.max = row.max;
-            input.min = row.min;
-            const typeText = (row.type === undefined || row.type === null) ? null : row.type;
-            switch (typeText) {
-              case 'text': {
-                input.soloTextAndNumber = false;
-                input.soloNumber = false;
-                input.soloText = true;
-                break;
-              }
-              case 'number': {
-                input.soloTextAndNumber = false;
-                input.soloText = false;
-                input.soloNumber = true;
-                break;
-              }
-              case 'text_number': {
-                input.soloNumber = false;
-                input.soloText = false;
-                input.soloTextAndNumber = true;
-                break;
-              }
-              default: {
-                input.soloTextAndNumber = false;
-                input.soloNumber = false;
-                input.soloText = false;
-              }
-            }
-          }
-          formInput.push(input);
+          formInput.push(this.assignmentInput(row, setting));
         });
         obj.input = formInput;
         buttonConfigLogin.push(obj);
       });
       this.configUi.buttonPrefer = buttonConfigLogin;
-      this.store.dispatch(RouterAction.initFirstButton());
-      this.store.dispatch(RouterAction.buttonLogin());
+      // this.store.dispatch(RouterAction.initFirstButton());
+      //this.store.dispatch(RouterAction.buttonLogin());
+      //TODO Temp para probar nueva pagina
+      //this.store.dispatch(RouterAction.configOpen());
+      this.store.dispatch(RouterAction.finish());
     } else {
       const formInput: InputUiModel[] = [];
       setting.login_fields.forEach(row => {
-        const input: InputUiModel = {};
-        input.fontColor = setting.field_font_color;
-        if (typeof row === 'string') {
-          (row === setting.user_field) ? input.userField = true : input.userField = false;
-          (row === setting.name_field) ? input.nameField = true : input.nameField = false;
-          input.label = row;
-          input.required = false;
-          input.placeholder = row;
-          input.soloTextAndNumber = false;
-          input.soloNumber = false;
-          input.soloText = false;
-          input.defaultValidation = [];
-        } else {
-          (row.label === setting.user_field) ? input.userField = true : input.userField = false;
-          (row.label === setting.name_field) ? input.nameField = true : input.nameField = false;
-          input.label = row.label;
-          input.required = (row.required === undefined) ? false : row.required;
-          input.choices = row.choices;
-          input.validation = row.validation;
-          input.placeholder = (row.placeholder === undefined || row.placeholder === null) ? row.label : row.placeholder;
-          input.defaultValidation = (row.defaultValidation === undefined || row.defaultValidation === null) ? [] : row.defaultValidation
-          const typeText = (row.type === undefined || row.type === null) ? null : row.type;
-          switch (typeText) {
-            case 'text': {
-              input.soloText = true;
-              break;
-            }
-            case 'number': {
-              input.soloNumber = true;
-              break;
-            }
-            case 'text_number': {
-              input.soloTextAndNumber = true;
-              break;
-            }
-            default: {
-              input.soloTextAndNumber = false;
-              input.soloNumber = false;
-              input.soloText = false;
-            }
-          }
-        }
-        formInput.push(input);
+        formInput.push(this.assignmentInput(row, setting));
       });
       this.configUi.input = formInput;
       this.store.dispatch(RouterAction.initFirstLogin());
       this.store.dispatch(RouterAction.loginOpen());
+      //TODO Temp para probar nueva pagina
+      this.store.dispatch(RouterAction.configOpen());
     }
-    // this.configUi.input = formInput;
-    this.store.dispatch(ConfigAction.loadConfig({payload: this.configUi}));
-    this.cd.detectChanges();
-    this.cd.markForCheck();
   }
 
+  private assignmentInput(row: any, setting: any): InputUiModel {
+    const input: InputUiModel = {};
+    input.fontColor = setting.field_font_color;
+    if (typeof row === 'string') {
+      if (setting.user_field instanceof Array) {
+        setting.user_field.forEach(field => {
+          if (row === field) input.userField = true;
+        });
+      } else {
+        if (row === setting.user_field) input.userField = true;
+      }
+      if (setting.user_name instanceof Array) {
+        setting.user_name.forEach(field => {
+          if (row === field) input.nameField = true;
+        });
+      } else {
+        if (row === setting.name_field) input.nameField = true;
+      }
+      input.label = row;
+      input.required = false;
+      input.placeholder = row;
+      input.soloTextAndNumber = false;
+      input.soloNumber = false;
+      input.soloText = false;
+      input.defaultValidation = [];
+    } else {
+      if (setting.user_field instanceof Array) {
+        setting.user_field.forEach(field => {
+          if (row.label === field) input.userField = true;
+        });
+      } else {
+        if (row.label === setting.user_field) input.userField = true;
+      }
+      if (setting.name_field instanceof Array) {
+        setting.name_field.forEach(field => {
+          if (row.label === field) input.nameField = true;
+        });
+      } else {
+        if (row.label === setting.name_field) input.nameField = true;
+      }
+      input.label = row.label;
+      input.required = (row.required === undefined) ? false : row.required;
+      input.choices = row.choices;
+      input.validation = row.validation;
+      input.placeholder = (row.placeholder === undefined || row.placeholder === null) ? row.label : row.placeholder;
+      input.defaultValidation = (row.defaultValidation === undefined || row.defaultValidation === null) ? [] : row.defaultValidation
+      const typeText = (row.type === undefined || row.type === null) ? null : row.type;
+      switch (typeText) {
+        case 'text': {
+          input.soloText = true;
+          break;
+        }
+        case 'number': {
+          input.soloNumber = true;
+          break;
+        }
+        case 'text_number': {
+          input.soloTextAndNumber = true;
+          break;
+        }
+        default: {
+          input.soloTextAndNumber = false;
+          input.soloNumber = false;
+          input.soloText = false;
+        }
+      }
+    }
+    return input;
+  }
 }

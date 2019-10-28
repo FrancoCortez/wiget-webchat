@@ -12,6 +12,7 @@ export interface InputUiModel {
   soloText?: boolean;
   soloNumber?: boolean;
   soloTextAndNumber?: boolean;
+  soloRut?: boolean;
   max?: any;
   min?: any;
   defaultValidation?: any[];

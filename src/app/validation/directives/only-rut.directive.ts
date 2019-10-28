@@ -1,40 +1,31 @@
-import {Directive, ElementRef, HostListener} from '@angular/core';
+import {Directive, ElementRef, HostListener, Input} from '@angular/core';
+import {RutPipe} from "../pipe/rut.pipe";
+import {FormGroup, NgControl} from "@angular/forms";
 
 @Directive({
   selector: '[appOnlyRut]'
 })
 export class OnlyRutDirective {
-
+  @Input('soloRutActive') active: boolean;
+  @Input('form') form: FormGroup;
   value: string;
+  private pipe = new RutPipe();
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef, private control: NgControl) {
+  }
 
   @HostListener('keydown', ['$event'])
   @HostListener('keyup', ['$event'])
   @HostListener('change', ['$event'])
+  @HostListener('blur', ['$event'])
   onChange($event) {
-    if(this.el.nativeElement !== undefined && this.el.nativeElement.value !== '') {
-      var actual = this.el.nativeElement.value.replace(/^0+/, "").trim();
-      if (actual != '' && actual.length > 1) {
-        var sinPuntos = actual.replace(/\./g, "").trim();
-        var actualLimpio = sinPuntos.replace(/-/g, "").trim();
-        var inicio = actualLimpio.substring(0, actualLimpio.length - 1).trim();
-        var rutPuntos = "";
-        var i = 0;
-        var j = 1;
-        for (i = inicio.length - 1; i >= 0; i--) {
-          var letra = inicio.charAt(i);
-          rutPuntos = letra + rutPuntos;
-          if (j % 3 == 0 && j <= inicio.length - 1) {
-            rutPuntos = "." + rutPuntos;
-          }
-          j++;
+    if (this.active) {
+      if (this.el.nativeElement !== undefined && this.el.nativeElement.value !== '') {
+        const actual = this.el.nativeElement.value.replace(/^0+/, "").trim();
+        if (actual != '' && actual.length > 1) {
+          this.control.control.setValue(this.pipe.transform($event.target.value));
         }
-        var dv = actualLimpio.substring(actualLimpio.length - 1);
-        rutPuntos = rutPuntos + "-" + dv;
-        this.el.nativeElement.value = rutPuntos;
       }
     }
   }
-
 }

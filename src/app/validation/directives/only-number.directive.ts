@@ -7,13 +7,14 @@ export class OnlyNumberDirective {
 
   @Input('soloNumberActive') active: boolean;
   private regex: RegExp = new RegExp(/^[0-9]+$/);
-  private specialKeys: Array<string> = [ 'Backspace', 'Tab', 'End', 'Home' ];
+  private specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home'];
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef) {
+  }
 
-  @HostListener('keydown', [ '$event' ])
+  @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
-    if(this.active) {
+    if (this.active) {
       if (this.specialKeys.indexOf(event.key) !== -1) {
         return;
       }

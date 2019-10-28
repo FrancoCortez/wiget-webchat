@@ -2,7 +2,7 @@ import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ConfigSelector, InitWebChatAction, RootStoreState} from '../../store';
 import {selectIsOpen} from '../../store/init-web-chat-store/selector';
-import {filter, map} from 'rxjs/operators';
+import {filter} from 'rxjs/operators';
 import {Subscription} from "rxjs";
 
 @Component({
@@ -18,7 +18,9 @@ export class TriggerButtonComponent implements OnInit, OnDestroy {
   selectIsOpen: Subscription = new Subscription();
   backgroundColor? = '';
 
-  constructor(private readonly store: Store<RootStoreState.AppState>) {  }
+  constructor(private readonly store: Store<RootStoreState.AppState>) {
+  }
+
   ngOnDestroy(): void {
     this.selectConfig.unsubscribe();
     this.selectIsOpen.unsubscribe();
@@ -50,6 +52,10 @@ export class TriggerButtonComponent implements OnInit, OnDestroy {
     } else {
       this.mobileHidden = true;
     }
+  }
+
+  public hiddenTrigger(): boolean {
+    return true;
   }
 
 }

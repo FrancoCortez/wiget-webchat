@@ -28,7 +28,7 @@ import {OnlyRutDirective} from "../validation/directives/only-rut.directive";
     OnlyNumberDirective,
     OnlyTextDirective,
     OnlyTextNumberDirective,
-    OnlyRutDirective
+    OnlyRutDirective,
   ],
   imports: [
     CommonModule,
@@ -47,7 +47,7 @@ import {OnlyRutDirective} from "../validation/directives/only-rut.directive";
     OnlyNumberDirective,
     OnlyTextDirective,
     OnlyTextNumberDirective,
-    OnlyRutDirective
+    OnlyRutDirective,
   ]
 })
 export class ComponentsModule {

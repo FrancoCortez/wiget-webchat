@@ -64,6 +64,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.selectIdUser.unsubscribe();
     this.selectConfig.unsubscribe();
     this.selectLoading.unsubscribe();
+    this.store.dispatch(LoginAction.loginState({payload: false}));
   }
 
   ngOnInit() {
@@ -78,9 +79,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig))
       .pipe(filter(fill => fill.caption !== undefined))
       .subscribe(resp => {
-      this.headerColor = resp.caption.headerBackgroundColor;
-      this.teamHidden = resp.showTeam;
-    });
+        this.headerColor = resp.caption.headerBackgroundColor;
+        this.teamHidden = resp.showTeam;
+      });
   }
 
   public login() {
@@ -124,9 +125,8 @@ export class LoginComponent implements OnInit, OnDestroy {
           input.forEach(row => {
             message.content += `\n ${row.label}: ${this.form.controls[row.id].value}`;
           });
-          this.store.dispatch(LoginAction.loginButtonEnabled({ payload: false}));
+          this.store.dispatch(LoginAction.loginButtonEnabled({payload: false}));
           this.store.dispatch(LoginAction.login({payload: message}));
-          // this.store.dispatch(LoginAction.loginState({payload: false}));
         });
     }
   }

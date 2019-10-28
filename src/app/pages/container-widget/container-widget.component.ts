@@ -33,11 +33,12 @@ export class ContainerWidgetComponent implements OnInit, OnDestroy {
   public hidden = false;
   public widgetOpen = true;
   public configOpen = false;
+  public finish = false;
 
   selectIsOpen: Subscription = new Subscription();
   selectWidgetOpen: Subscription = new Subscription();
   selectConfigOpen: Subscription = new Subscription();
-  selectConfig: Subscription = new Subscription();
+  selectFinish: Subscription = new Subscription();
 
   constructor(private readonly store: Store<RootStoreState.AppState>,
               private cd: ChangeDetectorRef) {
@@ -47,11 +48,20 @@ export class ContainerWidgetComponent implements OnInit, OnDestroy {
     this.selectIsOpen.unsubscribe();
     this.selectWidgetOpen.unsubscribe();
     this.selectConfigOpen.unsubscribe();
-    this.selectConfig.unsubscribe();
+    this.selectFinish.unsubscribe();
   }
 
   ngOnInit() {
     this.store.dispatch(ConversationAction.getMessage());
+    console.log('container init');
+    this.selectFinish = this.store.pipe(select(RouterSelector.selectFinish))
+      .pipe(filter(fill => fill !== null && fill !== undefined))
+      .subscribe(resp => {
+        this.finish = resp;
+        console.log('entre al select')
+        this.cd.detectChanges();
+        this.cd.markForCheck();
+      });
     this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
       .subscribe(resp => {
         this.store.subscribe(state => {

@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as featureActions from './actions';
-import {Observable, of, Subscription} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {catchError, delay, filter, map, mergeMap} from 'rxjs/operators';
 import {Action, select, Store} from '@ngrx/store';
 import {MessageService} from '../../services/message.service';
 import {
-  ConfigSelector, ConversationAction,
+  ConfigSelector,
+  ConversationAction,
   ConversationSelector,
   InitWebChatAction,
   LoginAction,
@@ -39,8 +40,8 @@ export class ConversationStoreEffects {
       .pipe(
         map(message => {
           const sub = this.store.pipe(select(ConversationSelector.selectLastConversation)).subscribe(resp => {
-            if(resp !== undefined) {
-              if(message.id !== resp.id) {
+            if (resp !== undefined) {
+              if (message.id !== resp.id) {
                 this.store.dispatch(featureActions.addAgentMessage({payload: message.agentName}));
                 this.store.dispatch(featureActions.addMessage({payload: message}));
                 if (this.audioEnabled) {

@@ -135,8 +135,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public toggleClose() {
     this.store.dispatch(InitWebChatAction.open({payload: this.hidden}));
-    this.cd.detectChanges();
-    this.cd.markForCheck();
   }
 
 }

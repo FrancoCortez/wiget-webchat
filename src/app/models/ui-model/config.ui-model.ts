@@ -6,9 +6,11 @@ import {CaptionLoginUiModel} from './caption-login.ui-model';
 import {MessageSendUiModel} from './message-send.ui-model';
 import {ConfigPanelUiModel} from './config-panel.ui-model';
 import {ButtonOptionUiModel} from "./button-option.ui-model";
+import {TriggerUiModel} from "./trigger.ui-model";
 
 export interface ConfigUiModel {
   input?: InputUiModel[];
+  trigger?: TriggerUiModel;
   button?: ButtonUiModel;
   header?: HeaderUiModel;
   captionLogin?: CaptionLoginUiModel;

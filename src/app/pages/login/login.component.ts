@@ -81,6 +81,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe(resp => {
         this.headerColor = resp.caption.headerBackgroundColor;
         this.teamHidden = resp.showTeam;
+        this.cd.detectChanges();
+        this.cd.markForCheck();
       });
   }
 
@@ -133,6 +135,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public toggleClose() {
     this.store.dispatch(InitWebChatAction.open({payload: this.hidden}));
+    this.cd.detectChanges();
+    this.cd.markForCheck();
   }
 
 }

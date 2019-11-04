@@ -1,6 +1,6 @@
 <div>
-  <a (click)="initWebChat()" *ngIf="hiddenTrigger()" [ngStyle]="{'background-image': backgroundColor}"
-     class="chattigo-widget-trigger test-angular">
-    <img class="chattigo-widget-trigger--logo" src="https://cdn.chattigo.com/assets/img/isotipo-grey.svg"/>
+  <a (click)="initWebChat()" *ngIf="hiddenTrigger()"  [ngStyle]="{'background-image': backgroundColor}"
+     class="chattigo-widget-trigger test-angular" [ngClass]="{'chattigo-widget-trigger--complete': completeTriggerClass}">
+    <img class="chattigo-widget-trigger__logo" [src]="src"/>
   </a>
 </div>

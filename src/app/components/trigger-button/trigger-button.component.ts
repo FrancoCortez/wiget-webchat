@@ -17,6 +17,8 @@ export class TriggerButtonComponent implements OnInit, OnDestroy {
   selectConfig: Subscription = new Subscription();
   selectIsOpen: Subscription = new Subscription();
   backgroundColor? = '';
+  src? = '';
+  completeTriggerClass? = false;
 
   constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
@@ -37,8 +39,18 @@ export class TriggerButtonComponent implements OnInit, OnDestroy {
         }
       });
     this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig))
-      .pipe(filter(fill => fill.caption !== undefined))
-      .subscribe(resp => this.backgroundColor = resp.caption.headerBackgroundColor);
+      .pipe(filter(fill => fill.trigger !== undefined))
+      .subscribe(resp => {
+        if(resp.trigger.src === undefined || resp.trigger.src === null || resp.trigger.src === '') {
+          this.src = 'https://cdn.chattigo.com/assets/img/isotipo-grey.svg';
+          this.backgroundColor = resp.trigger.backgroundColor;
+          this.completeTriggerClass = false;
+        } else {
+          this.src = resp.trigger.src;
+          this.backgroundColor = 'none';
+          this.completeTriggerClass = true;
+        }
+      });
   }
 
   public initWebChat() {
@@ -57,5 +69,7 @@ export class TriggerButtonComponent implements OnInit, OnDestroy {
   public hiddenTrigger(): boolean {
     return true;
   }
+
+
 
 }

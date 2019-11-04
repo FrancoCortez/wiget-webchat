@@ -49,6 +49,7 @@ export class ButtonComponent implements OnInit, OnDestroy {
   private config?: ConfigUiModel;
 
   constructor(private readonly store: Store<RootStoreState.AppState>, private cd: ChangeDetectorRef) {
+
   }
 
   ngOnDestroy(): void {
@@ -72,18 +73,23 @@ export class ButtonComponent implements OnInit, OnDestroy {
         this.config = resp;
         this.question = (resp.question === undefined) ? '' : resp.question;
         this.cd.detectChanges();
+        this.cd.markForCheck();
       });
   }
 
 
   public toggleClose() {
     this.store.dispatch(InitWebChatAction.open({payload: this.hidden}));
+    this.cd.detectChanges();
+    this.cd.markForCheck();
   }
 
   public navegate(index: number) {
     this.config.input = this.config.buttonPrefer[index].input;
     this.store.dispatch(ConfigAction.updateInputConfig({payload: this.config}));
     this.store.dispatch(RouterAction.loginOpen());
+    this.cd.detectChanges();
+    this.cd.markForCheck();
   }
 
 }

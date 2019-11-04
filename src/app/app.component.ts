@@ -130,6 +130,7 @@ export class AppComponent implements OnInit {
         '   "agent_name_enabled":false,\n' +
         '   "bg_menu":"#1f1f1f",\n' +
         '   "button_enabled":true,\n' +
+        '   "trigger_image":"./assets/robot.gif",\n' +
         '   "button_login_bg":"#c1012a",\n' +
         '   "button_login_color":"white",\n' +
         '   "caption_subtitle":"Estaremos gustosos de atender tus dudasconsultas.",\n' +
@@ -212,6 +213,10 @@ export class AppComponent implements OnInit {
     this.configUi = {
       did: this.did,
       showTeam: setting.team_enabled,
+      trigger: {
+        src: setting.trigger_image,
+        backgroundColor: (setting.trigger_color === undefined || setting.trigger_color === null || setting.trigger_color === '') ? `linear-gradient(140deg, ${setting.button_login_bg} 40%, #000 200%)` : setting.trigger_color,
+      },
       button: {
         enabled: setting.button_enabled,
         label: setting.login_text,

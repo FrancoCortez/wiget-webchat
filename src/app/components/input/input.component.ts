@@ -76,19 +76,19 @@ export class InputComponent implements OnInit, OnDestroy {
 
     if (row.max !== undefined && row.max !== null) {
       if (typeof row.max === 'number') {
-        (row.soloNumber) ? validation.push(Validators.max(row.max)) : validation.push(Validators.maxLength(row.max));
+        (row.soloNumber) ? validation.push(Validators.maxLength(row.max)) : validation.push(Validators.maxLength(row.max));
         this.inputValidationFront.push({key: 'maxlength', msg: `La cantidad maxima de caracteres es ${row.max}`})
       } else {
-        (row.soloNumber) ? validation.push(Validators.max(row.max.value)) : validation.push(Validators.maxLength(row.max.value));
+        (row.soloNumber) ? validation.push(Validators.maxLength(row.max.value)) : validation.push(Validators.maxLength(row.max.value));
         this.inputValidationFront.push({key: 'maxlength', msg: `${row.max.message}`})
       }
     }
     if (row.min !== undefined && row.min !== null) {
       if (typeof row.min === 'number') {
-        (row.soloNumber) ? validation.push(Validators.min(row.min)) : validation.push(Validators.minLength(row.min));
+        (row.soloNumber) ? validation.push(Validators.minLength(row.min)) : validation.push(Validators.minLength(row.min));
         this.inputValidationFront.push({key: 'minlength', msg: `La cantidad minima de caracteres es ${row.min}`})
       } else {
-        (row.soloNumber) ? validation.push(Validators.min(row.min.value)) : validation.push(Validators.minLength(row.min.value));
+        (row.soloNumber) ? validation.push(Validators.minLength(row.min.value)) : validation.push(Validators.minLength(row.min.value));
         this.inputValidationFront.push({key: 'minlength', msg: `${row.min.message}`})
       }
     }

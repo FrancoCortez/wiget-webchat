@@ -126,85 +126,162 @@ export class AppComponent implements OnInit {
    */
   private initConfigRemote() {
     this.configService.getConfig(this.did).subscribe(resp => {
-      resp = JSON.parse('{ \n' +
-        '   "agent_name_enabled":false,\n' +
-        '   "bg_menu":"#1f1f1f",\n' +
-        '   "button_enabled":true,\n' +
-        '   "trigger_image":"./assets/robot.gif",\n' +
-        '   "button_login_bg":"#c1012a",\n' +
-        '   "button_login_color":"white",\n' +
-        '   "caption_subtitle":"Estaremos gustosos de atender tus dudasconsultas.",\n' +
-        '   "caption_subtitle_color":"#424243",\n' +
-        '   "caption_title":"Inicia una conversación",\n' +
-        '   "caption_title_color":"#424243",\n' +
-        '   "field_font_color":"#424243",\n' +
-        '   "geo_active":true,\n' +
-        '   "header_background_color":"#c1012a",\n' +
-        '   "header_font_color":"#ffffff",\n' +
-        '   "header_status":"En linea",\n' +
-        '   "header_text":"AFP Habitat",\n' +
-        '   "init_button_prefer":[ \n' +
-        '      { \n' +
-        '         "button_bg":"#c1012a",\n' +
-        '         "button_color":"#ffffff",\n' +
-        '         "button_enabled":true,\n' +
-        '         "button_login_field":[ \n' +
-        '            { \n' +
-        '               "label":"Nombre",\n' +
-        '               "placeholder":"Ingrese su nombre",\n' +
-        '               "required":true\n' +
-        '            },\n' +
-        '           { \n' +
-        '               "label":"(DNI o Carnet de extrangeria) o RUC",\n' +
-        '               "placeholder":"CD/DNI",\n' +
-        '               "required":true\n' +
-        '            }\n' +
-        '         ],\n' +
-        '         "button_text":"Personas"\n' +
-        '      },\n' +
-        '      { \n' +
-        '         "button_bg":"#c1012a",\n' +
-        '         "button_color":"#ffffff",\n' +
-        '         "button_enabled":true,\n' +
-        '         "button_login_field":[ \n' +
-        '            { \n' +
-        '               "label":"Nombre",\n' +
-        '               "placeholder":"Ingrese el nombre de la empresa",\n' +
-        '               "required":true,\n' +
-        '               "min": {"value": 3, "message":"Mensaje de prueba de min value 3"},\n' +
-        '               "max": {"value": 30, "message":"Mensaje de prueba de max value 30"},\n' +
-        '               "defaultValidation": ["text"]\n' +
-        '            },\n' +
-        '            { \n' +
-        '               "label":"Ruc",\n' +
-        '               "placeholder":"Ingrese el RUC de la empresa",\n' +
-        '               "required":true,\n' +
-        '               "min": {"value": 3, "message":"Mensaje de prueba de min value 3"},\n' +
-        '               "max": {"value": 30, "message":"Mensaje de prueba de max value 30"},\n' +
-        '               "defaultValidation": ["rut"]\n' +
-        '            }\n' +
-        '         ],\n' +
-        '         "button_text":"Empresa"\n' +
-        '      }\n' +
-        '   ],\n' +
-        '   "locale":"es",\n' +
-        '   "login_text":"Iniciar sesión",\n' +
-        '   "logo":"https://media.licdn.com/dms/image/C4D0BAQGLbj7ukxdRbQ/company-logo_200_200/0?e=2159024400&v=beta&t=5kKwP6K_Bd89lEHYa57va1-T3EgbBri-eYLGrN26h7g",\n' +
-        '   "message_placeholder":"Escriba un mensaje...",\n' +
-        '   "preserve_history":true,\n' +
-        '   "send_color":"#cb1e74",\n' +
-        '   "subtitle_color":"#ffffff",\n' +
-        '   "team_enabled":false,\n' +
-        '   "user_field":[ \n' +
-        '      "(DNI o Carnet de extrangeria) o RUC",\n' +
-        '      "Ruc"\n' +
-        '   ],\n' +
-        '   "name_field":[ \n' +
-        '      "Nombre"\n' +
-        '   ],\n' +
-        '   "welcome_color":"#ffffff",\n' +
-        '   "welcome_text":"Bienvenido al chat de AFP Habitat"\n' +
-        '}');
+      // resp = JSON.parse('{ \n' +
+      //   '   "agent_name_enabled":false,\n' +
+      //   '   "bg_menu":"#1f1f1f",\n' +
+      //   '   "button_enabled":true,\n' +
+      //   '   "trigger_image":"./assets/robot.gif",\n' +
+      //   '   "button_login_bg":"#c1012a",\n' +
+      //   '   "button_login_color":"white",\n' +
+      //   '   "caption_subtitle":"Estaremos gustosos de atender tus dudasconsultas.",\n' +
+      //   '   "caption_subtitle_color":"#424243",\n' +
+      //   '   "caption_title":"Inicia una conversación",\n' +
+      //   '   "caption_title_color":"#424243",\n' +
+      //   '   "field_font_color":"#424243",\n' +
+      //   '   "geo_active":true,\n' +
+      //   '   "header_background_color":"#c1012a",\n' +
+      //   '   "header_font_color":"#ffffff",\n' +
+      //   '   "header_status":"En linea",\n' +
+      //   '   "header_text":"AFP Habitat",\n' +
+      //   '   "init_button_prefer":[ \n' +
+      //   '      { \n' +
+      //   '         "button_bg":"#c1012a",\n' +
+      //   '         "button_color":"#ffffff",\n' +
+      //   '         "button_enabled":true,\n' +
+      //   '         "button_login_field":[ \n' +
+      //   '            { \n' +
+      //   '               "label":"Nombre",\n' +
+      //   '               "placeholder":"Ingrese su nombre",\n' +
+      //   '               "required":true\n' +
+      //   '            },\n' +
+      //   '           { \n' +
+      //   '               "label":"(DNI o Carnet de extrangeria) o RUC",\n' +
+      //   '               "placeholder":"CD/DNI",\n' +
+      //   '               "required":true\n' +
+      //   '            }\n' +
+      //   '         ],\n' +
+      //   '         "button_text":"Personas"\n' +
+      //   '      },\n' +
+      //   '      { \n' +
+      //   '         "button_bg":"#c1012a",\n' +
+      //   '         "button_color":"#ffffff",\n' +
+      //   '         "button_enabled":true,\n' +
+      //   '         "button_login_field":[ \n' +
+      //   '            { \n' +
+      //   '               "label":"Nombre",\n' +
+      //   '               "placeholder":"Ingrese el nombre de la empresa",\n' +
+      //   '               "required":true,\n' +
+      //   '               "min": {"value": 3, "message":"Mensaje de prueba de min value 3"},\n' +
+      //   '               "max": {"value": 30, "message":"Mensaje de prueba de max value 30"},\n' +
+      //   '               "defaultValidation": ["text"]\n' +
+      //   '            },\n' +
+      //   '            { \n' +
+      //   '               "label":"Ruc",\n' +
+      //   '               "placeholder":"Ingrese el RUC de la empresa",\n' +
+      //   '               "required":true,\n' +
+      //   '               "min": {"value": 3, "message":"Mensaje de prueba de min value 3"},\n' +
+      //   '               "max": {"value": 30, "message":"Mensaje de prueba de max value 30"},\n' +
+      //   '               "defaultValidation": ["rut"]\n' +
+      //   '            }\n' +
+      //   '         ],\n' +
+      //   '         "button_text":"Empresa"\n' +
+      //   '      }\n' +
+      //   '   ],\n' +
+      //   '   "locale":"es",\n' +
+      //   '   "login_text":"Iniciar sesión",\n' +
+      //   '   "logo":"https://media.licdn.com/dms/image/C4D0BAQGLbj7ukxdRbQ/company-logo_200_200/0?e=2159024400&v=beta&t=5kKwP6K_Bd89lEHYa57va1-T3EgbBri-eYLGrN26h7g",\n' +
+      //   '   "message_placeholder":"Escriba un mensaje...",\n' +
+      //   '   "preserve_history":true,\n' +
+      //   '   "send_color":"#cb1e74",\n' +
+      //   '   "subtitle_color":"#ffffff",\n' +
+      //   '   "team_enabled":false,\n' +
+      //   '   "user_field":[ \n' +
+      //   '      "(DNI o Carnet de extrangeria) o RUC",\n' +
+      //   '      "Ruc"\n' +
+      //   '   ],\n' +
+      //   '   "name_field":[ \n' +
+      //   '      "Nombre"\n' +
+      //   '   ],\n' +
+      //   '   "welcome_color":"#ffffff",\n' +
+      //   '   "welcome_text":"Bienvenido al chat de AFP Habitat"\n' +
+      //   '}');
+      resp = JSON.parse("{\n" +
+        "   \"logo\": \"https://media.licdn.com/dms/image/C4D0BAQGLbj7ukxdRbQ/company-logo_200_200/0?e=2159024400&v=beta&t=5kKwP6K_Bd89lEHYa57va1-T3EgbBri-eYLGrN26h7g\",\n" +
+        "   \"welcome_text\": \"Bienvenido al chat de AFP Habitat\",\n" +
+        "   \"welcome_color\": \"#ffffff\",\n" +
+        "   \"subtitle_text\": \"subtitulo text\",\n" +
+        "   \"subtitle_color\": \"#ffffff\",\n" +
+        "   \"header_background_color\": \"#c1012a\",\n" +
+        "   \"caption_title\": \"Inicia una conversación\",\n" +
+        "   \"caption_title_color\": \"#424243\",\n" +
+        "   \"caption_subtitle\": \"Estaremos gustosos de atender tus dudas o consultas.\",\n" +
+        "   \"caption_subtitle_color\": \"#424243\",\n" +
+        "   \"team_enabled\": true,\n" +
+        "   \"login_fields\": \"asdasd\",\n" +
+        "   \"field_font_color\": \"#424243\",\n" +
+        "   \"button_enabled\": true,\n" +
+        "   \"button_login_color\": \"#ffffff\",\n" +
+        "   \"button_login_bg\": \"#c1012a\",\n" +
+        "   \"login_text\": \"Iniciar sesión\",\n" +
+        "   \"header_text\": \"AFP Habitat\",\n" +
+        "   \"header_status\": \"En linea\",\n" +
+        "   \"agent_name_enabled\": false,\n" +
+        "   \"header_font_color\": \"#ffffff\",\n" +
+        "   \"message_placeholder\": \"Escriba un mensaje...\",\n" +
+        "   \"send_color\": \"#cb1e74\",\n" +
+        "   \"init_button_prefer\": [\n" +
+        "      {\n" +
+        "         \"button_bg\": \"#c1012a\",\n" +
+        "         \"button_color\": \"#ffffff\",\n" +
+        "         \"button_text\": \"Persona\",\n" +
+        "         \"button_enabled\": true,\n" +
+        "         \"button_login_field\": [\n" +
+        "            {\n" +
+        "               \"label\": \"Nombre\",\n" +
+        "               \"placeholder\": \"Ingrese su nombre\",\n" +
+        "               \"required\": true\n" +
+        "            },\n" +
+        "            {\n" +
+        "               \"label\": \"Ingresar tu número de DNI/CE\",\n" +
+        "               \"placeholder\": \"DNI / CE\",\n" +
+        "               \"required\": true\n" +
+        "            }\n" +
+        "         ]\n" +
+        "      },\n" +
+        "      {\n" +
+        "         \"button_bg\": \"#c1012a\",\n" +
+        "         \"button_color\": \"#ffffff\",\n" +
+        "         \"button_text\": \"Empresa\",\n" +
+        "         \"button_enabled\": true,\n" +
+        "         \"button_login_field\": [\n" +
+        "            {\n" +
+        "               \"label\": \"Nombre Empresa\",\n" +
+        "               \"placeholder\": \"Ingrese el nombre de la empresa\",\n" +
+        "               \"required\": true\n" +
+        "            },\n" +
+        "            {\n" +
+        "               \"label\": \"Ingresar el número de RUC de la empresa\",\n" +
+        "               \"placeholder\": \"Ingrese el RUC de la empresa\",\n" +
+        "               \"required\": true\n" +
+        "            }\n" +
+        "         ]\n" +
+        "      }\n" +
+        "   ],\n" +
+        "   \"geo_active\": true,\n" +
+        "   \"locale\": \"es\",\n" +
+        "   \"preserve_history\": true,\n" +
+        "   \"bg_menu\": \"#1f1f1f\",\n" +
+        "   \"user_field\": [\n" +
+        "      \"(DNI o Carnet de extranjería) o RUC\",\n" +
+        "      \"Ruc\"\n" +
+        "   ],\n" +
+        "   \"name_field\": [\n" +
+        "      \"Nombre\",\n" +
+        "      \"Nombre Empresa\"\n" +
+        "   ],\n" +
+        "   \"trigger_image\": \"https://media.tenor.com/images/45f50da9cbb8f211afc1454773a52b82/tenor.gif\",\n" +
+        "   \"trigger_color\": \"#ffffff\"\n" +
+        "}");
       this.generateConfig(resp);
     });
   }
@@ -218,7 +295,7 @@ export class AppComponent implements OnInit {
         backgroundColor: (setting.trigger_color === undefined || setting.trigger_color === null || setting.trigger_color === '') ? `linear-gradient(140deg, ${setting.button_login_bg} 40%, #000 200%)` : setting.trigger_color,
       },
       button: {
-        enabled: setting.button_enabled,
+        enabled: (setting.button_enabled === undefined || setting.button_enabled == null || setting.button_enabled === '')? true : setting.button_enabled,
         label: setting.login_text,
         colorText: `${setting.button_login_color}`,
         colorButtonBg: `linear-gradient(140deg, ${setting.button_login_bg} 40%, #000 200%)`

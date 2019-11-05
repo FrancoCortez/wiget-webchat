@@ -88,8 +88,6 @@ export class ButtonComponent implements OnInit, OnDestroy {
     this.config.input = this.config.buttonPrefer[index].input;
     this.store.dispatch(ConfigAction.updateInputConfig({payload: this.config}));
     this.store.dispatch(RouterAction.loginOpen());
-    this.cd.detectChanges();
-    this.cd.markForCheck();
   }
 
 }

@@ -345,6 +345,8 @@ export class AppComponent implements OnInit {
       input.validation = row.validation;
       input.placeholder = (row.placeholder === undefined || row.placeholder === null) ? row.label : row.placeholder;
       input.defaultValidation = (row.defaultValidation === undefined || row.defaultValidation === null) ? [] : row.defaultValidation
+      input.min = row.min;
+      input.max = row.max;
       const typeText = (row.type === undefined || row.type === null) ? null : row.type;
       switch (typeText) {
         case 'text': {

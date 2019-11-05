@@ -98,6 +98,7 @@ export class InputComponent implements OnInit, OnDestroy {
         if (typeof validations === 'string') {
           switch (validations) {
             case ValidationEnum.EMAIL: {
+              this.soloRut = false;
               validation.push(emailValidation);
               this.inputValidationFront.push({key: validations, msg: `Error en el formato del correo`});
               break;
@@ -109,17 +110,20 @@ export class InputComponent implements OnInit, OnDestroy {
               break;
             }
             case ValidationEnum.URL: {
+              this.soloRut = false;
               validation.push(urlValidation);
               this.inputValidationFront.push({key: validations, msg: `El formato de la url es incorrecto`});
               break;
             }
             default: {
+              this.soloRut = false;
               validation.push(validationOfNull);
             }
           }
         } else {
           switch (validations.validation) {
             case ValidationEnum.EMAIL: {
+              this.soloRut = false;
               validation.push(emailValidation);
               this.inputValidationFront.push({key: validations.validation, msg: validations.message});
               break;
@@ -131,11 +135,13 @@ export class InputComponent implements OnInit, OnDestroy {
               break;
             }
             case ValidationEnum.URL: {
+              this.soloRut = false;
               validation.push(urlValidation);
               this.inputValidationFront.push({key: validations.validation, msg: validations.message});
               break;
             }
             default: {
+              this.soloRut = false;
               validation.push(validationOfNull);
             }
           }

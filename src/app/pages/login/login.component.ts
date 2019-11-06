@@ -73,16 +73,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.selectIsOpen = this.store.pipe(select(InitWebChatSelector.selectIsOpen))
       .subscribe(resp => {
         this.hidden = !resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
     this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig))
       .pipe(filter(fill => fill.caption !== undefined))
       .subscribe(resp => {
         this.headerColor = resp.caption.headerBackgroundColor;
         this.teamHidden = resp.showTeam;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
   }
 

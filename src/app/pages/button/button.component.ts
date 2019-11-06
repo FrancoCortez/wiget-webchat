@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {
   ConfigAction,
@@ -61,8 +61,6 @@ export class ButtonComponent implements OnInit, OnDestroy {
     this.selectIsOpen = this.store.pipe(select(InitWebChatSelector.selectIsOpen))
       .subscribe(resp => {
         this.hidden = !resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
     this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig))
       .pipe(filter(fill => fill.caption !== undefined))
@@ -72,16 +70,12 @@ export class ButtonComponent implements OnInit, OnDestroy {
         this.buttonConfig = resp.buttonPrefer;
         this.config = resp;
         this.question = (resp.question === undefined) ? '' : resp.question;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
   }
 
 
   public toggleClose() {
     this.store.dispatch(InitWebChatAction.open({payload: this.hidden}));
-    this.cd.detectChanges();
-    this.cd.markForCheck();
   }
 
   public navegate(index: number) {

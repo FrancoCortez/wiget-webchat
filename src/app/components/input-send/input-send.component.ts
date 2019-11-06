@@ -96,7 +96,6 @@ export class InputSendComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public uploadFile($event: any): void {
-    this.cd.detectChanges();
     const files = $event.target.files[0];
     if (files.size > 10000000) {
       alert('El archivo pesa mas de 10mb');
@@ -113,8 +112,6 @@ export class InputSendComponent implements OnInit, AfterViewInit, OnDestroy {
         this.typeFile = 'images';
         reader.onload = () => {
           this.imgURL = reader.result;
-          this.cd.detectChanges();
-          this.cd.markForCheck();
         };
       } else if (mimeType.match(/application\/*/) !== null) {
         this.imagePath = files;
@@ -131,8 +128,6 @@ export class InputSendComponent implements OnInit, AfterViewInit, OnDestroy {
       this.nameFile = files.name;
       this.sendFile = files;
       this.sendElement.nativeElement.focus();
-      this.cd.detectChanges();
-      this.cd.markForCheck();
     }
   }
 
@@ -172,8 +167,6 @@ export class InputSendComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           }));
           this.resetFeatures();
-          this.cd.detectChanges();
-          this.cd.markForCheck();
         });
       } else {
         if (value.sendMessage.replace(/\s/g, '').length > 0) {
@@ -193,8 +186,6 @@ export class InputSendComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           }));
           this.resetFeatures();
-          this.cd.detectChanges();
-          this.cd.markForCheck();
         }
       }
     }
@@ -224,8 +215,6 @@ export class InputSendComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   keyPressEvent(event) {
-    this.cd.detectChanges();
-    this.cd.markForCheck();
   }
 
   addEmoji($event) {
@@ -233,8 +222,6 @@ export class InputSendComponent implements OnInit, AfterViewInit, OnDestroy {
     // tslint:disable-next-line:max-line-length
     this.form.controls.sendMessage.setValue(((this.form.controls.sendMessage.value == null) ? '' : this.form.controls.sendMessage.value) + $event.emoji.native);
     this.sendElement.nativeElement.focus();
-    this.cd.detectChanges();
-    this.cd.markForCheck();
   }
 
   displayPanelEmoji() {
@@ -242,8 +229,6 @@ export class InputSendComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.displayEmoji) {
       this.sendElement.nativeElement.focus();
     }
-    this.cd.detectChanges();
-    this.cd.markForCheck();
   }
 
   private resetFeatures(): void {

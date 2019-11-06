@@ -47,45 +47,31 @@ export class ContainerLoginComponent implements OnInit, OnDestroy {
     this.selectIsOpen = this.store.pipe(select(InitWebChatSelector.selectIsOpen))
       .subscribe(resp => {
         this.toggles = resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
     this.selectIsTrigger = this.store.pipe(select(InitWebChatSelector.selectIsTrigger))
       .subscribe(resp => {
         this.triggerHidden = resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
     this.selectLoginOpen = this.store.pipe(select(RouterSelector.selectLoginOpen))
       .subscribe(resp => {
         this.loginOpen = resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
     this.selectButtonOpen = this.store.pipe(select(RouterSelector.selectButtonOpen))
       .subscribe(resp => {
         this.buttonLogin = resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
     this.selectWidgetOpen = this.store.pipe(select(RouterSelector.selectWidgetOpen))
       .subscribe(resp => {
         this.widgetOpen = resp;
         this.configOpen = resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
     this.selectConfigOpen = this.store.pipe(select(RouterSelector.selectConfigOpen))
       .subscribe(resp => {
         this.configOpen = resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
     this.selectFinishOpen = this.store.pipe(select(RouterSelector.selectFinish))
       .subscribe(resp => {
         this.finishOpen = resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
   }
 

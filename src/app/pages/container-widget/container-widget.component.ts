@@ -58,9 +58,6 @@ export class ContainerWidgetComponent implements OnInit, OnDestroy {
       .pipe(filter(fill => fill !== null && fill !== undefined))
       .subscribe(resp => {
         this.finish = resp;
-        console.log('entre al select')
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
     this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
       .subscribe(resp => {
@@ -71,22 +68,16 @@ export class ContainerWidgetComponent implements OnInit, OnDestroy {
     this.selectIsOpen = this.store.pipe(select(InitWebChatSelector.selectIsOpen))
       .subscribe(resp => {
         this.hidden = !resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
     this.selectWidgetOpen = this.store.pipe(select(RouterSelector.selectWidgetOpen))
       .pipe(filter(fill => fill !== null && fill !== undefined))
       .subscribe(resp => {
         this.widgetOpen = resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
     this.selectConfigOpen = this.store.pipe(select(RouterSelector.selectConfigOpen))
       .pipe(filter(fill => fill !== null && fill !== undefined))
       .subscribe(resp => {
         this.configOpen = resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
   }
 }

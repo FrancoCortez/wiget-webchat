@@ -1,13 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  OnInit,
-  QueryList,
-  ViewChildren
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ConversationSelector, RootStoreState} from '../../store';
 import {MessageUiModel} from '../../models/ui-model/message.ui.model';
@@ -18,7 +9,6 @@ import {Subscription} from 'rxjs';
   selector: 'app-widget-chat',
   templateUrl: './widget-chat.component.html',
   styleUrls: [],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WidgetChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -36,8 +26,6 @@ export class WidgetChatComponent implements OnInit, OnDestroy, AfterViewInit {
         .pipe(filter(fill => fill.length !== 0))
         .subscribe(resp => {
           this.conversation = resp;
-          this.changeDetector.detectChanges();
-          this.changeDetector.markForCheck();
           this.elementAgent.last.nativeElement.scrollIntoView();
           this.eventScroll();
         });

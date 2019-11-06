@@ -259,8 +259,6 @@ export class AppComponent implements OnInit {
     };
     this.configInput(setting);
     this.store.dispatch(ConfigAction.loadConfig({payload: this.configUi}));
-    this.cd.detectChanges();
-    this.cd.markForCheck();
   }
 
   private configInput(setting: any) {

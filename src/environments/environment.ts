@@ -19,9 +19,9 @@ export const environment = {
   leaveChat: 'leave-chat',
   leaveAgentChat: 'notifyClosed',
 
-  configProfile: 'development',
+  configProfile: 'qa',
 
-  configPath: 'http://localhost:8888'
+  configPath: 'https://kops.chattigo.com/config'
 };
 
 

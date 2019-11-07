@@ -36,6 +36,16 @@ export class OnlyNumberDirective {
     }
   }
 
+  @HostListener('keyup', ['$event'])
+  onKeyUp(event: KeyboardEvent) {
+    if (this.active) {
+      if (event.key === 'Dead') {
+        event.preventDefault();
+        this.el.nativeElement.value = '';
+      }
+    }
+  }
+
   @HostListener('blur', ['$event'])
   onBlur(event: any) {
     if (this.active) {

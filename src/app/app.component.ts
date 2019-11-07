@@ -15,8 +15,8 @@ import {InputUiModel} from './models/ui-model/input.ui-model';
 import {delay, filter} from 'rxjs/operators';
 import {MessageDto} from './models/message/message.dto';
 import {v4 as uuid} from 'uuid';
-import {ButtonOptionUiModel} from "./models/ui-model/button-option.ui-model";
-import {ConfigService} from "./services/config.service";
+import {ButtonOptionUiModel} from './models/ui-model/button-option.ui-model';
+import {ConfigService} from './services/config.service';
 
 
 @Component({
@@ -127,83 +127,83 @@ export class AppComponent implements OnInit {
   private initConfigRemote() {
     this.configService.getConfig(this.did).subscribe(resp => {
       // resp = JSON.parse('{ \n' +
-      //   '   "agent_name_enabled":false,\n' +
-      //   '   "bg_menu":"#1f1f1f",\n' +
-      //   '   "button_enabled":true,\n' +
-      //   '   "trigger_image":"./assets/robot.gif",\n' +
-      //   '   "button_login_bg":"#c1012a",\n' +
-      //   '   "button_login_color":"white",\n' +
-      //   '   "caption_subtitle":"Estaremos gustosos de atender tus dudasconsultas.",\n' +
-      //   '   "caption_subtitle_color":"#424243",\n' +
-      //   '   "caption_title":"Inicia una conversación",\n' +
-      //   '   "caption_title_color":"#424243",\n' +
-      //   '   "field_font_color":"#424243",\n' +
-      //   '   "geo_active":true,\n' +
-      //   '   "header_background_color":"#c1012a",\n' +
-      //   '   "header_font_color":"#ffffff",\n' +
-      //   '   "header_status":"En linea",\n' +
-      //   '   "header_text":"AFP Habitat",\n' +
-      //   '   "init_button_prefer":[ \n' +
+      //   '   'agent_name_enabled':false,\n' +
+      //   '   'bg_menu':'#1f1f1f',\n' +
+      //   '   'button_enabled':true,\n' +
+      //   '   'trigger_image':'./assets/robot.gif',\n' +
+      //   '   'button_login_bg':'#c1012a',\n' +
+      //   '   'button_login_color':'white',\n' +
+      //   '   'caption_subtitle':'Estaremos gustosos de atender tus dudasconsultas.',\n' +
+      //   '   'caption_subtitle_color':'#424243',\n' +
+      //   '   'caption_title':'Inicia una conversación',\n' +
+      //   '   'caption_title_color':'#424243',\n' +
+      //   '   'field_font_color':'#424243',\n' +
+      //   '   'geo_active':true,\n' +
+      //   '   'header_background_color':'#c1012a',\n' +
+      //   '   'header_font_color':'#ffffff',\n' +
+      //   '   'header_status':'En linea',\n' +
+      //   '   'header_text':'AFP Habitat',\n' +
+      //   '   'init_button_prefer':[ \n' +
       //   '      { \n' +
-      //   '         "button_bg":"#c1012a",\n' +
-      //   '         "button_color":"#ffffff",\n' +
-      //   '         "button_enabled":true,\n' +
-      //   '         "button_login_field":[ \n' +
+      //   '         'button_bg':'#c1012a',\n' +
+      //   '         'button_color':'#ffffff',\n' +
+      //   '         'button_enabled':true,\n' +
+      //   '         'button_login_field':[ \n' +
       //   '            { \n' +
-      //   '               "label":"Nombre",\n' +
-      //   '               "placeholder":"Ingrese su nombre",\n' +
-      //   '               "required":true\n' +
+      //   '               'label':'Nombre',\n' +
+      //   '               'placeholder':'Ingrese su nombre',\n' +
+      //   '               'required':true\n' +
       //   '            },\n' +
       //   '           { \n' +
-      //   '               "label":"(DNI o Carnet de extrangeria) o RUC",\n' +
-      //   '               "placeholder":"CD/DNI",\n' +
-      //   '               "required":true\n' +
+      //   '               'label':'(DNI o Carnet de extrangeria) o RUC',\n' +
+      //   '               'placeholder':'CD/DNI',\n' +
+      //   '               'required':true\n' +
       //   '            }\n' +
       //   '         ],\n' +
-      //   '         "button_text":"Personas"\n' +
+      //   '         'button_text':'Personas'\n' +
       //   '      },\n' +
       //   '      { \n' +
-      //   '         "button_bg":"#c1012a",\n' +
-      //   '         "button_color":"#ffffff",\n' +
-      //   '         "button_enabled":true,\n' +
-      //   '         "button_login_field":[ \n' +
+      //   '         'button_bg':'#c1012a',\n' +
+      //   '         'button_color':'#ffffff',\n' +
+      //   '         'button_enabled':true,\n' +
+      //   '         'button_login_field':[ \n' +
       //   '            { \n' +
-      //   '               "label":"Nombre",\n' +
-      //   '               "placeholder":"Ingrese el nombre de la empresa",\n' +
-      //   '               "required":true,\n' +
-      //   '               "min": {"value": 3, "message":"Mensaje de prueba de min value 3"},\n' +
-      //   '               "max": {"value": 30, "message":"Mensaje de prueba de max value 30"},\n' +
-      //   '               "defaultValidation": ["text"]\n' +
+      //   '               'label':'Nombre',\n' +
+      //   '               'placeholder':'Ingrese el nombre de la empresa',\n' +
+      //   '               'required':true,\n' +
+      //   '               'min': {'value': 3, 'message':'Mensaje de prueba de min value 3'},\n' +
+      //   '               'max': {'value': 30, 'message':'Mensaje de prueba de max value 30'},\n' +
+      //   '               'defaultValidation': ['text']\n' +
       //   '            },\n' +
       //   '            { \n' +
-      //   '               "label":"Ruc",\n' +
-      //   '               "placeholder":"Ingrese el RUC de la empresa",\n' +
-      //   '               "required":true,\n' +
-      //   '               "min": {"value": 3, "message":"Mensaje de prueba de min value 3"},\n' +
-      //   '               "max": {"value": 30, "message":"Mensaje de prueba de max value 30"},\n' +
-      //   '               "defaultValidation": ["rut"]\n' +
+      //   '               'label':'Ruc',\n' +
+      //   '               'placeholder':'Ingrese el RUC de la empresa',\n' +
+      //   '               'required':true,\n' +
+      //   '               'min': {'value': 3, 'message':'Mensaje de prueba de min value 3'},\n' +
+      //   '               'max': {'value': 30, 'message':'Mensaje de prueba de max value 30'},\n' +
+      //   '               'defaultValidation': ['rut']\n' +
       //   '            }\n' +
       //   '         ],\n' +
-      //   '         "button_text":"Empresa"\n' +
+      //   '         'button_text':'Empresa'\n' +
       //   '      }\n' +
       //   '   ],\n' +
-      //   '   "locale":"es",\n' +
-      //   '   "login_text":"Iniciar sesión",\n' +
-      //   '   "logo":"https://media.licdn.com/dms/image/C4D0BAQGLbj7ukxdRbQ/company-logo_200_200/0?e=2159024400&v=beta&t=5kKwP6K_Bd89lEHYa57va1-T3EgbBri-eYLGrN26h7g",\n' +
-      //   '   "message_placeholder":"Escriba un mensaje...",\n' +
-      //   '   "preserve_history":true,\n' +
-      //   '   "send_color":"#cb1e74",\n' +
-      //   '   "subtitle_color":"#ffffff",\n' +
-      //   '   "team_enabled":false,\n' +
-      //   '   "user_field":[ \n' +
-      //   '      "(DNI o Carnet de extrangeria) o RUC",\n' +
-      //   '      "Ruc"\n' +
+      //   '   'locale':'es',\n' +
+      //   '   'login_text':'Iniciar sesión',\n' +
+      //   '   'logo':'https://media.licdn.com/dms/image/C4D0BAQGLbj7ukxdRbQ/company-logo_200_200/0?e=2159024400&v=beta&t=5kKwP6K_Bd89lEHYa57va1-T3EgbBri-eYLGrN26h7g',\n' +
+      //   '   'message_placeholder':'Escriba un mensaje...',\n' +
+      //   '   'preserve_history':true,\n' +
+      //   '   'send_color':'#cb1e74',\n' +
+      //   '   'subtitle_color':'#ffffff',\n' +
+      //   '   'team_enabled':false,\n' +
+      //   '   'user_field':[ \n' +
+      //   '      '(DNI o Carnet de extrangeria) o RUC',\n' +
+      //   '      'Ruc'\n' +
       //   '   ],\n' +
-      //   '   "name_field":[ \n' +
-      //   '      "Nombre"\n' +
+      //   '   'name_field':[ \n' +
+      //   '      'Nombre'\n' +
       //   '   ],\n' +
-      //   '   "welcome_color":"#ffffff",\n' +
-      //   '   "welcome_text":"Bienvenido al chat de AFP Habitat"\n' +
+      //   '   'welcome_color':'#ffffff',\n' +
+      //   '   'welcome_text':'Bienvenido al chat de AFP Habitat'\n' +
       //   '}');
       this.generateConfig(resp);
     });
@@ -215,10 +215,12 @@ export class AppComponent implements OnInit {
       showTeam: setting.team_enabled,
       trigger: {
         src: setting.trigger_image,
+        // tslint:disable-next-line:max-line-length
         backgroundColor: (setting.trigger_color === undefined || setting.trigger_color === null || setting.trigger_color === '') ? `linear-gradient(140deg, ${setting.button_login_bg} 40%, #000 200%)` : setting.trigger_color,
       },
       button: {
-        enabled: (setting.button_enabled === undefined || setting.button_enabled == null || setting.button_enabled === '')? true : setting.button_enabled,
+        // tslint:disable-next-line:max-line-length
+        enabled: (setting.button_enabled === undefined || setting.button_enabled == null || setting.button_enabled === '') ? true : setting.button_enabled,
         label: setting.login_text,
         colorText: `${setting.button_login_color}`,
         colorButtonBg: `linear-gradient(140deg, ${setting.button_login_bg} 40%, #000 200%)`

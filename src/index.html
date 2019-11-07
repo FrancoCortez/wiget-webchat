@@ -19,9 +19,9 @@
 <app-widget-root did="afphabitat@WC" remote="true"></app-widget-root>
 <script>
     widget = document.querySelector('app-widget-root');
-    document.addEventListener('DOMContentLoaded', function () {
-        widget.init();
-    });
+    window.addEventListener('load', function() {
+        document.querySelector('app-widget-root').init();
+    })
 </script>
 </body>
 </html>

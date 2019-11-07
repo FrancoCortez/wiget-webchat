@@ -26,8 +26,8 @@ import 'classlist.js'; // Run `npm install --save classlist.js`.
  * Standard animation support in Angular DOES NOT require any polyfills (as of Angular 6.0).
  */
 import 'web-animations-js'; // Run `npm install --save web-animations-js`.
-import 'core-js/es/reflect';
 import 'zone.js/dist/zone'; // Included with Angular CLI.
+import 'core-js/es6/reflect';
 import '@webcomponents/custom-elements/src/native-shim';
 import '@webcomponents/custom-elements/custom-elements.min';
 /**

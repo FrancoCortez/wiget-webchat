@@ -12,7 +12,7 @@ import {InputComponent} from '../../components/input/input.component';
 export class OnlyNumberDirective {
 
   @Input('soloNumberActive') active: boolean;
-  private regex: RegExp = new RegExp(/^\D$/);
+  private regex: RegExp = new RegExp(/^\D+$/);
   private specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home'];
 
 

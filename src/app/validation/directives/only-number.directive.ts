@@ -25,7 +25,7 @@ export class OnlyNumberDirective {
       if (this.specialKeys.indexOf(event.key) !== -1) {
         return;
       }
-      let next: string = event.key;
+      const next: string = event.key;
       if (next && next.match(this.regex)) {
         event.returnValue = false;
         event.stopImmediatePropagation();
@@ -39,7 +39,7 @@ export class OnlyNumberDirective {
   @HostListener('blur', ['$event'])
   onBlur(event: any) {
     if (this.active) {
-      let next: string = this.el.nativeElement.value;
+      const next: string = this.el.nativeElement.value;
       if (next && next.match(this.regex)) {
         event.returnValue = false;
         event.stopImmediatePropagation();

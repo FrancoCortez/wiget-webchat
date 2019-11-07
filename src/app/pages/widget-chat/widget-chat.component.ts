@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ConversationSelector, RootStoreState} from '../../store';
 import {MessageUiModel} from '../../models/ui-model/message.ui.model';
@@ -16,8 +16,7 @@ export class WidgetChatComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChildren('elementConversation') elementAgent: QueryList<any>;
   private conversationObserve: Subscription = new Subscription();
 
-  constructor(private readonly store: Store<RootStoreState.AppState>,
-              private changeDetector: ChangeDetectorRef) {
+  constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 
   ngAfterViewInit(): void {

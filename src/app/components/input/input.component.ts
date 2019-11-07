@@ -53,7 +53,7 @@ export class InputComponent implements OnInit, OnDestroy {
           const validation: any = this.addValidationToControl(row);
           row.id = `input_${count}`;
           row.soloRut = this.soloRut;
-          this.form.addControl(row.id, new FormControl('', {validators: validation, updateOn: "blur"}
+          this.form.addControl(row.id, new FormControl('', {validators: validation, updateOn: "change"}
           ));
           if (row.choices !== undefined && row.choices.length > 0) {
             this.form.controls[row.id].setValue(row.choices[0]);
@@ -73,7 +73,6 @@ export class InputComponent implements OnInit, OnDestroy {
     const validation: any = [];
     validation.push((row.validation !== undefined) ? validationGeneric(row.validation) : validationOfNull);
     validation.push((row.required !== undefined && row.required !== false && row.required !== null) ? Validators.required : validationOfNull);
-
     if (row.max !== undefined && row.max !== null) {
       if (typeof row.max === 'number') {
         (row.soloNumber) ? validation.push(Validators.maxLength(row.max)) : validation.push(Validators.maxLength(row.max));

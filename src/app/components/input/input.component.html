@@ -6,7 +6,7 @@
             formControlName="input_{{i}}">
     <option *ngFor="let sel of item.choices">{{sel}}</option>
   </select>
-    <input *ngIf="item.choices === null || item.choices === undefined"
+    <input  *ngIf="item.choices === null || item.choices === undefined"
            [form]="form"
            [ngClass]="{'c-input--error': loginState && (form.getError('messageValidation', [('input_' + i)]) || form.getError('required', [('input_' + i)]))}" [placeholder]="item.placeholder"
            [soloNumberActive]="item.soloNumber" [soloRutActive]="item.soloRut"

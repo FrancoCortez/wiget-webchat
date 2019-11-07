@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {
   ConfigAction,
@@ -48,7 +48,7 @@ export class ButtonComponent implements OnInit, OnDestroy {
   question = '';
   private config?: ConfigUiModel;
 
-  constructor(private readonly store: Store<RootStoreState.AppState>, private cd: ChangeDetectorRef) {
+  constructor(private readonly store: Store<RootStoreState.AppState>) {
 
   }
 

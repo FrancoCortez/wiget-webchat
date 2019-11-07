@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {
   ConfigAction,
@@ -34,8 +34,7 @@ export class AppComponent implements OnInit {
   @Input() remote: boolean;
 
   constructor(private readonly store: Store<RootStoreState.AppState>,
-              private readonly configService: ConfigService,
-              private cd: ChangeDetectorRef) {
+              private readonly configService: ConfigService) {
     this.store.pipe(select(InitWebChatSelector.selectIsTrigger)).subscribe(resp => this.triggerHidden = resp);
     this.store.pipe(select(InitWebChatSelector.selectIsOpen))
       .subscribe(resp => {

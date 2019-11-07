@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {InitWebChatSelector, RootStoreState, RouterSelector} from "../../store";
 import {Subscription} from "rxjs";
@@ -26,13 +26,10 @@ export class ContainerLoginComponent implements OnInit, OnDestroy {
   selectConfigOpen: Subscription = new Subscription();
   selectFinishOpen: Subscription = new Subscription();
 
-  constructor(private readonly store: Store<RootStoreState.AppState>,
-              private cd: ChangeDetectorRef) {
+  constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 
   ngOnDestroy(): void {
-    this.cd.checkNoChanges();
-    this.cd.detach();
     this.selectIsOpen.unsubscribe();
     this.selectIsTrigger.unsubscribe();
     this.selectLoginOpen.unsubscribe();
@@ -43,7 +40,6 @@ export class ContainerLoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.cd.reattach();
     this.selectIsOpen = this.store.pipe(select(InitWebChatSelector.selectIsOpen))
       .subscribe(resp => {
         this.toggles = resp;

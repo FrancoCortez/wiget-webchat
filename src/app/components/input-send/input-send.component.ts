@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ConfigSelector, ConversationAction, LoginSelector, RootStoreState} from '../../store';
 import {MessageUiModel} from '../../models/ui-model/message.ui.model';
@@ -67,8 +67,7 @@ export class InputSendComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private readonly store: Store<RootStoreState.AppState>,
               private readonly format: FormatService,
-              private readonly uploadFileClient: UploadFileClient,
-              private cd: ChangeDetectorRef) {
+              private readonly uploadFileClient: UploadFileClient) {
 
   }
 

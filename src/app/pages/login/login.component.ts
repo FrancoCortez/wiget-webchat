@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {
   ConfigSelector,
@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   selectConfig: Subscription = new Subscription();
   selectLoading: Subscription = new Subscription();
 
-  constructor(private readonly store: Store<RootStoreState.AppState>, private cd: ChangeDetectorRef) {
+  constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 
   ngOnDestroy(): void {
@@ -85,6 +85,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public login() {
     this.store.dispatch(LoginAction.loginState({payload: true}));
     this.form = this.inputComponentReferent.form;
+    console.log(this.form);
     if (this.form.valid) {
       this.store.pipe(select(ConfigSelector.selectConfig))
         .pipe(map(input => input.input))

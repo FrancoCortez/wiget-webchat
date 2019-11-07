@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ConfigSelector, ConversationAction, InitWebChatSelector, RootStoreState, RouterSelector} from '../../store';
 import {filter} from 'rxjs/operators';
@@ -40,8 +40,7 @@ export class ContainerWidgetComponent implements OnInit, OnDestroy {
   selectConfigOpen: Subscription = new Subscription();
   selectFinish: Subscription = new Subscription();
 
-  constructor(private readonly store: Store<RootStoreState.AppState>,
-              private cd: ChangeDetectorRef) {
+  constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 
   ngOnDestroy(): void {

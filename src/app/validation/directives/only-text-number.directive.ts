@@ -20,7 +20,8 @@ export class OnlyTextNumberDirective {
       }
       let current: string = this.el.nativeElement.value;
       let next: string = current.concat(event.key);
-      if (next && !String(next).match(this.regex)) {
+      if (next && !String(next).match(this.regex) && String(next).match(this.regex) === null) {
+        this.el.nativeElement.value = current.substring(0, current.length -1);
         event.preventDefault();
       }
     }

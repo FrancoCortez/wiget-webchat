@@ -25,4 +25,6 @@ export const activateSound = createAction('[activateSound] activate sound', prop
 
 export const addAgentMessage = createAction('[addAgentMessage] addAgentMessage', props<{ payload: string }>());
 
-export const loadMessages = createAction('[loaddMessages] load messages', props<{ payload: any }>());
+export const loadMessages = createAction('[loadMessages] load messages', props<{ payload: any }>());
+
+

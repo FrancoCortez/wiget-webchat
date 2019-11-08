@@ -11,6 +11,7 @@ import {PickerModule} from '@ctrl/ngx-emoji-mart';
 import {EmojiModule} from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import {ButtonComponent} from './button/button.component';
 import {ContainerLoginComponent} from './container-login/container-login.component';
+import {FinishComponent} from './finish/finish.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {ContainerLoginComponent} from './container-login/container-login.compone
     ContainerWidgetComponent,
     ValidateHtmlPipe,
     ButtonComponent,
-    ContainerLoginComponent
+    ContainerLoginComponent,
+    FinishComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +37,8 @@ import {ContainerLoginComponent} from './container-login/container-login.compone
     ContainerWidgetComponent,
     ValidateHtmlPipe,
     ButtonComponent,
-    ContainerLoginComponent
+    ContainerLoginComponent,
+    FinishComponent
   ]
 })
 export class PagesModule {

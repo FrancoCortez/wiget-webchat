@@ -33,7 +33,7 @@ export class SocketClient {
     );
   }
 
-  public getLeaveAgentChat (): Observable<any> {
+  public getLeaveAgentChat(): Observable<any> {
     return this.socket.listen(environment.leaveAgentChat).pipe(
       map(data => data)
     )

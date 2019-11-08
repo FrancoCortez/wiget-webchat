@@ -83,5 +83,4 @@ export class WidgetChatComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
   }
-
 }

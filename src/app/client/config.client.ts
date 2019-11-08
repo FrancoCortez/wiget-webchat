@@ -9,7 +9,8 @@ import {environment} from "../../environments/environment";
 })
 export class ConfigClient {
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {
+  }
 
   public getConfig(did): Observable<any> {
     did = did.toLowerCase();

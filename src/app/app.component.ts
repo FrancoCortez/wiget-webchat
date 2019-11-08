@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {
   ConfigAction,
@@ -15,8 +15,8 @@ import {InputUiModel} from './models/ui-model/input.ui-model';
 import {delay, filter} from 'rxjs/operators';
 import {MessageDto} from './models/message/message.dto';
 import {v4 as uuid} from 'uuid';
-import {ButtonOptionUiModel} from "./models/ui-model/button-option.ui-model";
-import {ConfigService} from "./services/config.service";
+import {ButtonOptionUiModel} from './models/ui-model/button-option.ui-model';
+import {ConfigService} from './services/config.service';
 
 
 @Component({
@@ -34,8 +34,7 @@ export class AppComponent implements OnInit {
   @Input() remote: boolean;
 
   constructor(private readonly store: Store<RootStoreState.AppState>,
-              private readonly configService: ConfigService,
-              private cd: ChangeDetectorRef) {
+              private readonly configService: ConfigService) {
     this.store.pipe(select(InitWebChatSelector.selectIsTrigger)).subscribe(resp => this.triggerHidden = resp);
     this.store.pipe(select(InitWebChatSelector.selectIsOpen))
       .subscribe(resp => {
@@ -44,7 +43,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.remote) {
+    console.log('Version: 1.0.0');
+    if (this.remote) {
       this.initConfigRemote();
     } else {
       this.initConfigLocal();
@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
     this.store.pipe(select(ConfigSelector.selectConfig),
       delay(1000),
       filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory),
-      )
+    )
       .subscribe(resp => {
         this.store.subscribe(state => {
           localStorage.setItem('state', JSON.stringify(state));
@@ -108,7 +108,7 @@ export class AppComponent implements OnInit {
   /**
    * LocalConfig
    */
-  private initConfigLocal () {
+  private initConfigLocal() {
     const reviver = (key, value) => {
       if (typeof value === 'string'
         && value.indexOf('function ') === 0) {
@@ -126,6 +126,85 @@ export class AppComponent implements OnInit {
    */
   private initConfigRemote() {
     this.configService.getConfig(this.did).subscribe(resp => {
+      // resp = JSON.parse('{ \n' +
+      //   '   'agent_name_enabled':false,\n' +
+      //   '   'bg_menu':'#1f1f1f',\n' +
+      //   '   'button_enabled':true,\n' +
+      //   '   'trigger_image':'./assets/robot.gif',\n' +
+      //   '   'button_login_bg':'#c1012a',\n' +
+      //   '   'button_login_color':'white',\n' +
+      //   '   'caption_subtitle':'Estaremos gustosos de atender tus dudasconsultas.',\n' +
+      //   '   'caption_subtitle_color':'#424243',\n' +
+      //   '   'caption_title':'Inicia una conversación',\n' +
+      //   '   'caption_title_color':'#424243',\n' +
+      //   '   'field_font_color':'#424243',\n' +
+      //   '   'geo_active':true,\n' +
+      //   '   'header_background_color':'#c1012a',\n' +
+      //   '   'header_font_color':'#ffffff',\n' +
+      //   '   'header_status':'En linea',\n' +
+      //   '   'header_text':'AFP Habitat',\n' +
+      //   '   'init_button_prefer':[ \n' +
+      //   '      { \n' +
+      //   '         'button_bg':'#c1012a',\n' +
+      //   '         'button_color':'#ffffff',\n' +
+      //   '         'button_enabled':true,\n' +
+      //   '         'button_login_field':[ \n' +
+      //   '            { \n' +
+      //   '               'label':'Nombre',\n' +
+      //   '               'placeholder':'Ingrese su nombre',\n' +
+      //   '               'required':true\n' +
+      //   '            },\n' +
+      //   '           { \n' +
+      //   '               'label':'(DNI o Carnet de extrangeria) o RUC',\n' +
+      //   '               'placeholder':'CD/DNI',\n' +
+      //   '               'required':true\n' +
+      //   '            }\n' +
+      //   '         ],\n' +
+      //   '         'button_text':'Personas'\n' +
+      //   '      },\n' +
+      //   '      { \n' +
+      //   '         'button_bg':'#c1012a',\n' +
+      //   '         'button_color':'#ffffff',\n' +
+      //   '         'button_enabled':true,\n' +
+      //   '         'button_login_field':[ \n' +
+      //   '            { \n' +
+      //   '               'label':'Nombre',\n' +
+      //   '               'placeholder':'Ingrese el nombre de la empresa',\n' +
+      //   '               'required':true,\n' +
+      //   '               'min': {'value': 3, 'message':'Mensaje de prueba de min value 3'},\n' +
+      //   '               'max': {'value': 30, 'message':'Mensaje de prueba de max value 30'},\n' +
+      //   '               'defaultValidation': ['text']\n' +
+      //   '            },\n' +
+      //   '            { \n' +
+      //   '               'label':'Ruc',\n' +
+      //   '               'placeholder':'Ingrese el RUC de la empresa',\n' +
+      //   '               'required':true,\n' +
+      //   '               'min': {'value': 3, 'message':'Mensaje de prueba de min value 3'},\n' +
+      //   '               'max': {'value': 30, 'message':'Mensaje de prueba de max value 30'},\n' +
+      //   '               'defaultValidation': ['rut']\n' +
+      //   '            }\n' +
+      //   '         ],\n' +
+      //   '         'button_text':'Empresa'\n' +
+      //   '      }\n' +
+      //   '   ],\n' +
+      //   '   'locale':'es',\n' +
+      //   '   'login_text':'Iniciar sesión',\n' +
+      //   '   'logo':'https://media.licdn.com/dms/image/C4D0BAQGLbj7ukxdRbQ/company-logo_200_200/0?e=2159024400&v=beta&t=5kKwP6K_Bd89lEHYa57va1-T3EgbBri-eYLGrN26h7g',\n' +
+      //   '   'message_placeholder':'Escriba un mensaje...',\n' +
+      //   '   'preserve_history':true,\n' +
+      //   '   'send_color':'#cb1e74',\n' +
+      //   '   'subtitle_color':'#ffffff',\n' +
+      //   '   'team_enabled':false,\n' +
+      //   '   'user_field':[ \n' +
+      //   '      '(DNI o Carnet de extrangeria) o RUC',\n' +
+      //   '      'Ruc'\n' +
+      //   '   ],\n' +
+      //   '   'name_field':[ \n' +
+      //   '      'Nombre'\n' +
+      //   '   ],\n' +
+      //   '   'welcome_color':'#ffffff',\n' +
+      //   '   'welcome_text':'Bienvenido al chat de AFP Habitat'\n' +
+      //   '}');
       this.generateConfig(resp);
     });
   }
@@ -134,8 +213,14 @@ export class AppComponent implements OnInit {
     this.configUi = {
       did: this.did,
       showTeam: setting.team_enabled,
+      trigger: {
+        src: setting.trigger_image,
+        // tslint:disable-next-line:max-line-length
+        backgroundColor: (setting.trigger_color === undefined || setting.trigger_color === null || setting.trigger_color === '') ? `linear-gradient(140deg, ${setting.button_login_bg} 40%, #000 200%)` : setting.trigger_color,
+      },
       button: {
-        enabled: setting.button_enabled,
+        // tslint:disable-next-line:max-line-length
+        enabled: (setting.button_enabled === undefined || setting.button_enabled == null || setting.button_enabled === '') ? true : setting.button_enabled,
         label: setting.login_text,
         colorText: `${setting.button_login_color}`,
         colorButtonBg: `linear-gradient(140deg, ${setting.button_login_bg} 40%, #000 200%)`
@@ -172,13 +257,17 @@ export class AppComponent implements OnInit {
       preserveHistory: setting.preserve_history,
       geoActive: setting.geo_active,
       bgMenu: setting.bg_menu,
-      question: setting.question,
+      question: setting.question
     };
+    this.configInput(setting);
+    this.store.dispatch(ConfigAction.loadConfig({payload: this.configUi}));
+  }
+
+  private configInput(setting: any) {
     if (setting.init_button_prefer !== undefined && setting.init_button_prefer !== null) {
       const buttonConfigLogin: ButtonOptionUiModel[] = [];
       setting.init_button_prefer.forEach(button => {
         const obj: ButtonOptionUiModel = {
-          // colorButtonBg: button.button_bg,
           colorButtonBg: `linear-gradient(140deg, ${button.button_bg} 40%, #000 200%)`,
           colorText: button.button_color,
           label: button.button_text,
@@ -186,24 +275,7 @@ export class AppComponent implements OnInit {
         };
         const formInput: InputUiModel[] = [];
         button.button_login_field.forEach(row => {
-          const input: InputUiModel = {};
-          input.fontColor = setting.field_font_color;
-          if (typeof row === 'string') {
-            (row === setting.user_field) ? input.userField = true : input.userField = false;
-            (row === setting.name_field) ? input.nameField = true : input.nameField = false;
-            input.label = row;
-            input.required = false;
-            input.placeholder = row;
-          } else {
-            (row.label === setting.user_field) ? input.userField = true : input.userField = false;
-            (row.label === setting.name_field) ? input.nameField = true : input.nameField = false;
-            input.label = row.label;
-            input.required = (row.required === undefined) ? false : row.required;
-            input.choices = row.choices;
-            input.validation = row.validation;
-            input.placeholder = (row.placeholder === undefined || row.placeholder === null) ? row.label : row.placeholder;
-          }
-          formInput.push(input);
+          formInput.push(this.assignmentInput(row, setting));
         });
         obj.input = formInput;
         buttonConfigLogin.push(obj);
@@ -211,36 +283,91 @@ export class AppComponent implements OnInit {
       this.configUi.buttonPrefer = buttonConfigLogin;
       this.store.dispatch(RouterAction.initFirstButton());
       this.store.dispatch(RouterAction.buttonLogin());
+      //TODO Temp para probar nueva pagina
+      //this.store.dispatch(RouterAction.configOpen());
+      //this.store.dispatch(RouterAction.finish());
     } else {
       const formInput: InputUiModel[] = [];
       setting.login_fields.forEach(row => {
-        const input: InputUiModel = {};
-        input.fontColor = setting.field_font_color;
-        if (typeof row === 'string') {
-          (row === setting.user_field) ? input.userField = true : input.userField = false;
-          (row === setting.name_field) ? input.nameField = true : input.nameField = false;
-          input.label = row;
-          input.required = false;
-          input.placeholder = row;
-        } else {
-          (row.label === setting.user_field) ? input.userField = true : input.userField = false;
-          (row.label === setting.name_field) ? input.nameField = true : input.nameField = false;
-          input.label = row.label;
-          input.required = (row.required === undefined) ? false : row.required;
-          input.choices = row.choices;
-          input.validation = row.validation;
-          input.placeholder = (row.placeholder === undefined || row.placeholder === null) ? row.label : row.placeholder;
-        }
-        formInput.push(input);
+        formInput.push(this.assignmentInput(row, setting));
       });
       this.configUi.input = formInput;
       this.store.dispatch(RouterAction.initFirstLogin());
       this.store.dispatch(RouterAction.loginOpen());
+      //TODO Temp para probar nueva pagina
+      // this.store.dispatch(RouterAction.configOpen());
     }
-    // this.configUi.input = formInput;
-    this.store.dispatch(ConfigAction.loadConfig({payload: this.configUi}));
-    this.cd.detectChanges();
-    this.cd.markForCheck();
   }
 
+  private assignmentInput(row: any, setting: any): InputUiModel {
+    const input: InputUiModel = {};
+    input.fontColor = setting.field_font_color;
+    if (typeof row === 'string') {
+      if (setting.user_field instanceof Array) {
+        setting.user_field.forEach(field => {
+          if (row === field) input.userField = true;
+        });
+      } else {
+        if (row === setting.user_field) input.userField = true;
+      }
+      if (setting.user_name instanceof Array) {
+        setting.user_name.forEach(field => {
+          if (row === field) input.nameField = true;
+        });
+      } else {
+        if (row === setting.name_field) input.nameField = true;
+      }
+      input.label = row;
+      input.required = false;
+      input.placeholder = row;
+      input.soloTextAndNumber = false;
+      input.soloNumber = false;
+      input.soloText = false;
+      input.defaultValidation = [];
+    } else {
+      if (setting.user_field instanceof Array) {
+        setting.user_field.forEach(field => {
+          if (row.label === field) input.userField = true;
+        });
+      } else {
+        if (row.label === setting.user_field) input.userField = true;
+      }
+      if (setting.name_field instanceof Array) {
+        setting.name_field.forEach(field => {
+          if (row.label === field) input.nameField = true;
+        });
+      } else {
+        if (row.label === setting.name_field) input.nameField = true;
+      }
+      input.label = row.label;
+      input.required = (row.required === undefined) ? false : row.required;
+      input.choices = row.choices;
+      input.validation = row.validation;
+      input.placeholder = (row.placeholder === undefined || row.placeholder === null) ? row.label : row.placeholder;
+      input.defaultValidation = (row.defaultValidation === undefined || row.defaultValidation === null) ? [] : row.defaultValidation
+      input.min = row.min;
+      input.max = row.max;
+      const typeText = (row.type === undefined || row.type === null) ? null : row.type;
+      switch (typeText) {
+        case 'text': {
+          input.soloText = true;
+          break;
+        }
+        case 'number': {
+          input.soloNumber = true;
+          break;
+        }
+        case 'text_number': {
+          input.soloTextAndNumber = true;
+          break;
+        }
+        default: {
+          input.soloTextAndNumber = false;
+          input.soloNumber = false;
+          input.soloText = false;
+        }
+      }
+    }
+    return input;
+  }
 }

@@ -18,5 +18,4 @@ export const environment = {
 
   configProfile: 'production',
   configPath: 'https://k8s.chattigo.com/config'
-
 };

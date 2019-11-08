@@ -19,15 +19,17 @@
  */
 
 /** IE10 and IE11 requires the following for NgClass support on SVG elements */
-import 'classlist.js';  // Run `npm install --save classlist.js`.
-
+import 'classlist.js'; // Run `npm install --save classlist.js`.
 /**
  * Web Animations `@angular/platform-browser/animations`
  * Only required if AnimationBuilder is used within the application and using IE/Edge or Safari.
  * Standard animation support in Angular DOES NOT require any polyfills (as of Angular 6.0).
  */
-import 'web-animations-js';  // Run `npm install --save web-animations-js`.
-import 'core-js/es/reflect';
+import 'web-animations-js'; // Run `npm install --save web-animations-js`.
+import 'zone.js/dist/zone'; // Included with Angular CLI.
+import 'core-js/es6/reflect';
+import '@webcomponents/custom-elements/src/native-shim';
+import '@webcomponents/custom-elements/custom-elements.min';
 /**
  * By default, zone.js will patch all possible macroTask and DomEvents
  * user can disable parts of macroTask/DomEvents patch by setting following flags
@@ -56,12 +58,6 @@ import 'core-js/es/reflect';
  * Zone JS is required by default for Angular itself.
  */
 
-import 'zone.js/dist/zone'; // Included with Angular CLI.
-import '@webcomponents/custom-elements/src/native-shim';
-import '@webcomponents/custom-elements/custom-elements.min';
-
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
-
-import 'web-animations-js';

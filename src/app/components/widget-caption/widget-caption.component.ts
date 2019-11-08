@@ -21,6 +21,7 @@ export class WidgetCaptionComponent implements OnInit, OnDestroy {
   selectConfig: Subscription = new Subscription();
   selectLoginOpen: Subscription = new Subscription();
   selectFirstPage: Subscription = new Subscription();
+
   constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 

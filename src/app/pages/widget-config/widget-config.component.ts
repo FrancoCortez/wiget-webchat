@@ -17,6 +17,7 @@ export class WidgetConfigComponent implements OnInit, OnDestroy {
 
   selectChatSound: Subscription = new Subscription();
   selectConfig: Subscription = new Subscription();
+
   constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 

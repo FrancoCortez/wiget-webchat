@@ -17,7 +17,10 @@ export class TeamComponent implements OnInit, OnDestroy {
   did = '';
   selectDid: Subscription = new Subscription();
   selectTeam: Subscription = new Subscription();
-  constructor(private readonly store: Store<RootStoreState.AppState>, public teamService: TeamService) {}
+
+  constructor(private readonly store: Store<RootStoreState.AppState>, public teamService: TeamService) {
+  }
+
   ngOnDestroy(): void {
     this.selectDid.unsubscribe();
     this.selectTeam.unsubscribe();

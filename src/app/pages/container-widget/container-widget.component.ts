@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ConfigSelector, ConversationAction, InitWebChatSelector, RootStoreState, RouterSelector} from '../../store';
 import {filter} from 'rxjs/operators';
@@ -33,25 +33,30 @@ export class ContainerWidgetComponent implements OnInit, OnDestroy {
   public hidden = false;
   public widgetOpen = true;
   public configOpen = false;
+  public finish = false;
 
   selectIsOpen: Subscription = new Subscription();
   selectWidgetOpen: Subscription = new Subscription();
   selectConfigOpen: Subscription = new Subscription();
-  selectConfig: Subscription = new Subscription();
+  selectFinish: Subscription = new Subscription();
 
-  constructor(private readonly store: Store<RootStoreState.AppState>,
-              private cd: ChangeDetectorRef) {
+  constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 
   ngOnDestroy(): void {
     this.selectIsOpen.unsubscribe();
     this.selectWidgetOpen.unsubscribe();
     this.selectConfigOpen.unsubscribe();
-    this.selectConfig.unsubscribe();
+    this.selectFinish.unsubscribe();
   }
 
   ngOnInit() {
     this.store.dispatch(ConversationAction.getMessage());
+    this.selectFinish = this.store.pipe(select(RouterSelector.selectFinish))
+      .pipe(filter(fill => fill !== null && fill !== undefined))
+      .subscribe(resp => {
+        this.finish = resp;
+      });
     this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
       .subscribe(resp => {
         this.store.subscribe(state => {
@@ -61,22 +66,16 @@ export class ContainerWidgetComponent implements OnInit, OnDestroy {
     this.selectIsOpen = this.store.pipe(select(InitWebChatSelector.selectIsOpen))
       .subscribe(resp => {
         this.hidden = !resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
     this.selectWidgetOpen = this.store.pipe(select(RouterSelector.selectWidgetOpen))
       .pipe(filter(fill => fill !== null && fill !== undefined))
       .subscribe(resp => {
         this.widgetOpen = resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
     this.selectConfigOpen = this.store.pipe(select(RouterSelector.selectConfigOpen))
       .pipe(filter(fill => fill !== null && fill !== undefined))
       .subscribe(resp => {
         this.configOpen = resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
   }
 }

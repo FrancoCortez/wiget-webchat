@@ -9,21 +9,24 @@ const featureReducer = createReducer(
     login: true,
     widget: false,
     button: false,
-    config: false
+    config: false,
+    finish: false,
   })),
   on(featureActions.widgetOpen, (state) => ({
     ...state,
     login: false,
     widget: true,
     button: false,
-    config: false
+    config: false,
+    finish: false,
   })),
   on(featureActions.configOpen, (state) => ({
     ...state,
     login: false,
     button: false,
     widget: false,
-    config: true
+    config: true,
+    finish: false,
   })),
   on(featureActions.buttonLogin, (state) => ({
     ...state,
@@ -31,6 +34,15 @@ const featureReducer = createReducer(
     widget: false,
     config: false,
     button: true,
+    finish: false,
+  })),
+  on(featureActions.finish, (state) => ({
+    ...state,
+    login: false,
+    widget: false,
+    config: false,
+    button: false,
+    finish: true,
   })),
   on(featureActions.loadRouter, (state, {payload}) => ({
     ...state,
@@ -38,6 +50,7 @@ const featureReducer = createReducer(
     widget: payload.widget,
     config: payload.config,
     button: payload.button,
+    finish: payload.finish,
   })),
   on(featureActions.initFirstLogin, (state) => ({
     ...state,

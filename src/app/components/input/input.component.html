@@ -2,12 +2,20 @@
   <span *ngFor="let item of inputConfig; index as i">
     <label [ngStyle]="{'color': item.fontColor}" class="c-input-label">{{item.label}} <span
       *ngIf="item.required">*</span></label>
-    <select *ngIf="item.choices !== undefined && item.choices.length > 0" class="c-input" formControlName="input_{{i}}">
+    <select *ngIf="item.choices !== undefined && item.choices.length > 0" class="c-select"
+            formControlName="input_{{i}}">
     <option *ngFor="let sel of item.choices">{{sel}}</option>
   </select>
-    <input *ngIf="item.choices === null || item.choices === undefined "
-           [ngClass]="{'c-input--error': loginState && (form.getError('messageValidation', [('input_' + i)]) || form.getError('required', [('input_' + i)]))}"
-           [placeholder]="item.placeholder"
+    <input  *ngIf="item.choices === null || item.choices === undefined"
+           [form]="form"
+           [ngClass]="{'c-input--error': loginState && (form.getError('messageValidation', [('input_' + i)]) || form.getError('required', [('input_' + i)]))}" [placeholder]="item.placeholder"
+           [soloNumberActive]="item.soloNumber" [soloRutActive]="item.soloRut"
+           [soloTextActive]="item.soloText"
+           [soloTextNumberActive]="item.soloTextAndNumber"
+           appOnlyNumber
+           appOnlyRut
+           appOnlyText
+           appOnlyTextNumber
            class="c-input"
            formControlName="input_{{i}}"
            type="text"/>
@@ -15,8 +23,29 @@
        class="c-input__error-message">
       {{ error }}
     </p>
-    <p *ngIf="loginState && form.getError('required', [('input_' + i)]) as error" class="c-input__error-message">
+    <p *ngIf="loginState && form.get('input_' + i).errors?.required"
+       class="c-input__error-message">
       El campo {{item.label}} es obligatorio
+    </p>
+    <p *ngIf="loginState && form.get('input_' + i).errors?.email"
+       class="c-input__error-message">
+       {{this.addErrorControl('email').msg}}
+    </p>
+    <p *ngIf="loginState && form.get('input_' + i).errors?.rut"
+       class="c-input__error-message">
+       {{this.addErrorControl('rut').msg}}
+    </p>
+    <p *ngIf="loginState && form.get('input_' + i).errors?.url"
+       class="c-input__error-message">
+       {{this.addErrorControl('url').msg}}
+    </p>
+    <p *ngIf="loginState && form.get('input_' + i).errors?.maxlength"
+       class="c-input__error-message">
+      {{this.addErrorControl('maxlength').msg}}
+    </p>
+    <p *ngIf="loginState && form.get('input_' + i).errors?.minlength"
+       class="c-input__error-message">
+      {{this.addErrorControl('minlength').msg}}
     </p>
   </span>
 </form>

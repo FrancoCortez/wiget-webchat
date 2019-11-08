@@ -10,6 +10,10 @@ import {WidgetCaptionComponent} from './widget-caption/widget-caption.component'
 import {HeaderWidgetComponent} from './header-widget/header-widget.component';
 import {InputSendComponent} from './input-send/input-send.component';
 import {PickerModule} from '@ctrl/ngx-emoji-mart';
+import {OnlyNumberDirective} from "../validation/directives/only-number.directive";
+import {OnlyTextDirective} from "../validation/directives/only-text.directive";
+import {OnlyTextNumberDirective} from "../validation/directives/only-text-number.directive";
+import {OnlyRutDirective} from "../validation/directives/only-rut.directive";
 
 @NgModule({
   declarations: [
@@ -20,12 +24,16 @@ import {PickerModule} from '@ctrl/ngx-emoji-mart';
     HeaderComponent,
     WidgetCaptionComponent,
     HeaderWidgetComponent,
-    InputSendComponent
+    InputSendComponent,
+    OnlyNumberDirective,
+    OnlyTextDirective,
+    OnlyTextNumberDirective,
+    OnlyRutDirective,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    PickerModule
+    PickerModule,
   ],
   exports: [
     InputComponent,
@@ -35,7 +43,11 @@ import {PickerModule} from '@ctrl/ngx-emoji-mart';
     HeaderComponent,
     WidgetCaptionComponent,
     HeaderWidgetComponent,
-    InputSendComponent
+    InputSendComponent,
+    OnlyNumberDirective,
+    OnlyTextDirective,
+    OnlyTextNumberDirective,
+    OnlyRutDirective,
   ]
 })
 export class ComponentsModule {

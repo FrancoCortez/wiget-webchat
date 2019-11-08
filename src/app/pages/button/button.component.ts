@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {
   ConfigAction,
@@ -48,7 +48,8 @@ export class ButtonComponent implements OnInit, OnDestroy {
   question = '';
   private config?: ConfigUiModel;
 
-  constructor(private readonly store: Store<RootStoreState.AppState>, private cd: ChangeDetectorRef) {
+  constructor(private readonly store: Store<RootStoreState.AppState>) {
+
   }
 
   ngOnDestroy(): void {
@@ -60,19 +61,16 @@ export class ButtonComponent implements OnInit, OnDestroy {
     this.selectIsOpen = this.store.pipe(select(InitWebChatSelector.selectIsOpen))
       .subscribe(resp => {
         this.hidden = !resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
     this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig))
       .pipe(filter(fill => fill.caption !== undefined))
       .subscribe(resp => {
-      this.headerColor = resp.caption.headerBackgroundColor;
-      this.teamHidden = resp.showTeam;
-      this.buttonConfig = resp.buttonPrefer;
-      this.config = resp;
-      this.question = (resp.question === undefined) ? '' : resp.question;
-      this.cd.detectChanges();
-    });
+        this.headerColor = resp.caption.headerBackgroundColor;
+        this.teamHidden = resp.showTeam;
+        this.buttonConfig = resp.buttonPrefer;
+        this.config = resp;
+        this.question = (resp.question === undefined) ? '' : resp.question;
+      });
   }
 
 

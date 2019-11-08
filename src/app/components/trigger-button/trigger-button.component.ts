@@ -2,7 +2,7 @@ import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ConfigSelector, InitWebChatAction, RootStoreState} from '../../store';
 import {selectIsOpen} from '../../store/init-web-chat-store/selector';
-import {filter, map} from 'rxjs/operators';
+import {filter} from 'rxjs/operators';
 import {Subscription} from "rxjs";
 
 @Component({
@@ -17,8 +17,12 @@ export class TriggerButtonComponent implements OnInit, OnDestroy {
   selectConfig: Subscription = new Subscription();
   selectIsOpen: Subscription = new Subscription();
   backgroundColor? = '';
+  src? = '';
+  completeTriggerClass? = false;
 
-  constructor(private readonly store: Store<RootStoreState.AppState>) {  }
+  constructor(private readonly store: Store<RootStoreState.AppState>) {
+  }
+
   ngOnDestroy(): void {
     this.selectConfig.unsubscribe();
     this.selectIsOpen.unsubscribe();
@@ -35,8 +39,18 @@ export class TriggerButtonComponent implements OnInit, OnDestroy {
         }
       });
     this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig))
-      .pipe(filter(fill => fill.caption !== undefined))
-      .subscribe(resp => this.backgroundColor = resp.caption.headerBackgroundColor);
+      .pipe(filter(fill => fill.trigger !== undefined))
+      .subscribe(resp => {
+        if(resp.trigger.src === undefined || resp.trigger.src === null || resp.trigger.src === '') {
+          this.src = 'https://cdn.chattigo.com/assets/img/isotipo-grey.svg';
+          this.backgroundColor = resp.trigger.backgroundColor;
+          this.completeTriggerClass = false;
+        } else {
+          this.src = resp.trigger.src;
+          this.backgroundColor = 'none';
+          this.completeTriggerClass = true;
+        }
+      });
   }
 
   public initWebChat() {
@@ -51,5 +65,11 @@ export class TriggerButtonComponent implements OnInit, OnDestroy {
       this.mobileHidden = true;
     }
   }
+
+  public hiddenTrigger(): boolean {
+    return true;
+  }
+
+
 
 }

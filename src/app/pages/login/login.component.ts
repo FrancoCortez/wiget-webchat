@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {
   ConfigSelector,
@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   selectConfig: Subscription = new Subscription();
   selectLoading: Subscription = new Subscription();
 
-  constructor(private readonly store: Store<RootStoreState.AppState>, private cd: ChangeDetectorRef) {
+  constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
 
   ngOnDestroy(): void {
@@ -64,6 +64,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.selectIdUser.unsubscribe();
     this.selectConfig.unsubscribe();
     this.selectLoading.unsubscribe();
+    this.store.dispatch(LoginAction.loginState({payload: false}));
   }
 
   ngOnInit() {
@@ -72,15 +73,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.selectIsOpen = this.store.pipe(select(InitWebChatSelector.selectIsOpen))
       .subscribe(resp => {
         this.hidden = !resp;
-        this.cd.detectChanges();
-        this.cd.markForCheck();
       });
     this.selectConfig = this.store.pipe(select(ConfigSelector.selectConfig))
       .pipe(filter(fill => fill.caption !== undefined))
       .subscribe(resp => {
-      this.headerColor = resp.caption.headerBackgroundColor;
-      this.teamHidden = resp.showTeam;
-    });
+        this.headerColor = resp.caption.headerBackgroundColor;
+        this.teamHidden = resp.showTeam;
+      });
   }
 
   public login() {
@@ -124,9 +123,8 @@ export class LoginComponent implements OnInit, OnDestroy {
           input.forEach(row => {
             message.content += `\n ${row.label}: ${this.form.controls[row.id].value}`;
           });
-          this.store.dispatch(LoginAction.loginButtonEnabled({ payload: false}));
+          this.store.dispatch(LoginAction.loginButtonEnabled({payload: false}));
           this.store.dispatch(LoginAction.login({payload: message}));
-          // this.store.dispatch(LoginAction.loginState({payload: false}));
         });
     }
   }

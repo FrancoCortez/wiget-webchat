@@ -22,9 +22,21 @@ export const selectButtonOpen = createSelector(
   (state: State): boolean => state.button
 );
 
+export const selectFinish = createSelector(
+  selector,
+  (state: State): boolean => state.finish
+);
+
 export const selectFirstPage = createSelector(
   selector,
   (state: State): any => {
     return {button: state.firstButton, login: state.firstLogin}
+  }
+);
+
+export const selectFirstLoginState = createSelector(
+  selector,
+  (state: State): boolean => {
+    return (state.login || state.button);
   }
 );

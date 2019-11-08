@@ -43,6 +43,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('Version: 1.0.0');
     if (this.remote) {
       this.initConfigRemote();
     } else {

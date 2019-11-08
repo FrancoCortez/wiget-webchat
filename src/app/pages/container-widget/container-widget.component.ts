@@ -52,7 +52,6 @@ export class ContainerWidgetComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.store.dispatch(ConversationAction.getMessage());
-    console.log('container init');
     this.selectFinish = this.store.pipe(select(RouterSelector.selectFinish))
       .pipe(filter(fill => fill !== null && fill !== undefined))
       .subscribe(resp => {

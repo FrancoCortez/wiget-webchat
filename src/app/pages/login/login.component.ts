@@ -85,7 +85,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   public login() {
     this.store.dispatch(LoginAction.loginState({payload: true}));
     this.form = this.inputComponentReferent.form;
-    console.log(this.form);
     if (this.form.valid) {
       this.store.pipe(select(ConfigSelector.selectConfig))
         .pipe(map(input => input.input))

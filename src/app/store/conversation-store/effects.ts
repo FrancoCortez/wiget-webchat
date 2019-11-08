@@ -111,7 +111,7 @@ export class ConversationStoreEffects {
   constructor(private actions$: Actions,
               private readonly store: Store<RootStoreState.AppState>,
               private readonly messageService: MessageService) {
-    this.audio = new Audio('assets/audio/Rhea.mp3');
+    this.audio = new Audio('https://cdn.chattigo.com/assets/legacy/sounds/Rhea.mp3');
     this.store.pipe(select(ConversationSelector.selectChatSound)).subscribe(resp => this.audioEnabled = resp.soundActive);
     this.store.pipe(select(RouterSelector.selectFirstPage)).subscribe(resp => this.firstPageElection = resp);
   }

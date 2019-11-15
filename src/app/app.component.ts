@@ -126,97 +126,162 @@ export class AppComponent implements OnInit {
    */
   private initConfigRemote() {
     this.configService.getConfig(this.did).subscribe(resp => {
-      // resp = JSON.parse('{ \n' +
-      //   '   'agent_name_enabled':false,\n' +
-      //   '   'bg_menu':'#1f1f1f',\n' +
-      //   '   'button_enabled':true,\n' +
-      //   '   'trigger_image':'./assets/robot.gif',\n' +
-      //   '   'button_login_bg':'#c1012a',\n' +
-      //   '   'button_login_color':'white',\n' +
-      //   '   'caption_subtitle':'Estaremos gustosos de atender tus dudasconsultas.',\n' +
-      //   '   'caption_subtitle_color':'#424243',\n' +
-      //   '   'caption_title':'Inicia una conversación',\n' +
-      //   '   'caption_title_color':'#424243',\n' +
-      //   '   'field_font_color':'#424243',\n' +
-      //   '   'geo_active':true,\n' +
-      //   '   'header_background_color':'#c1012a',\n' +
-      //   '   'header_font_color':'#ffffff',\n' +
-      //   '   'header_status':'En linea',\n' +
-      //   '   'header_text':'AFP Habitat',\n' +
-      //   '   'init_button_prefer':[ \n' +
-      //   '      { \n' +
-      //   '         'button_bg':'#c1012a',\n' +
-      //   '         'button_color':'#ffffff',\n' +
-      //   '         'button_enabled':true,\n' +
-      //   '         'button_login_field':[ \n' +
-      //   '            { \n' +
-      //   '               'label':'Nombre',\n' +
-      //   '               'placeholder':'Ingrese su nombre',\n' +
-      //   '               'required':true\n' +
-      //   '            },\n' +
-      //   '           { \n' +
-      //   '               'label':'(DNI o Carnet de extrangeria) o RUC',\n' +
-      //   '               'placeholder':'CD/DNI',\n' +
-      //   '               'required':true\n' +
-      //   '            }\n' +
-      //   '         ],\n' +
-      //   '         'button_text':'Personas'\n' +
-      //   '      },\n' +
-      //   '      { \n' +
-      //   '         'button_bg':'#c1012a',\n' +
-      //   '         'button_color':'#ffffff',\n' +
-      //   '         'button_enabled':true,\n' +
-      //   '         'button_login_field':[ \n' +
-      //   '            { \n' +
-      //   '               'label':'Nombre',\n' +
-      //   '               'placeholder':'Ingrese el nombre de la empresa',\n' +
-      //   '               'required':true,\n' +
-      //   '               'min': {'value': 3, 'message':'Mensaje de prueba de min value 3'},\n' +
-      //   '               'max': {'value': 30, 'message':'Mensaje de prueba de max value 30'},\n' +
-      //   '               'defaultValidation': ['text']\n' +
-      //   '            },\n' +
-      //   '            { \n' +
-      //   '               'label':'Ruc',\n' +
-      //   '               'placeholder':'Ingrese el RUC de la empresa',\n' +
-      //   '               'required':true,\n' +
-      //   '               'min': {'value': 3, 'message':'Mensaje de prueba de min value 3'},\n' +
-      //   '               'max': {'value': 30, 'message':'Mensaje de prueba de max value 30'},\n' +
-      //   '               'defaultValidation': ['rut']\n' +
-      //   '            }\n' +
-      //   '         ],\n' +
-      //   '         'button_text':'Empresa'\n' +
-      //   '      }\n' +
-      //   '   ],\n' +
-      //   '   'locale':'es',\n' +
-      //   '   'login_text':'Iniciar sesión',\n' +
-      //   '   'logo':'https://media.licdn.com/dms/image/C4D0BAQGLbj7ukxdRbQ/company-logo_200_200/0?e=2159024400&v=beta&t=5kKwP6K_Bd89lEHYa57va1-T3EgbBri-eYLGrN26h7g',\n' +
-      //   '   'message_placeholder':'Escriba un mensaje...',\n' +
-      //   '   'preserve_history':true,\n' +
-      //   '   'send_color':'#cb1e74',\n' +
-      //   '   'subtitle_color':'#ffffff',\n' +
-      //   '   'team_enabled':false,\n' +
-      //   '   'user_field':[ \n' +
-      //   '      '(DNI o Carnet de extrangeria) o RUC',\n' +
-      //   '      'Ruc'\n' +
-      //   '   ],\n' +
-      //   '   'name_field':[ \n' +
-      //   '      'Nombre'\n' +
-      //   '   ],\n' +
-      //   '   'welcome_color':'#ffffff',\n' +
-      //   '   'welcome_text':'Bienvenido al chat de AFP Habitat'\n' +
+      // resp = JSON.parse('{\n' +
+      //   '  "header_text": "Toulouse Lautrec",\n' +
+      //   '  "header_status": "En linea",\n' +
+      //   '  "agent_name_enabled": true,\n' +
+      //   '  "team_enabled": true,\n' +
+      //   '  "logo": "https://cdn.chattigo.com/assets/img/isotipo-grey.svg",\n' +
+      //   '  "caption_title": "Inicia una conversación",\n' +
+      //   '  "caption_title_color": "#424243",\n' +
+      //   '  "caption_subtitle": "Estaremos gustosos de atender tus dudas o consultas.",\n' +
+      //   '  "caption_subtitle_color": "#424243",\n' +
+      //   '  "welcome_text": "Bienvenido al Chat de Toulouse Lautrec",\n' +
+      //   '  "message_placeholder": "Escriba un mensaje...",\n' +
+      //   '  "send_color": "#cb1e74",\n' +
+      //   '  "header_background_color": "#ef426f",\n' +
+      //   '  "header_background_gradient": "#440099",\n' +
+      //   '  "header_font_color": "#ffffff",\n' +
+      //   '  "locale": "es",\n' +
+      //   '  "user_field": [\n' +
+      //   '    "Teléfono"\n' +
+      //   '  ],\n' +
+      //   '  "name_field": [\n' +
+      //   '    "Nombre"\n' +
+      //   '  ],\n' +
+      //   '  "button_enabled": true,\n' +
+      //   '  "button_login_color": "white",\n' +
+      //   '  "button_login_bg": "#ef426f",\n' +
+      //   '  "login_text": "Iniciar sesión",\n' +
+      //   '  "field_font_color": "#424243",\n' +
+      //   '  "welcome_color": "#ffffff",\n' +
+      //   '  "subtitle_color": "#ffffff",\n' +
+      //   '  "preserve_history": true,\n' +
+      //   '  "bg_menu": "#1f1f1f",\n' +
+      //   '  "geo_active": true,\n' +
+      //   '  "init_button_prefer": [\n' +
+      //   '    {\n' +
+      //   '      "button_bg": "#ef426f",\n' +
+      //   '      "button_color": "#ffffff",\n' +
+      //   '      "button_text": "Carreras Profesionales",\n' +
+      //   '      "button_enabled": true,\n' +
+      //   '      "button_login_field": [\n' +
+      //   '        {\n' +
+      //   '          "label": "Nombre",\n' +
+      //   '          "placeholder": "Ingresa tu nombre",\n' +
+      //   '          "required": true,\n' +
+      //   '          "type": "text"\n' +
+      //   '        },\n' +
+      //   '        {\n' +
+      //   '          "label": "Teléfono",\n' +
+      //   '          "placeholder": "Ingresa tu teléfono",\n' +
+      //   '          "required": true,\n' +
+      //   '          "type": "number",\n' +
+      //   '          "max": 10\n' +
+      //   '        },\n' +
+      //   '        {\n' +
+      //   '          "label": "Email",\n' +
+      //   '          "placeholder": "Ingresa tu correo",\n' +
+      //   '          "required": true,\n' +
+      //   '          "defaultValidation": [\n' +
+      //   '            "email"\n' +
+      //   '          ]\n' +
+      //   '        },\n' +
+      //   '        {\n' +
+      //   '          "label": "DNI",\n' +
+      //   '          "placeholder": "Ingresa tu DNI",\n' +
+      //   '          "required": true,\n' +
+      //   '          "type": "number"\n' +
+      //   '        }\n' +
+      //   '      ]\n' +
+      //   '    },\n' +
+      //   '    {\n' +
+      //   '      "button_bg": "#ef426f",\n' +
+      //   '      "button_color": "#ffffff",\n' +
+      //   '      "button_text": "Cursos y Diplomados",\n' +
+      //   '      "button_enabled": true,\n' +
+      //   '      "button_login_field": [\n' +
+      //   '        {\n' +
+      //   '          "label": "Nombre",\n' +
+      //   '          "placeholder": "Ingresa el nombre",\n' +
+      //   '          "required": true,\n' +
+      //   '          "type": "text"\n' +
+      //   '        },\n' +
+      //   '        {\n' +
+      //   '          "label": "Teléfono",\n' +
+      //   '          "placeholder": "Ingresa tu número de teléfono",\n' +
+      //   '          "required": true,\n' +
+      //   '          "type": "number",\n' +
+      //   '          "max": 11\n' +
+      //   '        },\n' +
+      //   '        {\n' +
+      //   '          "label": "Email",\n' +
+      //   '          "placeholder": "Ingrese su correo",\n' +
+      //   '          "required": true,\n' +
+      //   '          "defaultValidation": [\n' +
+      //   '            "email"\n' +
+      //   '          ]\n' +
+      //   '        }\n' +
+      //   '      ]\n' +
+      //   '    },\n' +
+      //   '    {\n' +
+      //   '      "button_bg": "#ef426f",\n' +
+      //   '      "button_color": "#ffffff",\n' +
+      //   '      "button_text": "Atención al Estudiante",\n' +
+      //   '      "button_enabled": true,\n' +
+      //   '      "button_login_field": [\n' +
+      //   '        {\n' +
+      //   '          "label": "Nombre",\n' +
+      //   '          "placeholder": "Ingresa el nombre",\n' +
+      //   '          "required": true,\n' +
+      //   '          "type": "text"\n' +
+      //   '        },\n' +
+      //   '        {\n' +
+      //   '          "label": "Teléfono",\n' +
+      //   '          "placeholder": "Ingresa tu número de teléfono",\n' +
+      //   '          "required": true,\n' +
+      //   '          "type": "number",\n' +
+      //   '          "max": 11\n' +
+      //   '        },\n' +
+      //   '        {\n' +
+      //   '          "label": "Email",\n' +
+      //   '          "placeholder": "Ingrese su correo",\n' +
+      //   '          "required": true,\n' +
+      //   '          "defaultValidation": [\n' +
+      //   '            "email"\n' +
+      //   '          ]\n' +
+      //   '        },\n' +
+      //   '        {\n' +
+      //   '          "label": "Mensaje",\n' +
+      //   '          "placeholder": "Ingrese su primer mensaje mensaje",\n' +
+      //   '          "required": true\n' +
+      //   '        }\n' +
+      //   '      ]\n' +
+      //   '    }\n' +
+      //   '  ],\n' +
+      //   '  "trigger_color": "#440099",\n' +
+      //   '  "trigger_gradient": "#ef426f"\n' +
       //   '}');
       this.generateConfig(resp);
     });
   }
 
+
   private generateConfig(setting: any) {
+    let degTriggerGradient = [100, 10, 100];
+    if(setting.trigger_gradient === null || setting.trigger_gradient === '' || setting.trigger_gradient === undefined) degTriggerGradient = [140, 40, 200];
+    let degHeaderGradient = [140, 10, 100];
+    console.log(setting.header_background_gradient)
+    if(setting.header_background_gradient === null || setting.header_background_gradient === '' ||  setting.header_background_gradient === undefined) degHeaderGradient = [140, 40, 200];
+    setting.trigger_gradient = (setting.trigger_gradient === null || setting.trigger_gradient === '' || setting.trigger_gradient === undefined) ? '#000' : setting.trigger_gradient;
+    setting.header_background_gradient = (setting.header_background_gradient === null || setting.header_background_gradient === '' || setting.header_background_gradient === undefined) ? '#000' : setting.header_background_gradient;
     this.configUi = {
       did: this.did,
       showTeam: setting.team_enabled,
       trigger: {
         src: setting.trigger_image,
         // tslint:disable-next-line:max-line-length
-        backgroundColor: (setting.trigger_color === undefined || setting.trigger_color === null || setting.trigger_color === '') ? `linear-gradient(140deg, ${setting.button_login_bg} 40%, #000 200%)` : setting.trigger_color,
+        backgroundColor: (setting.trigger_color === undefined || setting.trigger_color === null || setting.trigger_color === '') ? `linear-gradient(140deg, ${setting.button_login_bg} 40%, #000 200%)` :  `linear-gradient(${degTriggerGradient[0]}deg, ${setting.trigger_color} ${degTriggerGradient[1]}%, ${setting.trigger_gradient} ${degTriggerGradient[2]}%)`,
       },
       button: {
         // tslint:disable-next-line:max-line-length
@@ -236,7 +301,7 @@ export class AppComponent implements OnInit {
         caption: setting.header_status,
         title: setting.header_text,
         // tslint:disable-next-line:max-line-length
-        headerBackgroundColor: `url(https://cdn.chattigo.com/assets/img/logo-wing.svg), linear-gradient(140deg, ${setting.header_background_color} 40%, #000 200%)`,
+        headerBackgroundColor: `url(https://cdn.chattigo.com/assets/img/logo-wing.svg), linear-gradient(${degTriggerGradient[0]}deg, ${setting.header_background_color} ${degTriggerGradient[1]}%, ${setting.header_background_gradient} ${degTriggerGradient[2]}%)`,
         headerFontColor: `${setting.header_font_color}`,
         agentNameEnabled: setting.agent_name_enabled,
       },

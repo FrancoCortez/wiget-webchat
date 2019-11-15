@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Version: 1.0.0');
+    console.log('Version: 1.0.1');
     if (this.remote) {
       this.initConfigRemote();
     } else {
@@ -271,7 +271,6 @@ export class AppComponent implements OnInit {
     let degTriggerGradient = [100, 10, 100];
     if(setting.trigger_gradient === null || setting.trigger_gradient === '' || setting.trigger_gradient === undefined) degTriggerGradient = [140, 40, 200];
     let degHeaderGradient = [140, 10, 100];
-    console.log(setting.header_background_gradient)
     if(setting.header_background_gradient === null || setting.header_background_gradient === '' ||  setting.header_background_gradient === undefined) degHeaderGradient = [140, 40, 200];
     setting.trigger_gradient = (setting.trigger_gradient === null || setting.trigger_gradient === '' || setting.trigger_gradient === undefined) ? '#000' : setting.trigger_gradient;
     setting.header_background_gradient = (setting.header_background_gradient === null || setting.header_background_gradient === '' || setting.header_background_gradient === undefined) ? '#000' : setting.header_background_gradient;

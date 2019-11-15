@@ -1,4 +1,4 @@
-<div class="chattigo-widget chattigo-widget--welcome" *ngIf="!hidden" [@enterAnimationFade]>
+<div *ngIf="!hidden"  class="chattigo-widget chattigo-widget--welcome">
   <a (click)="toggleClose()" class="chattigo-widget__close-icon"><span class="icon-close" style="color: white; display: block"></span></a>
   <div [ngStyle]="{'background-image': headerColor}" class="chattigo-widget-header__background"></div>
   <app-header></app-header>

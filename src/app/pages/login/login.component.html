@@ -7,11 +7,14 @@
       <app-widget-caption></app-widget-caption>
       <app-team *ngIf="teamHidden"></app-team>
     </div>
+
+    <div *ngIf="!loading" class="c-loader-bg" style="height: 100% !important;">
+      <div class="c-loader"></div>
+    </div>
+
+    <app-input></app-input>
+
     <div class="chattigo-widget-form">
-      <div *ngIf="!loading" class="c-loader-bg" style="height: 100% !important;">
-        <div class="c-loader"></div>
-      </div>
-      <app-input></app-input>
       <app-button (click)="login()"></app-button>
     </div>
   </div>

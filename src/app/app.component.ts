@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
 
   constructor(private readonly store: Store<RootStoreState.AppState>,
               private readonly configService: ConfigService) {
+    console.log('Entre al constructor')
     this.store.pipe(select(InitWebChatSelector.selectIsTrigger)).subscribe(resp => this.triggerHidden = resp);
     this.store.pipe(select(InitWebChatSelector.selectIsOpen))
       .subscribe(resp => {
@@ -64,6 +65,7 @@ export class AppComponent implements OnInit {
     this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
   };
   @Input() public toggle = () => {
+    this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
     this.store.dispatch(InitWebChatAction.open({payload: !this.toggles}));
   };
   @Input() public visibilityWC = (show: boolean) => {
@@ -71,10 +73,12 @@ export class AppComponent implements OnInit {
     this.store.dispatch(InitWebChatAction.open({payload: show}));
   };
   @Input() public expandChat = () => {
+    this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
     this.store.dispatch(InitWebChatAction.open({payload: true}));
   };
 
   @Input() public collapseChat = () => {
+    this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
     this.store.dispatch(InitWebChatAction.open({payload: false}));
   };
   @Input() public logout = () => {
@@ -97,12 +101,15 @@ export class AppComponent implements OnInit {
     this.expandChat();
   }
 
-  @Input() public initChatWithAgent = (data: string) => {
-    this.store.dispatch(InitWebChatAction.loadIdUser({payload: data}));
-    this.store.dispatch(RouterAction.loginOpen());
-    this.store.dispatch(ConversationAction.leaveChat());
-    this.init();
-    this.expandChat();
+  @Input() public initChatWithAgent = (data: any) => {
+    if(data != null && !isNaN(data)) {
+      this.store.dispatch(InitWebChatAction.loadIdUser({payload: data}));
+    }
+      this.store.dispatch(RouterAction.loginOpen());
+      this.store.dispatch(ConversationAction.leaveChat());
+      this.init();
+      this.expandChat();
+
   }
 
   /**

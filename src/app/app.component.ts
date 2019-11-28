@@ -1,4 +1,4 @@
-import { Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {
   ConfigAction,
@@ -17,6 +17,7 @@ import {MessageDto} from './models/message/message.dto';
 import {v4 as uuid} from 'uuid';
 import {ButtonOptionUiModel} from './models/ui-model/button-option.ui-model';
 import {ConfigService} from './services/config.service';
+import {SocialMediaUiModel} from "./models/ui-model/social-media.ui-model";
 
 
 @Component({
@@ -133,142 +134,170 @@ export class AppComponent implements OnInit {
    */
   private initConfigRemote() {
     this.configService.getConfig(this.did).subscribe(resp => {
-      // resp = JSON.parse('{\n' +
-      //   '  "header_text": "Toulouse Lautrec",\n' +
-      //   '  "header_status": "En linea",\n' +
-      //   '  "agent_name_enabled": true,\n' +
-      //   '  "team_enabled": true,\n' +
-      //   '  "logo": "https://cdn.chattigo.com/assets/img/isotipo-grey.svg",\n' +
-      //   '  "caption_title": "Inicia una conversación",\n' +
-      //   '  "caption_title_color": "#424243",\n' +
-      //   '  "caption_subtitle": "Estaremos gustosos de atender tus dudas o consultas.",\n' +
-      //   '  "caption_subtitle_color": "#424243",\n' +
-      //   '  "welcome_text": "Bienvenido al Chat de Toulouse Lautrec",\n' +
-      //   '  "message_placeholder": "Escriba un mensaje...",\n' +
-      //   '  "send_color": "#cb1e74",\n' +
-      //   '  "header_background_color": "#ef426f",\n' +
-      //   '  "header_background_gradient": "#440099",\n' +
-      //   '  "header_font_color": "#ffffff",\n' +
-      //   '  "locale": "es",\n' +
-      //   '  "user_field": [\n' +
-      //   '    "Teléfono"\n' +
-      //   '  ],\n' +
-      //   '  "name_field": [\n' +
-      //   '    "Nombre"\n' +
-      //   '  ],\n' +
-      //   '  "button_enabled": true,\n' +
-      //   '  "button_login_color": "white",\n' +
-      //   '  "button_login_bg": "#ef426f",\n' +
-      //   '  "login_text": "Iniciar sesión",\n' +
-      //   '  "field_font_color": "#424243",\n' +
-      //   '  "welcome_color": "#ffffff",\n' +
-      //   '  "subtitle_color": "#ffffff",\n' +
-      //   '  "preserve_history": true,\n' +
-      //   '  "bg_menu": "#1f1f1f",\n' +
-      //   '  "geo_active": true,\n' +
-      //   '  "init_button_prefer": [\n' +
-      //   '    {\n' +
-      //   '      "button_bg": "#ef426f",\n' +
-      //   '      "button_color": "#ffffff",\n' +
-      //   '      "button_text": "Carreras Profesionales",\n' +
-      //   '      "button_enabled": true,\n' +
-      //   '      "button_login_field": [\n' +
-      //   '        {\n' +
-      //   '          "label": "Nombre",\n' +
-      //   '          "placeholder": "Ingresa tu nombre",\n' +
-      //   '          "required": true,\n' +
-      //   '          "type": "text"\n' +
-      //   '        },\n' +
-      //   '        {\n' +
-      //   '          "label": "Teléfono",\n' +
-      //   '          "placeholder": "Ingresa tu teléfono",\n' +
-      //   '          "required": true,\n' +
-      //   '          "type": "number",\n' +
-      //   '          "max": 10\n' +
-      //   '        },\n' +
-      //   '        {\n' +
-      //   '          "label": "Email",\n' +
-      //   '          "placeholder": "Ingresa tu correo",\n' +
-      //   '          "required": true,\n' +
-      //   '          "defaultValidation": [\n' +
-      //   '            "email"\n' +
-      //   '          ]\n' +
-      //   '        },\n' +
-      //   '        {\n' +
-      //   '          "label": "DNI",\n' +
-      //   '          "placeholder": "Ingresa tu DNI",\n' +
-      //   '          "required": true,\n' +
-      //   '          "type": "number"\n' +
-      //   '        }\n' +
-      //   '      ]\n' +
-      //   '    },\n' +
-      //   '    {\n' +
-      //   '      "button_bg": "#ef426f",\n' +
-      //   '      "button_color": "#ffffff",\n' +
-      //   '      "button_text": "Cursos y Diplomados",\n' +
-      //   '      "button_enabled": true,\n' +
-      //   '      "button_login_field": [\n' +
-      //   '        {\n' +
-      //   '          "label": "Nombre",\n' +
-      //   '          "placeholder": "Ingresa el nombre",\n' +
-      //   '          "required": true,\n' +
-      //   '          "type": "text"\n' +
-      //   '        },\n' +
-      //   '        {\n' +
-      //   '          "label": "Teléfono",\n' +
-      //   '          "placeholder": "Ingresa tu número de teléfono",\n' +
-      //   '          "required": true,\n' +
-      //   '          "type": "number",\n' +
-      //   '          "max": 11\n' +
-      //   '        },\n' +
-      //   '        {\n' +
-      //   '          "label": "Email",\n' +
-      //   '          "placeholder": "Ingrese su correo",\n' +
-      //   '          "required": true,\n' +
-      //   '          "defaultValidation": [\n' +
-      //   '            "email"\n' +
-      //   '          ]\n' +
-      //   '        }\n' +
-      //   '      ]\n' +
-      //   '    },\n' +
-      //   '    {\n' +
-      //   '      "button_bg": "#ef426f",\n' +
-      //   '      "button_color": "#ffffff",\n' +
-      //   '      "button_text": "Atención al Estudiante",\n' +
-      //   '      "button_enabled": true,\n' +
-      //   '      "button_login_field": [\n' +
-      //   '        {\n' +
-      //   '          "label": "Nombre",\n' +
-      //   '          "placeholder": "Ingresa el nombre",\n' +
-      //   '          "required": true,\n' +
-      //   '          "type": "text"\n' +
-      //   '        },\n' +
-      //   '        {\n' +
-      //   '          "label": "Teléfono",\n' +
-      //   '          "placeholder": "Ingresa tu número de teléfono",\n' +
-      //   '          "required": true,\n' +
-      //   '          "type": "number",\n' +
-      //   '          "max": 11\n' +
-      //   '        },\n' +
-      //   '        {\n' +
-      //   '          "label": "Email",\n' +
-      //   '          "placeholder": "Ingrese su correo",\n' +
-      //   '          "required": true,\n' +
-      //   '          "defaultValidation": [\n' +
-      //   '            "email"\n' +
-      //   '          ]\n' +
-      //   '        },\n' +
-      //   '        {\n' +
-      //   '          "label": "Mensaje",\n' +
-      //   '          "placeholder": "Ingrese su primer mensaje mensaje",\n' +
-      //   '          "required": true\n' +
-      //   '        }\n' +
-      //   '      ]\n' +
-      //   '    }\n' +
-      //   '  ],\n' +
-      //   '  "trigger_color": "#440099",\n' +
-      //   '  "trigger_gradient": "#ef426f"\n' +
-      //   '}');
+      resp = JSON.parse('{\n' +
+        '  "header_text": "Toulouse Lautrec",\n' +
+        '  "header_status": "En linea",\n' +
+        '  "agent_name_enabled": true,\n' +
+        '  "team_enabled": true,\n' +
+        '  "logo": "https://cdn.chattigo.com/assets/img/isotipo-grey.svg",\n' +
+        '  "caption_title": "Inicia una conversación",\n' +
+        '  "caption_title_color": "#424243",\n' +
+        '  "caption_subtitle": "Estaremos gustosos de atender tus dudas o consultas.",\n' +
+        '  "caption_subtitle_color": "#424243",\n' +
+        '  "welcome_text": "Bienvenido al Chat de Toulouse Lautrec",\n' +
+        '  "message_placeholder": "Escriba un mensaje...",\n' +
+        '  "send_color": "#cb1e74",\n' +
+        '  "header_background_color": "#ef426f",\n' +
+        '  "header_background_gradient": "#440099",\n' +
+        '  "header_font_color": "#ffffff",\n' +
+        '  "locale": "es",\n' +
+        '  "user_field": [\n' +
+        '    "Teléfono"\n' +
+        '  ],\n' +
+        '  "name_field": [\n' +
+        '    "Nombre"\n' +
+        '  ],\n' +
+        '  "button_enabled": true,\n' +
+        '  "button_login_color": "white",\n' +
+        '  "button_login_bg": "#ef426f",\n' +
+        '  "login_text": "Iniciar sesión",\n' +
+        '  "field_font_color": "#424243",\n' +
+        '  "welcome_color": "#ffffff",\n' +
+        '  "subtitle_color": "#ffffff",\n' +
+        '  "preserve_history": true,\n' +
+        '  "bg_menu": "#1f1f1f",\n' +
+        '  "geo_active": true,\n' +
+        '  "init_button_prefer": [\n' +
+        '    {\n' +
+        '      "button_bg": "#ef426f",\n' +
+        '      "button_color": "#ffffff",\n' +
+        '      "button_text": "Carreras Profesionales",\n' +
+        '      "button_enabled": true,\n' +
+        '      "button_login_field": [\n' +
+        '        {\n' +
+        '          "label": "Nombre",\n' +
+        '          "placeholder": "Ingresa tu nombre",\n' +
+        '          "required": true,\n' +
+        '          "type": "text"\n' +
+        '        },\n' +
+        '        {\n' +
+        '          "label": "Teléfono",\n' +
+        '          "placeholder": "Ingresa tu teléfono",\n' +
+        '          "required": true,\n' +
+        '          "type": "number",\n' +
+        '          "max": 10\n' +
+        '        },\n' +
+        '        {\n' +
+        '          "label": "Email",\n' +
+        '          "placeholder": "Ingresa tu correo",\n' +
+        '          "required": true,\n' +
+        '          "defaultValidation": [\n' +
+        '            "email"\n' +
+        '          ]\n' +
+        '        },\n' +
+        '        {\n' +
+        '          "label": "DNI",\n' +
+        '          "placeholder": "Ingresa tu DNI",\n' +
+        '          "required": true,\n' +
+        '          "type": "number"\n' +
+        '        }\n' +
+        '      ]\n' +
+        '    },\n' +
+        '    {\n' +
+        '      "button_bg": "#ef426f",\n' +
+        '      "button_color": "#ffffff",\n' +
+        '      "button_text": "Cursos y Diplomados",\n' +
+        '      "button_enabled": true,\n' +
+        '      "button_login_field": [\n' +
+        '        {\n' +
+        '          "label": "Nombre",\n' +
+        '          "placeholder": "Ingresa el nombre",\n' +
+        '          "required": true,\n' +
+        '          "type": "text"\n' +
+        '        },\n' +
+        '        {\n' +
+        '          "label": "Teléfono",\n' +
+        '          "placeholder": "Ingresa tu número de teléfono",\n' +
+        '          "required": true,\n' +
+        '          "type": "number",\n' +
+        '          "max": 11\n' +
+        '        },\n' +
+        '        {\n' +
+        '          "label": "Email",\n' +
+        '          "placeholder": "Ingrese su correo",\n' +
+        '          "required": true,\n' +
+        '          "defaultValidation": [\n' +
+        '            "email"\n' +
+        '          ]\n' +
+        '        }\n' +
+        '      ]\n' +
+        '    },\n' +
+        '    {\n' +
+        '      "button_bg": "#ef426f",\n' +
+        '      "button_color": "#ffffff",\n' +
+        '      "button_text": "Atención al Estudiante",\n' +
+        '      "button_enabled": true,\n' +
+        '      "button_login_field": [\n' +
+        '        {\n' +
+        '          "label": "Nombre",\n' +
+        '          "placeholder": "Ingresa el nombre",\n' +
+        '          "required": true,\n' +
+        '          "type": "text"\n' +
+        '        },\n' +
+        '        {\n' +
+        '          "label": "Teléfono",\n' +
+        '          "placeholder": "Ingresa tu número de teléfono",\n' +
+        '          "required": true,\n' +
+        '          "type": "number",\n' +
+        '          "max": 11\n' +
+        '        },\n' +
+        '        {\n' +
+        '          "label": "Email",\n' +
+        '          "placeholder": "Ingrese su correo",\n' +
+        '          "required": true,\n' +
+        '          "defaultValidation": [\n' +
+        '            "email"\n' +
+        '          ]\n' +
+        '        },\n' +
+        '        {\n' +
+        '          "label": "Mensaje",\n' +
+        '          "placeholder": "Ingrese su primer mensaje mensaje",\n' +
+        '          "required": true\n' +
+        '        }\n' +
+        '      ]\n' +
+        '    }\n' +
+        '  ],\n' +
+        '  "trigger_color": "#440099",\n' +
+        '  "trigger_gradient": "#ef426f",\n' +
+        '  "finish": {\n' +
+        '    "header": {\n' +
+        '      "title": "Gracias por contactarte con nosotros",\n' +
+        '      "subtitle": "Mantente en contacto a través de nuestra redes sociales",\n' +
+        '      "colorTitle": "#ffffff",\n' +
+        '      "colorSubtitle": "#ffffff",\n' +
+        '      "logo": "https://cdn.chattigo.com/assets/img/isotipo-grey.svg"\n' +
+        '    },\n' +
+        '    "socialMedia": [\n' +
+        '      {\n' +
+        '        "social": "FACEBOOK",\n' +
+        '        "url": "https://google.com"\n' +
+        '      },\n' +
+        '      {\n' +
+        '        "social": "TWITTER",\n' +
+        '        "url": "https://google.com"\n' +
+        '      }\n' +
+        '    ],\n' +
+        '    "content": {\n' +
+        '      "mainText": "Evalúa la conversación",\n' +
+        '      "star": true,\n' +
+        '      "startText": "Calificaste la atención con 4 estrellas"\n' +
+        '    },\n' +
+        '    "button": {\n' +
+        '      "text": "Volver Al Inicio",\n' +
+        '      "boderColor": "#440099"\n' +
+        '    }\n' +
+        '  }\n' +
+        '}');
       this.generateConfig(resp);
     });
   }
@@ -328,8 +357,9 @@ export class AppComponent implements OnInit {
       preserveHistory: setting.preserve_history,
       geoActive: setting.geo_active,
       bgMenu: setting.bg_menu,
-      question: setting.question
+      question: setting.question,
     };
+    this.assignametFinish(setting);
     this.configInput(setting);
     this.store.dispatch(ConfigAction.loadConfig({payload: this.configUi}));
   }
@@ -355,7 +385,6 @@ export class AppComponent implements OnInit {
       this.store.dispatch(RouterAction.initFirstButton());
       this.store.dispatch(RouterAction.buttonLogin());
       //TODO Temp para probar nueva pagina
-      //this.store.dispatch(RouterAction.configOpen());
       //this.store.dispatch(RouterAction.finish());
     } else {
       const formInput: InputUiModel[] = [];
@@ -366,7 +395,7 @@ export class AppComponent implements OnInit {
       this.store.dispatch(RouterAction.initFirstLogin());
       this.store.dispatch(RouterAction.loginOpen());
       //TODO Temp para probar nueva pagina
-      // this.store.dispatch(RouterAction.configOpen());
+      //this.store.dispatch(RouterAction.finish());
     }
   }
 
@@ -440,5 +469,55 @@ export class AppComponent implements OnInit {
       }
     }
     return input;
+  }
+
+  private createMediaSocial (setting: any) {
+    const socialMediaList: SocialMediaUiModel[] = [];
+    if(setting.finish != undefined && setting.finish.socialMedia.length > 0) {
+      setting.finish.socialMedia.forEach(media => {
+        const socialMediaObj: SocialMediaUiModel = {
+          icon: `icon-social-${media.social.toLowerCase()}`,
+          url: media.url
+        };
+        socialMediaList.push(socialMediaObj);
+      });
+    }
+    this.configUi.finish.socialMedia = socialMediaList;
+
+  }
+
+  private assignametFinish (setting: any) {
+    if(setting.finish === undefined) {
+      setting.finish = {};
+    } else {
+      if(setting.finish.header === undefined) {
+        setting.finish.header = {};
+      }
+      if(setting.finish.socialMedia === undefined) {
+        setting.finish.socialMedia = [];
+      }
+      if(setting.finish.content === undefined) {
+        setting.finish.content = {};
+      }
+      if(setting.finish.button === undefined) {
+        setting.finish.button = {};
+      }
+    }
+    this.configUi.finish = {
+      header: {
+        title: setting.finish.header.title || 'Gracias por contactarte con nosotros' ,
+        subtitle: setting.finish.header.subtitle || 'Mantente en contacto a través de nuestras redes sociales',
+        logo: setting.finish.header.logo || setting.logo,
+        titleColor: setting.finish.header.colorTitle || setting.welcome_color,
+        subtitleColor: setting.finish.header.colorSubtitle || setting.subtitle_color
+      },
+      content: {
+        buttonBorderColor: setting.finish.button.boderColor || setting.button.button_bg,
+        buttonText: setting.finish.button.text || 'Volver Al Inicio',
+        titleMessage: setting.finish.content.mainText || 'Evalúa la conversación',
+        star: setting.finish.content.start || false
+      }
+    };
+    this.createMediaSocial(setting);
   }
 }

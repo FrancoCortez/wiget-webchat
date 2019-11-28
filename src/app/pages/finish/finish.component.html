@@ -1,5 +1,9 @@
-<div>
-  <div class="c-message-box">
-    añlskdñlaskdñl
+<div *ngIf="!hidden" class="chattigo-widget chattigo-widget--ending">
+  <a (click)="toggleClose()" class="chattigo-widget__close-icon"><span class="icon-close" style="color: white; display: block"></span></a>
+  <div [ngStyle]="{'background-image': headerColor}" class="chattigo-widget-header__background"></div>
+  <app-header-finish></app-header-finish>
+  <div class="chattigo-widget-content">
+    <app-content-finish></app-content-finish>
   </div>
 </div>
+<app-trigger-button></app-trigger-button>

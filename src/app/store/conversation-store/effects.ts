@@ -85,11 +85,12 @@ export class ConversationStoreEffects {
     mergeMap(() => this.messageService.leaveChat()
       .pipe(
         map((message) => {
-          if (this.firstPageElection.button) {
-            this.store.dispatch(RouterAction.buttonLogin());
-          } else if (this.firstPageElection.login) {
-            this.store.dispatch(RouterAction.loginOpen());
-          }
+          // if (this.firstPageElection.button) {
+          //   this.store.dispatch(RouterAction.buttonLogin());
+          // } else if (this.firstPageElection.login) {
+          //   this.store.dispatch(RouterAction.loginOpen());
+          // }
+          this.store.dispatch(RouterAction.finish());
           this.store.dispatch(LoginAction.leaveLogin());
           this.store.dispatch(featureActions.cleanConversation());
           localStorage.removeItem('state');

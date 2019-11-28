@@ -14,6 +14,10 @@ import {OnlyNumberDirective} from "../validation/directives/only-number.directiv
 import {OnlyTextDirective} from "../validation/directives/only-text.directive";
 import {OnlyTextNumberDirective} from "../validation/directives/only-text-number.directive";
 import {OnlyRutDirective} from "../validation/directives/only-rut.directive";
+import { SocialMediaComponent } from './social-media/social-media.component';
+import { HeaderFinishComponent } from './header-finish/header-finish.component';
+import { StarFinishComponent } from './star-finish/star-finish.component';
+import { ContentFinishComponent } from './content-finish/content-finish.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +33,10 @@ import {OnlyRutDirective} from "../validation/directives/only-rut.directive";
     OnlyTextDirective,
     OnlyTextNumberDirective,
     OnlyRutDirective,
+    SocialMediaComponent,
+    HeaderFinishComponent,
+    StarFinishComponent,
+    ContentFinishComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +56,10 @@ import {OnlyRutDirective} from "../validation/directives/only-rut.directive";
     OnlyTextDirective,
     OnlyTextNumberDirective,
     OnlyRutDirective,
+    SocialMediaComponent,
+    HeaderFinishComponent,
+    StarFinishComponent,
+    ContentFinishComponent,
   ]
 })
 export class ComponentsModule {

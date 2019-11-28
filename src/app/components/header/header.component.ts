@@ -26,4 +26,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.selectConfig = this.store.pipe(select(selectConfig)).subscribe(resp => this.header = resp.header);
   }
 
+
 }

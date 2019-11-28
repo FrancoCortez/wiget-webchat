@@ -1,0 +1,9 @@
+<div class="chattigo-widget-form">
+  <div class="c-evaluation">
+    <p class="c-evaluation__message">{{content.titleMessage}}</p>
+    <app-star-finish *ngIf="!content.star"></app-star-finish>
+  </div>
+  <a (click)="finishChat()" class="c-button c-button--secondary" [ngStyle]="{'border': border, 'color': color}" >
+    {{content.buttonText}}
+  </a>
+</div>

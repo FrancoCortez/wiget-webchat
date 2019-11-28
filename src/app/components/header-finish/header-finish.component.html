@@ -1,0 +1,10 @@
+<div class="chattigo-widget-header">
+  <img class="chattigo-widget-header__logo" [src]="header.logo" />
+  <h3 class="chattigo-widget-header__h3" [ngStyle]="{'color': header.titleColor}" >
+    {{header.title}}
+  </h3>
+  <div class="chattigo-widget-header__subheading" [ngStyle]="{'color': header.subtitleColor}">
+   {{header.subtitle}}
+  </div>
+  <app-social-media></app-social-media>
+</div>

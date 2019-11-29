@@ -59,7 +59,6 @@ export class ContainerLoginComponent implements OnInit, OnDestroy {
     this.selectWidgetOpen = this.store.pipe(select(RouterSelector.selectWidgetOpen))
       .subscribe(resp => {
         this.widgetOpen = resp;
-        this.configOpen = resp;
       });
     this.selectConfigOpen = this.store.pipe(select(RouterSelector.selectConfigOpen))
       .subscribe(resp => {

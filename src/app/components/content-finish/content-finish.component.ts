@@ -12,6 +12,7 @@ import {FinishContentUiModel} from "../../models/ui-model/finish-content.ui.mode
 export class ContentFinishComponent implements OnInit, OnDestroy {
 
   selectConfig: Subscription = new Subscription();
+  routerFirstPage: Subscription = new Subscription();
   content?: FinishContentUiModel;
   border?: string;
   color?: string;
@@ -24,17 +25,21 @@ export class ContentFinishComponent implements OnInit, OnDestroy {
       this.border = `1px solid ${resp.finish.content.buttonBorderColor}`;
       this.color = `${resp.finish.content.buttonBorderColor}`;
     });
-    this.store.pipe(select(RouterSelector.selectFirstPage)).subscribe(resp => this.firstPageElection = resp);
+    this.routerFirstPage = this.store.pipe(select(RouterSelector.selectFirstPage)).subscribe(resp => this.firstPageElection = resp);
   }
 
   ngOnDestroy(): void {
     this.selectConfig.unsubscribe();
+    this.routerFirstPage.unsubscribe();
   }
 
   public finishChat() {
+    console.log('entre al finish')
     if (this.firstPageElection.button) {
+      console.log('entre al button')
       this.store.dispatch(RouterAction.buttonLogin());
     } else if (this.firstPageElection.login) {
+      console.log('entre al login')
        this.store.dispatch(RouterAction.loginOpen());
      }
   }

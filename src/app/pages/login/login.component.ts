@@ -16,6 +16,8 @@ import {MessageDto} from '../../models/message/message.dto';
 import {v4 as uuid} from 'uuid';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Subscription} from "rxjs";
+import {ConfigUiModel} from "../../models/ui-model/config.ui-model";
+import {InitTypeEnum} from "../../models/utils/init-type.enum";
 
 @Component({
   selector: 'app-login',
@@ -55,6 +57,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   selectIdUser: Subscription = new Subscription();
   selectConfig: Subscription = new Subscription();
   selectLoading: Subscription = new Subscription();
+  config?: ConfigUiModel;
 
   constructor(private readonly store: Store<RootStoreState.AppState>) {
   }
@@ -68,6 +71,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('init login')
     this.selectLoading = this.store.pipe(select(LoginSelector.selectButtonLoginEnabled)).subscribe(resp => this.loading = resp);
     this.selectIdUser = this.store.pipe(select(InitWebChatSelector.selectIdUser)).subscribe(resp => this.idUser = resp);
     this.selectIsOpen = this.store.pipe(select(InitWebChatSelector.selectIsOpen))
@@ -79,12 +83,29 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe(resp => {
         this.headerColor = resp.caption.headerBackgroundColor;
         this.teamHidden = resp.showTeam;
+        console.log(`Entre al resp ${resp}` );
+        this.config = resp;
       });
   }
 
   public login() {
     this.store.dispatch(LoginAction.loginState({payload: true}));
     this.form = this.inputComponentReferent.form;
+    if(this.config.initType === InitTypeEnum.START_CHAT_WITH_WELCOME){
+      this.store.dispatch(LoginAction.loginButtonEnabled({payload: false}));
+      this.store.pipe(select(LoginSelector.selectLogin)).subscribe(resp => {
+        this.store.dispatch(LoginAction.login({payload: resp}));
+      });
+    } else {
+      this.loginSubmit();
+    }
+  }
+
+  public toggleClose() {
+    this.store.dispatch(InitWebChatAction.open({payload: this.hidden}));
+  }
+
+  public loginSubmit() {
     if (this.form.valid) {
       this.store.pipe(select(ConfigSelector.selectConfig))
         .pipe(map(input => input.input))
@@ -127,10 +148,6 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.store.dispatch(LoginAction.login({payload: message}));
         });
     }
-  }
-
-  public toggleClose() {
-    this.store.dispatch(InitWebChatAction.open({payload: this.hidden}));
   }
 
 }

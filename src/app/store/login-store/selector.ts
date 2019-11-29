@@ -9,7 +9,7 @@ const selector = (state: AppState) => state.login;
 
 export const selectLogin = createSelector(
   selector,
-  (state: State): LoginDto => state.login
+  (state: State): any => state.login
 );
 
 export const loginState = createSelector(

@@ -18,6 +18,7 @@ import {v4 as uuid} from 'uuid';
 import {ButtonOptionUiModel} from './models/ui-model/button-option.ui-model';
 import {ConfigService} from './services/config.service';
 import {SocialMediaUiModel} from "./models/ui-model/social-media.ui-model";
+import {InitTypeEnum} from "./models/utils/init-type.enum";
 
 
 @Component({
@@ -36,27 +37,32 @@ export class AppComponent implements OnInit {
 
   constructor(private readonly store: Store<RootStoreState.AppState>,
               private readonly configService: ConfigService) {
-    console.log('Entre al constructor')
     this.store.pipe(select(InitWebChatSelector.selectIsTrigger)).subscribe(resp => this.triggerHidden = resp);
-    this.store.pipe(select(InitWebChatSelector.selectIsOpen))
-      .subscribe(resp => {
-        this.toggles = resp;
-      });
+    this.store.pipe(select(InitWebChatSelector.selectIsOpen)).subscribe(resp => this.toggles = resp);
   }
 
   ngOnInit(): void {
-    console.log('Version: 1.0.1');
+    console.log('Version: 1.0.2');
     if (this.remote) {
       this.initConfigRemote();
     } else {
       this.initConfigLocal();
+    }
+    this.init();
+  }
+
+  private getLocalStorage () {
+    const stateLocal = localStorage.getItem('state');
+    if (stateLocal !== null) {
+      const state = JSON.parse(stateLocal);
+      this.configUi.initType =  state.config.config.initType;
     }
   }
 
   @Input() public init = () => {
     this.store.pipe(select(ConfigSelector.selectConfig),
       delay(1000),
-      filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory),
+      filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory)
     )
       .subscribe(resp => {
         this.store.subscribe(state => {
@@ -68,6 +74,7 @@ export class AppComponent implements OnInit {
   @Input() public toggle = () => {
     this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
     this.store.dispatch(InitWebChatAction.open({payload: !this.toggles}));
+
   };
   @Input() public visibilityWC = (show: boolean) => {
     this.store.dispatch(InitWebChatAction.triggerInit({payload: show}));
@@ -78,6 +85,7 @@ export class AppComponent implements OnInit {
     this.store.dispatch(InitWebChatAction.open({payload: true}));
   };
 
+
   @Input() public collapseChat = () => {
     this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
     this.store.dispatch(InitWebChatAction.open({payload: false}));
@@ -86,6 +94,7 @@ export class AppComponent implements OnInit {
     this.store.dispatch(ConversationAction.leaveChat());
   };
   @Input() public startChat = (data: any) => {
+    this.assignamentTypeInitWidget(InitTypeEnum.START_CHAT);
     const message: MessageDto = {
       msisdn: (data.msisdn === undefined || data.msisdn === null || data.msisdn === '') ? uuid() : data.msisdn,
       isAttachment: false,
@@ -100,7 +109,25 @@ export class AppComponent implements OnInit {
     message.content = `\n Nombre: ${message.name} \n ${data.content}`;
     this.store.dispatch(LoginAction.login({payload: message}));
     this.expandChat();
-  }
+  };
+
+  @Input() public startChatWithWelcome = (data: any) => {
+    this.assignamentTypeInitWidget(InitTypeEnum.START_CHAT_WITH_WELCOME);
+    const message: MessageDto = {
+      msisdn: (data.msisdn === undefined || data.msisdn === null || data.msisdn === '') ? uuid() : data.msisdn,
+      isAttachment: false,
+      type: 'text',
+      id: uuid(),
+      name: (data.name === undefined || data.name === null || data.name === '') ? 'Anonimo' : data.name,
+      attachment: null,
+      timestamp: new Date(),
+      content: data.content,
+      idUser: data.idUser
+    };
+    message.content = `\n Nombre: ${message.name} \n ${data.content}`;
+    this.store.dispatch(LoginAction.loginTemp({payload: message}));
+    this.expandChat();
+  };
 
   @Input() public initChatWithAgent = (data: any) => {
     if(data != null && !isNaN(data)) {
@@ -111,7 +138,7 @@ export class AppComponent implements OnInit {
       this.init();
       this.expandChat();
 
-  }
+  };
 
   /**
    * LocalConfig
@@ -151,12 +178,6 @@ export class AppComponent implements OnInit {
         '  "header_background_gradient": "#440099",\n' +
         '  "header_font_color": "#ffffff",\n' +
         '  "locale": "es",\n' +
-        '  "user_field": [\n' +
-        '    "Teléfono"\n' +
-        '  ],\n' +
-        '  "name_field": [\n' +
-        '    "Nombre"\n' +
-        '  ],\n' +
         '  "button_enabled": true,\n' +
         '  "button_login_color": "white",\n' +
         '  "button_login_bg": "#ef426f",\n' +
@@ -167,106 +188,6 @@ export class AppComponent implements OnInit {
         '  "preserve_history": true,\n' +
         '  "bg_menu": "#1f1f1f",\n' +
         '  "geo_active": true,\n' +
-        '  "init_button_prefer": [\n' +
-        '    {\n' +
-        '      "button_bg": "#ef426f",\n' +
-        '      "button_color": "#ffffff",\n' +
-        '      "button_text": "Carreras Profesionales",\n' +
-        '      "button_enabled": true,\n' +
-        '      "button_login_field": [\n' +
-        '        {\n' +
-        '          "label": "Nombre",\n' +
-        '          "placeholder": "Ingresa tu nombre",\n' +
-        '          "required": true,\n' +
-        '          "type": "text"\n' +
-        '        },\n' +
-        '        {\n' +
-        '          "label": "Teléfono",\n' +
-        '          "placeholder": "Ingresa tu teléfono",\n' +
-        '          "required": true,\n' +
-        '          "type": "number",\n' +
-        '          "max": 10\n' +
-        '        },\n' +
-        '        {\n' +
-        '          "label": "Email",\n' +
-        '          "placeholder": "Ingresa tu correo",\n' +
-        '          "required": true,\n' +
-        '          "defaultValidation": [\n' +
-        '            "email"\n' +
-        '          ]\n' +
-        '        },\n' +
-        '        {\n' +
-        '          "label": "DNI",\n' +
-        '          "placeholder": "Ingresa tu DNI",\n' +
-        '          "required": true,\n' +
-        '          "type": "number"\n' +
-        '        }\n' +
-        '      ]\n' +
-        '    },\n' +
-        '    {\n' +
-        '      "button_bg": "#ef426f",\n' +
-        '      "button_color": "#ffffff",\n' +
-        '      "button_text": "Cursos y Diplomados",\n' +
-        '      "button_enabled": true,\n' +
-        '      "button_login_field": [\n' +
-        '        {\n' +
-        '          "label": "Nombre",\n' +
-        '          "placeholder": "Ingresa el nombre",\n' +
-        '          "required": true,\n' +
-        '          "type": "text"\n' +
-        '        },\n' +
-        '        {\n' +
-        '          "label": "Teléfono",\n' +
-        '          "placeholder": "Ingresa tu número de teléfono",\n' +
-        '          "required": true,\n' +
-        '          "type": "number",\n' +
-        '          "max": 11\n' +
-        '        },\n' +
-        '        {\n' +
-        '          "label": "Email",\n' +
-        '          "placeholder": "Ingrese su correo",\n' +
-        '          "required": true,\n' +
-        '          "defaultValidation": [\n' +
-        '            "email"\n' +
-        '          ]\n' +
-        '        }\n' +
-        '      ]\n' +
-        '    },\n' +
-        '    {\n' +
-        '      "button_bg": "#ef426f",\n' +
-        '      "button_color": "#ffffff",\n' +
-        '      "button_text": "Atención al Estudiante",\n' +
-        '      "button_enabled": true,\n' +
-        '      "button_login_field": [\n' +
-        '        {\n' +
-        '          "label": "Nombre",\n' +
-        '          "placeholder": "Ingresa el nombre",\n' +
-        '          "required": true,\n' +
-        '          "type": "text"\n' +
-        '        },\n' +
-        '        {\n' +
-        '          "label": "Teléfono",\n' +
-        '          "placeholder": "Ingresa tu número de teléfono",\n' +
-        '          "required": true,\n' +
-        '          "type": "number",\n' +
-        '          "max": 11\n' +
-        '        },\n' +
-        '        {\n' +
-        '          "label": "Email",\n' +
-        '          "placeholder": "Ingrese su correo",\n' +
-        '          "required": true,\n' +
-        '          "defaultValidation": [\n' +
-        '            "email"\n' +
-        '          ]\n' +
-        '        },\n' +
-        '        {\n' +
-        '          "label": "Mensaje",\n' +
-        '          "placeholder": "Ingrese su primer mensaje mensaje",\n' +
-        '          "required": true\n' +
-        '        }\n' +
-        '      ]\n' +
-        '    }\n' +
-        '  ],\n' +
         '  "trigger_color": "#440099",\n' +
         '  "trigger_gradient": "#ef426f",\n' +
         '  "finish": {\n' +
@@ -361,6 +282,7 @@ export class AppComponent implements OnInit {
     };
     this.assignametFinish(setting);
     this.configInput(setting);
+    this.getLocalStorage();
     this.store.dispatch(ConfigAction.loadConfig({payload: this.configUi}));
   }
 
@@ -388,9 +310,11 @@ export class AppComponent implements OnInit {
       //this.store.dispatch(RouterAction.finish());
     } else {
       const formInput: InputUiModel[] = [];
-      setting.login_fields.forEach(row => {
-        formInput.push(this.assignmentInput(row, setting));
-      });
+      if(setting.login_fields != undefined) {
+        setting.login_fields.forEach(row => {
+          formInput.push(this.assignmentInput(row, setting));
+        });
+      }
       this.configUi.input = formInput;
       this.store.dispatch(RouterAction.initFirstLogin());
       this.store.dispatch(RouterAction.loginOpen());
@@ -519,5 +443,13 @@ export class AppComponent implements OnInit {
       }
     };
     this.createMediaSocial(setting);
+  }
+
+
+  private assignamentTypeInitWidget(init: InitTypeEnum) {
+    this.store.pipe(select(ConfigSelector.selectConfig)).subscribe(resp => {
+      resp.initType = init;
+      this.store.dispatch(ConfigAction.initType({payload: resp}));
+    })
   }
 }

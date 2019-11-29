@@ -15,6 +15,7 @@ import {
   RouterAction,
   RouterSelector
 } from '../index';
+import {InitTypeEnum} from "../../models/utils/init-type.enum";
 
 @Injectable()
 export class ConversationStoreEffects {
@@ -91,10 +92,14 @@ export class ConversationStoreEffects {
           //   this.store.dispatch(RouterAction.loginOpen());
           // }
           this.store.dispatch(RouterAction.finish());
-          this.store.dispatch(LoginAction.leaveLogin());
+          this.store.pipe(select(ConfigSelector.selectConfig)).subscribe(resp => {
+            if(resp.initType !== InitTypeEnum.START_CHAT_WITH_WELCOME){
+              this.store.dispatch(LoginAction.leaveLogin());
+              localStorage.removeItem('state');
+              localStorage.clear();
+            }
+          });
           this.store.dispatch(featureActions.cleanConversation());
-          localStorage.removeItem('state');
-          localStorage.clear();
           this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
           this.store.pipe(select(ConfigSelector.selectConfig), filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory))
             .subscribe(resp => {

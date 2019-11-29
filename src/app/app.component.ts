@@ -19,6 +19,7 @@ import {ButtonOptionUiModel} from './models/ui-model/button-option.ui-model';
 import {ConfigService} from './services/config.service';
 import {SocialMediaUiModel} from "./models/ui-model/social-media.ui-model";
 import {InitTypeEnum} from "./models/utils/init-type.enum";
+import {FinishUiModel} from "./models/ui-model/finish.ui-model";
 
 
 @Component({
@@ -161,64 +162,64 @@ export class AppComponent implements OnInit {
    */
   private initConfigRemote() {
     this.configService.getConfig(this.did).subscribe(resp => {
-      resp = JSON.parse('{\n' +
-        '  "header_text": "Toulouse Lautrec",\n' +
-        '  "header_status": "En linea",\n' +
-        '  "agent_name_enabled": true,\n' +
-        '  "team_enabled": true,\n' +
-        '  "logo": "https://cdn.chattigo.com/assets/img/isotipo-grey.svg",\n' +
-        '  "caption_title": "Inicia una conversación",\n' +
-        '  "caption_title_color": "#424243",\n' +
-        '  "caption_subtitle": "Estaremos gustosos de atender tus dudas o consultas.",\n' +
-        '  "caption_subtitle_color": "#424243",\n' +
-        '  "welcome_text": "Bienvenido al Chat de Toulouse Lautrec",\n' +
-        '  "message_placeholder": "Escriba un mensaje...",\n' +
-        '  "send_color": "#cb1e74",\n' +
-        '  "header_background_color": "#ef426f",\n' +
-        '  "header_background_gradient": "#440099",\n' +
-        '  "header_font_color": "#ffffff",\n' +
-        '  "locale": "es",\n' +
-        '  "button_enabled": true,\n' +
-        '  "button_login_color": "white",\n' +
-        '  "button_login_bg": "#ef426f",\n' +
-        '  "login_text": "Iniciar sesión",\n' +
-        '  "field_font_color": "#424243",\n' +
-        '  "welcome_color": "#ffffff",\n' +
-        '  "subtitle_color": "#ffffff",\n' +
-        '  "preserve_history": true,\n' +
-        '  "bg_menu": "#1f1f1f",\n' +
-        '  "geo_active": true,\n' +
-        '  "trigger_color": "#440099",\n' +
-        '  "trigger_gradient": "#ef426f",\n' +
-        '  "finish": {\n' +
-        '    "header": {\n' +
-        '      "title": "Gracias por contactarte con nosotros",\n' +
-        '      "subtitle": "Mantente en contacto a través de nuestra redes sociales",\n' +
-        '      "colorTitle": "#ffffff",\n' +
-        '      "colorSubtitle": "#ffffff",\n' +
-        '      "logo": "https://cdn.chattigo.com/assets/img/isotipo-grey.svg"\n' +
-        '    },\n' +
-        '    "socialMedia": [\n' +
-        '      {\n' +
-        '        "social": "FACEBOOK",\n' +
-        '        "url": "https://google.com"\n' +
-        '      },\n' +
-        '      {\n' +
-        '        "social": "TWITTER",\n' +
-        '        "url": "https://google.com"\n' +
-        '      }\n' +
-        '    ],\n' +
-        '    "content": {\n' +
-        '      "mainText": "Evalúa la conversación",\n' +
-        '      "star": true,\n' +
-        '      "startText": "Calificaste la atención con 4 estrellas"\n' +
-        '    },\n' +
-        '    "button": {\n' +
-        '      "text": "Volver Al Inicio",\n' +
-        '      "boderColor": "#440099"\n' +
-        '    }\n' +
-        '  }\n' +
-        '}');
+      // resp = JSON.parse('{\n' +
+      //   '  "header_text": "Toulouse Lautrec",\n' +
+      //   '  "header_status": "En linea",\n' +
+      //   '  "agent_name_enabled": true,\n' +
+      //   '  "team_enabled": true,\n' +
+      //   '  "logo": "https://cdn.chattigo.com/assets/img/isotipo-grey.svg",\n' +
+      //   '  "caption_title": "Inicia una conversación",\n' +
+      //   '  "caption_title_color": "#424243",\n' +
+      //   '  "caption_subtitle": "Estaremos gustosos de atender tus dudas o consultas.",\n' +
+      //   '  "caption_subtitle_color": "#424243",\n' +
+      //   '  "welcome_text": "Bienvenido al Chat de Toulouse Lautrec",\n' +
+      //   '  "message_placeholder": "Escriba un mensaje...",\n' +
+      //   '  "send_color": "#cb1e74",\n' +
+      //   '  "header_background_color": "#ef426f",\n' +
+      //   '  "header_background_gradient": "#440099",\n' +
+      //   '  "header_font_color": "#ffffff",\n' +
+      //   '  "locale": "es",\n' +
+      //   '  "button_enabled": true,\n' +
+      //   '  "button_login_color": "white",\n' +
+      //   '  "button_login_bg": "#ef426f",\n' +
+      //   '  "login_text": "Iniciar sesión",\n' +
+      //   '  "field_font_color": "#424243",\n' +
+      //   '  "welcome_color": "#ffffff",\n' +
+      //   '  "subtitle_color": "#ffffff",\n' +
+      //   '  "preserve_history": true,\n' +
+      //   '  "bg_menu": "#1f1f1f",\n' +
+      //   '  "geo_active": true,\n' +
+      //   '  "trigger_color": "#440099",\n' +
+      //   '  "trigger_gradient": "#ef426f",\n' +
+      //   '  "finish": {\n' +
+      //   '    "header": {\n' +
+      //   '      "title": "Gracias por contactarte con nosotros",\n' +
+      //   '      "subtitle": "Mantente en contacto a través de nuestra redes sociales",\n' +
+      //   '      "colorTitle": "#ffffff",\n' +
+      //   '      "colorSubtitle": "#ffffff",\n' +
+      //   '      "logo": "https://cdn.chattigo.com/assets/img/isotipo-grey.svg"\n' +
+      //   '    },\n' +
+      //   '    "socialMedia": [\n' +
+      //   '      {\n' +
+      //   '        "social": "FACEBOOK",\n' +
+      //   '        "url": "https://google.com"\n' +
+      //   '      },\n' +
+      //   '      {\n' +
+      //   '        "social": "TWITTER",\n' +
+      //   '        "url": "https://google.com"\n' +
+      //   '      }\n' +
+      //   '    ],\n' +
+      //   '    "content": {\n' +
+      //   '      "mainText": "Evalúa la conversación",\n' +
+      //   '      "star": true,\n' +
+      //   '      "startText": "Calificaste la atención con 4 estrellas"\n' +
+      //   '    },\n' +
+      //   '    "button": {\n' +
+      //   '      "text": "Volver Al Inicio",\n' +
+      //   '      "boderColor": "#440099"\n' +
+      //   '    }\n' +
+      //   '  }\n' +
+      //   '}');
       this.generateConfig(resp);
     });
   }
@@ -410,22 +411,32 @@ export class AppComponent implements OnInit {
 
   }
 
+  private defaultFinishObject (setting: any) {
+    setting.finish = {
+      header: {
+        title: null,
+        subtitle: null,
+        logo: null,
+        colorTitle: null,
+        colorSubtitle: null,
+
+      },
+      content: {
+        mainText: null,
+        star: null,
+      },
+      button: {
+        borderColor: null,
+        text: null,
+      },
+      socialMedia: []
+    };
+    return setting;
+  }
+
   private assignametFinish (setting: any) {
     if(setting.finish === undefined) {
-      setting.finish = {};
-    } else {
-      if(setting.finish.header === undefined) {
-        setting.finish.header = {};
-      }
-      if(setting.finish.socialMedia === undefined) {
-        setting.finish.socialMedia = [];
-      }
-      if(setting.finish.content === undefined) {
-        setting.finish.content = {};
-      }
-      if(setting.finish.button === undefined) {
-        setting.finish.button = {};
-      }
+      setting = this.defaultFinishObject(setting);
     }
     this.configUi.finish = {
       header: {
@@ -436,10 +447,10 @@ export class AppComponent implements OnInit {
         subtitleColor: setting.finish.header.colorSubtitle || setting.subtitle_color
       },
       content: {
-        buttonBorderColor: setting.finish.button.boderColor || setting.button.button_bg,
+        buttonBorderColor: setting.finish.button.borderColor || setting.button_login_bg,
         buttonText: setting.finish.button.text || 'Volver Al Inicio',
         titleMessage: setting.finish.content.mainText || 'Evalúa la conversación',
-        star: setting.finish.content.start || false
+        star: setting.finish.content.star || false
       }
     };
     this.createMediaSocial(setting);

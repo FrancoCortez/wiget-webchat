@@ -1,5 +1,5 @@
 # BUILD STAGE
-FROM node:12.2.0-alpine AS builder
+FROM node:13.2.0-alpine AS builder
 WORKDIR /app
 COPY package.json .
 RUN npm install

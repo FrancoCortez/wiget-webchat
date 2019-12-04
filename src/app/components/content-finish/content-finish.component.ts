@@ -34,12 +34,9 @@ export class ContentFinishComponent implements OnInit, OnDestroy {
   }
 
   public finishChat() {
-    console.log('entre al finish')
     if (this.firstPageElection.button) {
-      console.log('entre al button')
       this.store.dispatch(RouterAction.buttonLogin());
     } else if (this.firstPageElection.login) {
-      console.log('entre al login')
        this.store.dispatch(RouterAction.loginOpen());
      }
   }

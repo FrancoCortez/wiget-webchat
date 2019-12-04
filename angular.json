@@ -46,6 +46,9 @@
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": false,
+              "styles": [
+                "src/styles-prod.scss"
+              ],
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,

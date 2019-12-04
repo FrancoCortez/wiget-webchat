@@ -8,6 +8,7 @@ import {LoginStoreModule} from './login-store';
 import {TeamStoreModule} from './team-store';
 import {RouterStoreModule} from './router-store';
 import {ConversationStoreModule} from './conversation-store';
+import {PreserveSelectionStoreModule} from "./preserve-selection-store";
 
 @NgModule({
   declarations: [],
@@ -19,6 +20,7 @@ import {ConversationStoreModule} from './conversation-store';
     TeamStoreModule,
     RouterStoreModule,
     ConversationStoreModule,
+    PreserveSelectionStoreModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
   ]

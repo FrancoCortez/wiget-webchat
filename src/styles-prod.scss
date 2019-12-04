@@ -1,0 +1,22 @@
+// @import 'https://develop.cdn.chattigo.com/css/chattigo-widget.css';
+@import 'https://cdn.chattigo.com/css/chattigo-widget.css';
+@import '~@ctrl/ngx-emoji-mart/picker.css';
+
+div.emoji-mart-preview  {
+  display: none !important;
+}
+
+
+.emoji-mart-bar {
+  display: none !important;
+}
+
+.emoji-mart {
+  width: 100% !important;
+}
+
+.test-angular {
+  @media only screen and (max-width: 451px) {
+    display: block !important;
+  }
+}

@@ -5,7 +5,7 @@ import {
   InitWebChatAction,
   InitWebChatSelector,
   LoginAction,
-  LoginSelector,
+  LoginSelector, PreserveSelectionAction,
   RootStoreState
 } from '../../store';
 import {InputComponent} from '../../components/input/input.component';
@@ -71,7 +71,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('init login')
     this.selectLoading = this.store.pipe(select(LoginSelector.selectButtonLoginEnabled)).subscribe(resp => this.loading = resp);
     this.selectIdUser = this.store.pipe(select(InitWebChatSelector.selectIdUser)).subscribe(resp => this.idUser = resp);
     this.selectIsOpen = this.store.pipe(select(InitWebChatSelector.selectIsOpen))
@@ -99,6 +98,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     } else {
       this.loginSubmit();
     }
+    this.resetPreserve();
+  }
+
+  private resetPreserve() {
+    this.store.dispatch(PreserveSelectionAction.chatPreserveClean());
+    this.store.dispatch(PreserveSelectionAction.starPreserveClean());
   }
 
   public toggleClose() {

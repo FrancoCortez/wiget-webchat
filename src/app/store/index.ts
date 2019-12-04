@@ -7,5 +7,5 @@ export * from './login-store';
 export * from './team-store';
 export * from './router-store';
 export * from './conversation-store';
-
+export * from './preserve-selection-store';
 export {RootStoreState, RootStoreModule};

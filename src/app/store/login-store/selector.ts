@@ -1,6 +1,5 @@
 import {createSelector} from '@ngrx/store';
 import {State} from './state';
-import {LoginDto} from '../../models/login/login.dto';
 import {AppState} from '../root-state';
 
 // export const selectorLogin = createFeatureSelector<AppState , State>('login');

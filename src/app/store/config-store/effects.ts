@@ -6,6 +6,7 @@ import {catchError, map, mergeMap} from 'rxjs/operators';
 import {Action, Store} from '@ngrx/store';
 import {ConversationAction, InitWebChatAction, LoginAction, RootStoreState, RouterAction} from '../index';
 import {LoginService} from '../../services/login.service';
+import {InitTypeEnum} from "../../models/utils/init-type.enum";
 
 @Injectable()
 export class ConfigStoreEffects {
@@ -23,7 +24,7 @@ export class ConfigStoreEffects {
               const state = JSON.parse(stateLocal);
               if (login.payload.did === state.config.config.did) {
                 this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
-                this.store.dispatch(ConversationAction.loadMessages({payload: state.conversation}));
+                this.store.dispatch(ConversationAction.loadMessages({payload: state.conversation}));;
                 this.store.dispatch(LoginAction.loadLogin({payload: state.login}));
                 this.store.dispatch(InitWebChatAction.loadInitWeb({payload: state.initWebChat}));
                 if (state.login.login !== null) {

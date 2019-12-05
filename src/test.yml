@@ -1,0 +1,114 @@
+header_text: Toulouse Lautrec
+header_status: En linea
+agent_name_enabled: true
+team_enabled: true
+logo: https://cdn.chattigo.com/assets/img/isotipo-grey.svg
+caption_title: Inicia una conversación
+caption_title_color: "#424243"
+caption_subtitle: Estaremos gustosos de atender tus dudas o consultas.
+caption_subtitle_color: "#424243"
+welcome_text: Bienvenido al Chat de Toulouse Lautrec
+message_placeholder: Escriba un mensaje...
+send_color: "#cb1e74"
+header_background_color: "#ef426f"
+header_background_gradient: "#440099"
+header_font_color: "#ffffff"
+locale: es
+user_field:
+  - Teléfono
+name_field:
+  - Nombre
+button_enabled: true
+button_login_color: white
+button_login_bg: "#ef426f"
+login_text: Iniciar sesión
+field_font_color: "#424243"
+welcome_color: "#ffffff"
+subtitle_color: "#ffffff"
+preserve_history: true
+bg_menu: "#1f1f1f"
+geo_active: true
+init_button_prefer:
+  - button_bg: "#ef426f"
+    button_color: "#ffffff"
+    button_text: Carreras Profesionales
+    button_enabled: true
+    button_login_field:
+      - label: Nombre
+        placeholder: Ingresa tu nombre
+        required: true
+        type: text
+      - label: Teléfono
+        placeholder: Ingresa tu teléfono
+        required: true
+        type: number
+        max: 10
+      - label: Email
+        placeholder: Ingresa tu correo
+        required: true
+        defaultValidation: ['email']
+      - label: DNI
+        placeholder: Ingresa tu DNI
+        required: true
+        type: number
+  - button_bg: "#ef426f"
+    button_color: "#ffffff"
+    button_text: Cursos y Diplomados
+    button_enabled: true
+    button_login_field:
+      - label: Nombre
+        placeholder: Ingresa el nombre
+        required: true
+        type: text
+      - label: Teléfono
+        placeholder: Ingresa tu número de teléfono
+        required: true
+        type: number
+        max: 11
+      - label: Email
+        placeholder: Ingrese su correo
+        required: true
+        defaultValidation: ['email']
+  - button_bg: "#ef426f"
+    button_color: "#ffffff"
+    button_text: Atención al Estudiante
+    button_enabled: true
+    button_login_field:
+      - label: Nombre
+        placeholder: Ingresa el nombre
+        required: true
+        type: text
+      - label: Teléfono
+        placeholder: Ingresa tu número de teléfono
+        required: true
+        type: number
+        max: 11
+      - label: Email
+        placeholder: Ingrese su correo
+        required: true
+        defaultValidation: ['email']
+      - label: Mensaje
+        placeholder: Ingrese su primer mensaje mensaje
+        required: true
+trigger_color: '#440099'
+trigger_gradient: '#ef426f'
+
+finish:
+  header:
+    title: 'Gracias por contactarte con nosotros'
+    subtitle: 'Mantente en contacto a través de nuestra redes sociales'
+    colorTitle: '#ffffff'
+    colorSubtitle: '#ffffff'
+    logo: 'https://cdn.chattigo.com/assets/img/isotipo-grey.svg'
+  socialMedia:
+    - social: FACEBOOK
+      url: 'https://google.com'
+    - social: TWITTER
+      url: 'https://google.com'
+  content:
+    mainText: Evalúa la conversación
+    star: true
+    startText: Calificaste la atención con 4 estrellas
+  button:
+    text: Volver Al Inicio
+    boderColor: '#440099'

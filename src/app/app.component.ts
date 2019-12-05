@@ -1,4 +1,4 @@
-import { Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {
   ConfigAction,
@@ -17,6 +17,9 @@ import {MessageDto} from './models/message/message.dto';
 import {v4 as uuid} from 'uuid';
 import {ButtonOptionUiModel} from './models/ui-model/button-option.ui-model';
 import {ConfigService} from './services/config.service';
+import {SocialMediaUiModel} from "./models/ui-model/social-media.ui-model";
+import {InitTypeEnum} from "./models/utils/init-type.enum";
+import {FinishUiModel} from "./models/ui-model/finish.ui-model";
 
 
 @Component({
@@ -35,27 +38,32 @@ export class AppComponent implements OnInit {
 
   constructor(private readonly store: Store<RootStoreState.AppState>,
               private readonly configService: ConfigService) {
-    console.log('Entre al constructor')
     this.store.pipe(select(InitWebChatSelector.selectIsTrigger)).subscribe(resp => this.triggerHidden = resp);
-    this.store.pipe(select(InitWebChatSelector.selectIsOpen))
-      .subscribe(resp => {
-        this.toggles = resp;
-      });
+    this.store.pipe(select(InitWebChatSelector.selectIsOpen)).subscribe(resp => this.toggles = resp);
   }
 
   ngOnInit(): void {
-    console.log('Version: 1.0.1');
+    console.log('Version: 1.0.2');
     if (this.remote) {
       this.initConfigRemote();
     } else {
       this.initConfigLocal();
+    }
+    this.init();
+  }
+
+  private getLocalStorage () {
+    const stateLocal = localStorage.getItem('state');
+    if (stateLocal !== null) {
+      const state = JSON.parse(stateLocal);
+      this.configUi.initType =  state.config.config.initType;
     }
   }
 
   @Input() public init = () => {
     this.store.pipe(select(ConfigSelector.selectConfig),
       delay(1000),
-      filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory),
+      filter(fill => ((fill.preserveHistory !== undefined || fill.preserveHistory !== null)) && fill.preserveHistory)
     )
       .subscribe(resp => {
         this.store.subscribe(state => {
@@ -67,6 +75,7 @@ export class AppComponent implements OnInit {
   @Input() public toggle = () => {
     this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
     this.store.dispatch(InitWebChatAction.open({payload: !this.toggles}));
+
   };
   @Input() public visibilityWC = (show: boolean) => {
     this.store.dispatch(InitWebChatAction.triggerInit({payload: show}));
@@ -77,6 +86,7 @@ export class AppComponent implements OnInit {
     this.store.dispatch(InitWebChatAction.open({payload: true}));
   };
 
+
   @Input() public collapseChat = () => {
     this.store.dispatch(InitWebChatAction.triggerInit({payload: true}));
     this.store.dispatch(InitWebChatAction.open({payload: false}));
@@ -85,6 +95,7 @@ export class AppComponent implements OnInit {
     this.store.dispatch(ConversationAction.leaveChat());
   };
   @Input() public startChat = (data: any) => {
+    this.assignamentTypeInitWidget(InitTypeEnum.START_CHAT);
     const message: MessageDto = {
       msisdn: (data.msisdn === undefined || data.msisdn === null || data.msisdn === '') ? uuid() : data.msisdn,
       isAttachment: false,
@@ -99,7 +110,25 @@ export class AppComponent implements OnInit {
     message.content = `\n Nombre: ${message.name} \n ${data.content}`;
     this.store.dispatch(LoginAction.login({payload: message}));
     this.expandChat();
-  }
+  };
+
+  @Input() public startChatWithWelcome = (data: any) => {
+    this.assignamentTypeInitWidget(InitTypeEnum.START_CHAT_WITH_WELCOME);
+    const message: MessageDto = {
+      msisdn: (data.msisdn === undefined || data.msisdn === null || data.msisdn === '') ? uuid() : data.msisdn,
+      isAttachment: false,
+      type: 'text',
+      id: uuid(),
+      name: (data.name === undefined || data.name === null || data.name === '') ? 'Anonimo' : data.name,
+      attachment: null,
+      timestamp: new Date(),
+      content: data.content,
+      idUser: data.idUser
+    };
+    message.content = `\n Nombre: ${message.name} \n ${data.content}`;
+    this.store.dispatch(LoginAction.loginTemp({payload: message}));
+    this.expandChat();
+  };
 
   @Input() public initChatWithAgent = (data: any) => {
     if(data != null && !isNaN(data)) {
@@ -110,7 +139,7 @@ export class AppComponent implements OnInit {
       this.init();
       this.expandChat();
 
-  }
+  };
 
   /**
    * LocalConfig
@@ -267,7 +296,35 @@ export class AppComponent implements OnInit {
       //   '    }\n' +
       //   '  ],\n' +
       //   '  "trigger_color": "#440099",\n' +
-      //   '  "trigger_gradient": "#ef426f"\n' +
+      //   '  "trigger_gradient": "#ef426f",\n' +
+      //   '  "finish": {\n' +
+      //   '    "header": {\n' +
+      //   '      "title": "Gracias por contactarte con nosotros",\n' +
+      //   '      "subtitle": "Mantente en contacto a través de nuestra redes sociales",\n' +
+      //   '      "colorTitle": "#ffffff",\n' +
+      //   '      "colorSubtitle": "#ffffff",\n' +
+      //   '      "logo": "https://cdn.chattigo.com/assets/img/isotipo-grey.svg"\n' +
+      //   '    },\n' +
+      //   '    "socialMedia": [\n' +
+      //   '      {\n' +
+      //   '        "social": "FACEBOOK",\n' +
+      //   '        "url": "https://google.com"\n' +
+      //   '      },\n' +
+      //   '      {\n' +
+      //   '        "social": "TWITTER",\n' +
+      //   '        "url": "https://google.com"\n' +
+      //   '      }\n' +
+      //   '    ],\n' +
+      //   '    "content": {\n' +
+      //   '      "mainText": "Evalúa la conversación",\n' +
+      //   '      "star": false,\n' +
+      //   '      "startText": "Calificaste la atención con 4 estrellas"\n' +
+      //   '    },\n' +
+      //   '    "button": {\n' +
+      //   '      "text": "Volver Al Inicio",\n' +
+      //   '      "boderColor": "#440099"\n' +
+      //   '    }\n' +
+      //   '  }\n' +
       //   '}');
       this.generateConfig(resp);
     });
@@ -328,9 +385,11 @@ export class AppComponent implements OnInit {
       preserveHistory: setting.preserve_history,
       geoActive: setting.geo_active,
       bgMenu: setting.bg_menu,
-      question: setting.question
+      question: setting.question,
     };
+    this.assignametFinish(setting);
     this.configInput(setting);
+    this.getLocalStorage();
     this.store.dispatch(ConfigAction.loadConfig({payload: this.configUi}));
   }
 
@@ -355,18 +414,19 @@ export class AppComponent implements OnInit {
       this.store.dispatch(RouterAction.initFirstButton());
       this.store.dispatch(RouterAction.buttonLogin());
       //TODO Temp para probar nueva pagina
-      //this.store.dispatch(RouterAction.configOpen());
       //this.store.dispatch(RouterAction.finish());
     } else {
       const formInput: InputUiModel[] = [];
-      setting.login_fields.forEach(row => {
-        formInput.push(this.assignmentInput(row, setting));
-      });
+      if(setting.login_fields != undefined) {
+        setting.login_fields.forEach(row => {
+          formInput.push(this.assignmentInput(row, setting));
+        });
+      }
       this.configUi.input = formInput;
       this.store.dispatch(RouterAction.initFirstLogin());
       this.store.dispatch(RouterAction.loginOpen());
       //TODO Temp para probar nueva pagina
-      // this.store.dispatch(RouterAction.configOpen());
+      //this.store.dispatch(RouterAction.finish());
     }
   }
 
@@ -440,5 +500,73 @@ export class AppComponent implements OnInit {
       }
     }
     return input;
+  }
+
+  private createMediaSocial (setting: any) {
+    const socialMediaList: SocialMediaUiModel[] = [];
+    if(setting.finish != undefined && setting.finish.socialMedia.length > 0) {
+      setting.finish.socialMedia.forEach(media => {
+        const socialMediaObj: SocialMediaUiModel = {
+          icon: `icon-social-${media.social.toLowerCase()}`,
+          url: media.url
+        };
+        socialMediaList.push(socialMediaObj);
+      });
+    }
+    this.configUi.finish.socialMedia = socialMediaList;
+
+  }
+
+  private defaultFinishObject (setting: any) {
+    setting.finish = {
+      header: {
+        title: null,
+        subtitle: null,
+        logo: null,
+        colorTitle: null,
+        colorSubtitle: null,
+
+      },
+      content: {
+        mainText: null,
+        star: null,
+      },
+      button: {
+        borderColor: null,
+        text: null,
+      },
+      socialMedia: []
+    };
+    return setting;
+  }
+
+  private assignametFinish (setting: any) {
+    if(setting.finish === undefined) {
+      setting = this.defaultFinishObject(setting);
+    }
+    this.configUi.finish = {
+      header: {
+        title: setting.finish.header.title || 'Gracias por contactarte con nosotros' ,
+        subtitle: setting.finish.header.subtitle || 'Mantente en contacto a través de nuestras redes sociales',
+        logo: setting.finish.header.logo || setting.logo,
+        titleColor: setting.finish.header.colorTitle || setting.welcome_color,
+        subtitleColor: setting.finish.header.colorSubtitle || setting.subtitle_color
+      },
+      content: {
+        buttonBorderColor: setting.finish.button.borderColor || setting.button_login_bg,
+        buttonText: setting.finish.button.text || 'Volver Al Inicio',
+        titleMessage: setting.finish.content.mainText || 'Evalúa la conversación',
+        star: setting.finish.content.star || false
+      }
+    };
+    this.createMediaSocial(setting);
+  }
+
+
+  private assignamentTypeInitWidget(init: InitTypeEnum) {
+    this.store.pipe(select(ConfigSelector.selectConfig)).subscribe(resp => {
+      resp.initType = init;
+      this.store.dispatch(ConfigAction.initType({payload: resp}));
+    })
   }
 }

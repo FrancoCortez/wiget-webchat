@@ -43,6 +43,14 @@ const featureReducer = createReducer(
     ...state,
     buttonEnabled: payload
   }))
+  ,
+  on(featureActions.loginTemp, (state, {payload}) => ({
+    ...state,
+    isLoading: true,
+    isLoader: false,
+    login: payload,
+    error: null,
+  }))
 );
 
 export function reducer(state: State | undefined, action: Action) {

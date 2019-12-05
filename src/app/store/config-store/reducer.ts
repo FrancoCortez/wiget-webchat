@@ -17,6 +17,13 @@ const featureReducer = createReducer(
     isLoader: false,
     config: payload,
     error: null,
+  })),
+  on(featureActions.initType, (state, {payload}) => ({
+    ...state,
+    isLoading: true,
+    isLoader: false,
+    config: payload,
+    error: null,
   }))
 );
 

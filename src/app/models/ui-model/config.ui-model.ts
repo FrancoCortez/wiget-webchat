@@ -7,6 +7,8 @@ import {MessageSendUiModel} from './message-send.ui-model';
 import {ConfigPanelUiModel} from './config-panel.ui-model';
 import {ButtonOptionUiModel} from "./button-option.ui-model";
 import {TriggerUiModel} from "./trigger.ui-model";
+import {FinishUiModel} from "./finish.ui-model";
+import {InitTypeEnum} from "../utils/init-type.enum";
 
 export interface ConfigUiModel {
   input?: InputUiModel[];
@@ -17,6 +19,7 @@ export interface ConfigUiModel {
   caption?: WidgetCaptionUiModel;
   messageSend?: MessageSendUiModel;
   configPanel?: ConfigPanelUiModel;
+  finish?: FinishUiModel;
   isMobile?: boolean;
   preserveHistory?: boolean;
   bgMenu?: string;
@@ -25,4 +28,5 @@ export interface ConfigUiModel {
   showTeam?: boolean;
   buttonPrefer?: ButtonOptionUiModel[];
   question?: string;
+  initType?: InitTypeEnum;
 }

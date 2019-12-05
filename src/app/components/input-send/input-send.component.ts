@@ -1,6 +1,13 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {ConfigSelector, ConversationAction, LoginSelector, RootStoreState} from '../../store';
+import {
+  ConfigSelector,
+  ConversationAction,
+  InitWebChatSelector,
+  LoginSelector, PreserveSelectionAction, PreserveSelectionSelector,
+  RootStoreState,
+  RouterSelector
+} from '../../store';
 import {MessageUiModel} from '../../models/ui-model/message.ui.model';
 import {MessageSendUiModel} from '../../models/ui-model/message-send.ui-model';
 import {FormControl, FormGroup} from '@angular/forms';
@@ -64,7 +71,7 @@ export class InputSendComponent implements OnInit, AfterViewInit, OnDestroy {
   selectDid: Subscription = new Subscription();
   selectConfig: Subscription = new Subscription();
   selectLogin: Subscription = new Subscription();
-
+  widgetOpen: boolean;
   constructor(private readonly store: Store<RootStoreState.AppState>,
               private readonly format: FormatService,
               private readonly uploadFileClient: UploadFileClient) {
@@ -92,6 +99,31 @@ export class InputSendComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectLogin = this.store.pipe(select(LoginSelector.selectLogin))
       .pipe(filter(fill => fill !== null))
       .subscribe((resp: MessageDto) => this.loginResp = resp);
+
+    this.store.pipe(select(PreserveSelectionSelector.selectPreserveChat)).subscribe(resp => {
+      if(resp !== undefined && resp !== null) {
+        this.form.controls['sendMessage'].setValue(resp.textChat);
+        this.imgURL = resp.preview;
+        this.typeFile = resp.typeFile;
+      }
+    });
+
+    this.store.pipe(select(InitWebChatSelector.selectIsOpen)).subscribe(resp => {
+      if(!resp) {
+        console.log('entre al opening')
+        this.store.dispatch(PreserveSelectionAction.chatPreserve({
+          payload: {
+            textChat: this.form.controls['sendMessage'].value,
+            preview: this.imgURL,
+            typeFile: this.typeFile
+          }
+        }))
+      }
+      this.store.pipe(select(RouterSelector.selectWidgetOpen))
+        .subscribe(resp => {
+          this.widgetOpen = resp;
+        });
+    })
   }
 
   public uploadFile($event: any): void {
@@ -266,17 +298,6 @@ export class InputSendComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
 
-  }
-
-  private evetScrollForCustomPx() {
-    const findMessageBox = document.getElementsByClassName('widget-send-message-box-js');
-    if (findMessageBox.length) {
-      const sendMessageBox = findMessageBox[0];
-      const inputMessage: any = sendMessageBox.getElementsByClassName('widget-message-input-js')[0];
-      const chatMessages: any = document.getElementsByClassName('widget-message-content-js')[0];
-      const sendMessageBoxHeight = (sendMessageBox.scrollHeight - 16) + 'px';
-      chatMessages.style.marginBottom = sendMessageBoxHeight;
-    }
   }
 
   private disableSend() {

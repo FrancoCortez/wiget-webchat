@@ -11,3 +11,6 @@ export const loadLogin = createAction('[loadLogin] load login', props<{ payload:
 
 export const loginState = createAction('[loginState] login state', props<{ payload: boolean }>());
 export const loginButtonEnabled = createAction('[loginButtonEnabled] login button enabled', props<{ payload: boolean }>());
+
+
+export const loginTemp = createAction('[loginTemp] Welcome init webchat with start', props<{ payload: MessageDto }>());

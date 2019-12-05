@@ -1,0 +1,11 @@
+<ul  class="c-list c-list--evaluation">
+  <li *ngFor="let item of starList" class="c-evaluation__item">
+    <span (click)="selectStart(item.position)" [ngClass]="item.class" style="cursor: pointer"></span>
+  </li>
+</ul>
+<p *ngIf="positionSelected > 1" class="c-evaluation__message">
+  Calificaste la atención con {{positionSelected}} estrellas
+</p>
+<p *ngIf="positionSelected == 1" class="c-evaluation__message">
+  Calificaste la atención con {{positionSelected}} estrella
+</p>

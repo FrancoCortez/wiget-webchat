@@ -78,6 +78,7 @@ init_button_prefer:
         placeholder: Ingresa el nombre
         required: true
         type: text
+        documentType: true
       - label: Teléfono
         placeholder: Ingresa tu número de teléfono
         required: true

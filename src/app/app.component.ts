@@ -162,7 +162,7 @@ export class AppComponent implements OnInit {
    */
   private initConfigRemote() {
     this.configService.getConfig(this.did).subscribe(resp => {
-      resp = JSON.parse('{\n' +
+/*      resp = JSON.parse('{\n' +
         '  "header_text": "Toulouse Lautrec",\n' +
         '  "header_status": "En linea",\n' +
         '  "agent_name_enabled": true,\n' +
@@ -268,10 +268,17 @@ export class AppComponent implements OnInit {
         '      "button_login_field": [\n' +
         '        {\n' +
         '          "label": "Nombre",\n' +
-        '          "placeholder": "Ingresa el nombre111111",\n' +
+        '          "placeholder": "Ingresa el nombre",\n' +
         '          "required": true,\n' +
-        '          "type": "text",\n' +
-        '          "documentType": true\n' +
+        '          "type": "text"\n' +
+        '        },\n' +
+        '        {\n' +
+        '          "label": "COSO",\n' +
+        '          "documentType": true,\n' +
+        '          "choices": [\n' +
+        '            "Si",\n' +
+        '            "No"\n' +
+        '          ]\n' +
         '        },\n' +
         '        {\n' +
         '          "label": "Teléfono",\n' +
@@ -326,7 +333,7 @@ export class AppComponent implements OnInit {
         '      "boderColor": "#440099"\n' +
         '    }\n' +
         '  }\n' +
-        '}');
+        '}');*/
       this.generateConfig(resp);
     });
   }

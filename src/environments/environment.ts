@@ -21,7 +21,7 @@ export const environment = {
 
   configProfile: 'development',
 
-  configPath: 'https://kops.chattigo.com/config'
+  configPath: 'https://k8s.chattigo.com//config'
 };
 
 

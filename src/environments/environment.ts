@@ -8,7 +8,7 @@ export const environment = {
   socketPath: '/feature-eqp1-483/bff-portal-webchat/socket.io/',
   socketTransports: 'websocket',
   bffServer: globalBffServer,
-  bffGetAgent: `${globalBffServer}feature-eqp1-483/bff-portal-webchat/channel/did`,
+  bffGetAgent: `${globalBffServer}/feature-eqp1-483/bff-portal-webchat/channel/did`,
   bffUploadFile: `${globalBffServer}/feature-eqp1-483/bff-portal-webchat/message/attachment/upload`,
   agentImg: 'https://cdn.chattigo.com/assets/img/profiles',
 
@@ -19,7 +19,7 @@ export const environment = {
   leaveChat: 'leave-chat',
   leaveAgentChat: 'notifyClosed',
 
-  configProfile: 'qa',
+  configProfile: 'development',
 
   configPath: 'https://kops.chattigo.com/config'
 };

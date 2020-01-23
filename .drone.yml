@@ -87,25 +87,6 @@ steps:
     branch:
     - release/*
 
-- name: deploy-kube-hotfix
-  image: mroldand/drone-kubernetes:v1.0.0
-  settings:
-    kubernetes_server: 
-      from_secret: KUBERNETES_SERVER_QA
-    kubernetes_cert: 
-      from_secret: KUBERNETES_QA_CERT
-    kubernetes_token: 
-      from_secret: KUBERNETES_QA_TOKEN
-    namespace: chattigo-front
-    deployment: webchat-widget
-    container: webchat-widget
-    repo: chattigocontainers.azurecr.io/${DRONE_REPO_NAME}
-    tags: 
-      - ${DRONE_COMMIT_BRANCH//\//-}-${DRONE_COMMIT_SHA:0:8}
-  when:
-    branch:
-    - hotfix/*
-
 - name: deploy-kube-pantera-master
   image: mroldand/drone-kubernetes:v1.0.0
   settings:

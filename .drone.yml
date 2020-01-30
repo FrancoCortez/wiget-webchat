@@ -12,9 +12,10 @@ steps:
     repo: chattigocontainers.azurecr.io/${DRONE_REPO_NAME}
     registry: chattigocontainers.azurecr.io
     tags:
-      - ${DRONE_COMMIT_BRANCH/release\//}
       - ${DRONE_COMMIT_BRANCH//\//-}-${DRONE_COMMIT_SHA:0:8}
     dockerfile: ./Dockerfile
+    build_args:
+      - ENV=qa
   when:
     branch:
     - release/*
@@ -29,9 +30,10 @@ steps:
     repo: chattigocontainers.azurecr.io/${DRONE_REPO_NAME}
     registry: chattigocontainers.azurecr.io
     tags:
-      - ${DRONE_COMMIT_BRANCH/hotfix\//}
       - ${DRONE_COMMIT_BRANCH//\//-}-${DRONE_COMMIT_SHA:0:8}
     dockerfile: ./Dockerfile
+    build_args:
+      - ENV=prod
   when:
     branch:
     - hotfix/*
@@ -48,6 +50,8 @@ steps:
     tags:
       - ${DRONE_TAG}
     dockerfile: ./Dockerfile
+    build_args:
+      - ENV=prod
   when:
     event:
     - tag
@@ -64,6 +68,8 @@ steps:
     tags:
       - ${DRONE_COMMIT_BRANCH//\//-}-${DRONE_COMMIT_SHA:0:8}
     dockerfile: ./Dockerfile
+    build_args:
+      - ENV=dev
   when:
     branch:
     - feature/*

@@ -87,7 +87,7 @@
               ]
 
             },
-            "qa": {
+            "gob-qa": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

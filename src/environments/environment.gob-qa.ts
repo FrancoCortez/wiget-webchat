@@ -21,7 +21,7 @@ export const environment = {
 
   configProfile: 'qa',
 
-  configPath: 'https://kops-qa.chattigo.com/config'
+  configPath: 'https://kops-gob.chattigo.com/config'
 };
 
 

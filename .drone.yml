@@ -112,7 +112,7 @@ steps:
   image: mroldand/drone-kubernetes:v1.0.0
   settings:
     kubernetes_server: 
-      from_secret: KUBERNETES_SERVER_QA
+      from_secret: KUBERNETES_SERVER_QA_GOB
     kubernetes_cert: 
       from_secret: KUBERNETES_QA_GOB_CERT
     kubernetes_token: 

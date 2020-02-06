@@ -106,7 +106,7 @@ steps:
         - ${DRONE_COMMIT_BRANCH//\//-}-${DRONE_COMMIT_SHA:0:8}
   when:
     branch:
-    - release/*
+    - release/eqp1*
 
 - name: deploy-kube-release-gob
   image: mroldand/drone-kubernetes:v1.0.0

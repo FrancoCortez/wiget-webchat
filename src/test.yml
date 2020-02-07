@@ -78,11 +78,6 @@ init_button_prefer:
         placeholder: Ingresa el nombre
         required: true
         type: text
-      - label: COSO
-        documentType: true
-        choices:
-          - "Si"
-          - "No"
       - label: Teléfono
         placeholder: Ingresa tu número de teléfono
         required: true

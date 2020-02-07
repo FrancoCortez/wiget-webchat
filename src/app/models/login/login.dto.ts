@@ -3,5 +3,4 @@ export interface LoginDto {
   user?: string;
   valid?: boolean;
   initMessage?: string;
-  documentType?: string;
 }

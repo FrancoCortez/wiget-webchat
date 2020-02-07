@@ -10,5 +10,4 @@ export interface MessageDto {
   isAttachment: boolean;
   attachment?: AttachmentDto;
   idUser?: string;
-  documentType?: string,
 }

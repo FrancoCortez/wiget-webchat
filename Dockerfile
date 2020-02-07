@@ -6,8 +6,7 @@ COPY package.json .
 RUN npm install -g http-serve yarn
 RUN yarn install
 COPY . .
-ARG ENV=qa
-RUN npm run build:elements-$ENV
+RUN yarn build:prod --configuration $configuration && yarn build:elements-prod
 
 # DEPLOY STAGE
 EXPOSE 4200

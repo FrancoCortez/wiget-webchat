@@ -16,4 +16,5 @@ export interface InputUiModel {
   max?: any;
   min?: any;
   defaultValidation?: any[];
+  documentType?: boolean;
 }

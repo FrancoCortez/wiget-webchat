@@ -12,11 +12,10 @@ steps:
     repo: chattigocontainers.azurecr.io/${DRONE_REPO_NAME}
     registry: chattigocontainers.azurecr.io
     tags:
-      - ${DRONE_COMMIT_BRANCH/release\//}
       - ${DRONE_COMMIT_BRANCH//\//-}-${DRONE_COMMIT_SHA:0:8}
     dockerfile: ./Dockerfile
     build_args:
-      - configuration=qa
+      - ENV=qa
   when:
     branch:
     - release/eqp1*
@@ -35,7 +34,7 @@ steps:
       - ${DRONE_COMMIT_BRANCH//\//-}-${DRONE_COMMIT_SHA:0:8}
     dockerfile: ./Dockerfile
     build_args:
-      - configuration=gob-qa
+      - ENV=gob-qa
   when:
     branch:
     - release/gob*
@@ -50,9 +49,10 @@ steps:
     repo: chattigocontainers.azurecr.io/${DRONE_REPO_NAME}
     registry: chattigocontainers.azurecr.io
     tags:
-      - ${DRONE_COMMIT_BRANCH/hotfix\//}
       - ${DRONE_COMMIT_BRANCH//\//-}-${DRONE_COMMIT_SHA:0:8}
     dockerfile: ./Dockerfile
+    build_args:
+      - ENV=prod
   when:
     branch:
     - hotfix/*
@@ -69,14 +69,16 @@ steps:
     tags:
       - ${DRONE_TAG}
     dockerfile: ./Dockerfile
+    build_args:
+      - ENV=prod
   when:
     event:
     - tag
-    
+
 - name: docker-dev
   image: plugins/docker
   settings:
-    username: 
+    username:
       from_secret: DOCKER_ORG_LOGIN
     password:
       from_secret: DOCKER_ORG_PASSWORD
@@ -85,6 +87,8 @@ steps:
     tags:
       - ${DRONE_COMMIT_BRANCH//\//-}-${DRONE_COMMIT_SHA:0:8}
     dockerfile: ./Dockerfile
+    build_args:
+      - ENV=dev
   when:
     branch:
     - feature/*
@@ -92,11 +96,11 @@ steps:
 - name: deploy-kube-release-pantera
   image: mroldand/drone-kubernetes:v1.0.0
   settings:
-    kubernetes_server: 
+    kubernetes_server:
       from_secret: KUBERNETES_SERVER_QA
-    kubernetes_cert: 
+    kubernetes_cert:
       from_secret: KUBERNETES_QA_CERT
-    kubernetes_token: 
+    kubernetes_token:
       from_secret: KUBERNETES_QA_TOKEN
     namespace: chattigo-front
     deployment: webchat-widget
@@ -111,11 +115,11 @@ steps:
 - name: deploy-kube-release-gob
   image: mroldand/drone-kubernetes:v1.0.0
   settings:
-    kubernetes_server: 
+    kubernetes_server:
       from_secret: KUBERNETES_SERVER_QA_GOB
-    kubernetes_cert: 
+    kubernetes_cert:
       from_secret: KUBERNETES_QA_GOB_CERT
-    kubernetes_token: 
+    kubernetes_token:
       from_secret: KUBERNETES_QA_GOB_TOKEN
     namespace: chattigo-front
     deployment: webchat-widget
@@ -130,17 +134,17 @@ steps:
 - name: deploy-kube-pantera-master
   image: mroldand/drone-kubernetes:v1.0.0
   settings:
-    kubernetes_server: 
+    kubernetes_server:
       from_secret: KUBERNETES_SERVER_DEV
-    kubernetes_cert: 
+    kubernetes_cert:
       from_secret: KUBERNETES_DEV_CERT
-    kubernetes_token: 
+    kubernetes_token:
       from_secret: KUBERNETES_DEV_TOKEN
     namespace: pantera
     deployment: webchat-widget
     container: webchat-widget
     repo: chattigocontainers.azurecr.io/${DRONE_REPO_NAME}
-    tags: 
+    tags:
       - ${DRONE_COMMIT_BRANCH//\//-}-${DRONE_COMMIT_SHA:0:8}
   when:
     branch:
@@ -149,17 +153,17 @@ steps:
 - name: deploy-kube-gob-master
   image: mroldand/drone-kubernetes:v1.0.0
   settings:
-    kubernetes_server: 
+    kubernetes_server:
       from_secret: KUBERNETES_SERVER_DEV
-    kubernetes_cert: 
+    kubernetes_cert:
       from_secret: KUBERNETES_DEV_CERT
-    kubernetes_token: 
+    kubernetes_token:
       from_secret: KUBERNETES_DEV_TOKEN
     namespace: gob
     deployment: webchat-widget
     container: webchat-widget
     repo: chattigocontainers.azurecr.io/${DRONE_REPO_NAME}
-    tags: 
+    tags:
       - ${DRONE_COMMIT_BRANCH//\//-}-${DRONE_COMMIT_SHA:0:8}
   when:
     branch:
@@ -200,7 +204,7 @@ steps:
 - name: slack
   image: plugins/slack
   settings:
-    webhook: 
+    webhook:
       from_secret: SLACK_WEBHOOK
     channel: drone-ci
     template: >

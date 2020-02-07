@@ -1,15 +1,15 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --qa` replaces `environment.ts` with `environment.qa.ts`.
 // The list of file replacements can be found in `angular.json`.
-const globalBffServer = 'https://kops.chattigo.com';
+const globalBffServer = 'https://k8s-dev.chattigo.com';
 export const environment = {
   production: false,
-  socketServer: 'https://kops.chattigo.com',
-  socketPath: '/webchat/socket.io/',
+  socketServer: 'https://k8s-dev.chattigo.com',
+  socketPath: '/feature-eqp1-483/bff-portal-webchat/socket.io/',
   socketTransports: 'websocket',
   bffServer: globalBffServer,
-  bffGetAgent: `${globalBffServer}/webchat/channel/did`,
-  bffUploadFile: `${globalBffServer}/webchat/message/attachment/upload`,
+  bffGetAgent: `${globalBffServer}/feature-eqp1-483/bff-portal-webchat/channel/did`,
+  bffUploadFile: `${globalBffServer}/feature-eqp1-483/bff-portal-webchat/message/attachment/upload`,
   agentImg: 'https://cdn.chattigo.com/assets/img/profiles',
 
   // Constant Websocket Action
@@ -19,9 +19,9 @@ export const environment = {
   leaveChat: 'leave-chat',
   leaveAgentChat: 'notifyClosed',
 
-  configProfile: 'qa',
+  configProfile: 'development',
 
-  configPath: 'https://kops.chattigo.com/config'
+  configPath: 'https://k8s.chattigo.com/config'
 };
 
 

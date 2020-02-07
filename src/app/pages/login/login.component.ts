@@ -14,10 +14,10 @@ import {LoginDto} from '../../models/login/login.dto';
 import {filter, map} from 'rxjs/operators';
 import {MessageDto} from '../../models/message/message.dto';
 import {v4 as uuid} from 'uuid';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {Subscription} from 'rxjs';
-import {ConfigUiModel} from '../../models/ui-model/config.ui-model';
-import {InitTypeEnum} from '../../models/utils/init-type.enum';
+import {animate, state, style, transition, trigger} from "@angular/animations";
+import {Subscription} from "rxjs";
+import {ConfigUiModel} from "../../models/ui-model/config.ui-model";
+import {InitTypeEnum} from "../../models/utils/init-type.enum";
 
 @Component({
   selector: 'app-login',
@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe(resp => {
         this.headerColor = resp.caption.headerBackgroundColor;
         this.teamHidden = resp.showTeam;
-        console.log(`Entre al resp ${resp}`);
+        console.log(`Entre al resp ${resp}` );
         this.config = resp;
       });
   }
@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public login() {
     this.store.dispatch(LoginAction.loginState({payload: true}));
     this.form = this.inputComponentReferent.form;
-    if (this.config.initType === InitTypeEnum.START_CHAT_WITH_WELCOME) {
+    if(this.config.initType === InitTypeEnum.START_CHAT_WITH_WELCOME){
       this.store.dispatch(LoginAction.loginButtonEnabled({payload: false}));
       this.store.pipe(select(LoginSelector.selectLogin)).subscribe(resp => {
         this.store.dispatch(LoginAction.login({payload: resp}));
@@ -116,7 +116,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         .pipe(map(input => input.input))
         .subscribe(input => {
           const login: LoginDto = {};
-          let inputDocumentValue = '';
           input.forEach(row => {
             if (row.nameField) {
               const value = this.form.controls[row.id].value;
@@ -134,9 +133,6 @@ export class LoginComponent implements OnInit, OnDestroy {
                 login.user = login.user + '-' + value;
               }
             }
-            if (row.documentType) {
-              inputDocumentValue = this.form.controls[row.id].value;
-            }
           });
           login.valid = this.form.valid;
           const message: MessageDto = {
@@ -148,8 +144,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             attachment: null,
             timestamp: new Date(),
             content: '',
-            idUser: this.idUser,
-            documentType: inputDocumentValue
+            idUser: this.idUser
           };
           input.forEach(row => {
             message.content += `\n ${row.label}: ${this.form.controls[row.id].value}`;

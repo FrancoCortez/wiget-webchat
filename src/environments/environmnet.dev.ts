@@ -6,11 +6,11 @@ const globalBffServer = 'https://k8s-dev.chattigo.com';
 export const environment = {
   production: false,
   socketServer: 'https://k8s-dev.chattigo.com',
-  socketPath: '/feature-eqp1-483/bff-portal-webchat/socket.io/',
+  socketPath: '/feature-gob-328/bff-portal-webchat/socket.io/',
   socketTransports: 'websocket',
   bffServer: globalBffServer,
-  bffGetAgent: `${globalBffServer}/feature-eqp1-483/bff-portal-webchat/channel/did`,
-  bffUploadFile: `${globalBffServer}/feature-eqp1-483/bff-portal-webchat/message/attachment/upload`,
+  bffGetAgent: `${globalBffServer}/feature-gob-328/bff-portal-webchat/channel/did`,
+  bffUploadFile: `${globalBffServer}/feature-gob-328/bff-portal-webchat/message/attachment/upload`,
   agentImg: 'https://develop.cdn.chattigo.com/assets/img/profiles',
 
   // Constant Websocket Action

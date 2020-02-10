@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
-    "sourceMap": true,
+    "sourceMap": false,
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
@@ -13,6 +13,9 @@
     "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
+    ],
+    "types": [
+      "node"
     ],
     "lib": [
       "es2018",

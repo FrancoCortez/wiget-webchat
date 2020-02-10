@@ -1,8 +1,8 @@
-const globalBffServer = 'https://channels.chattigo.com';
+const globalBffServer = 'NGINX_REPLACE_BFF_PORTAL_WEBCHAT';
 export const environment = {
   production: false,
-  socketServer: 'https://channels.chattigo.com',
-  socketPath: '/webchat/socket.io/',
+  socketServer: 'NGINX_REPLACE_SOCKET_SERVER',
+  socketPath: 'NGINX_REPLACE_SOCKET_PATH',
   socketTransports: 'websocket',
   bffServer: globalBffServer,
   bffGetAgent: `${globalBffServer}/webchat/channel/did`,
@@ -16,6 +16,6 @@ export const environment = {
   leaveChat: 'leave-chat',
   leaveAgentChat: 'notifyClosed',
 
-  configProfile: 'production',
-  configPath: 'https://k8s.chattigo.com/config'
+  configProfile: 'NGINX_REPLACE_SPRING_PROFILES_ACTIVE',
+  configPath: 'NGINX_REPLACE_CONFIG_SERVER'
 };
